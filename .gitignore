@@ -12,6 +12,7 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
+#/[Uu]serSettings/
 /Assets/AssetStoreTools*
 AssetBundles/
 
