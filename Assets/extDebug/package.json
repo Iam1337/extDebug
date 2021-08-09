@@ -1,0 +1,23 @@
+{
+  "name": "com.iam1337.extdebug",
+  "displayName": "extDebug",
+  "version": "1.0.0",
+  "unity": "2021.1",
+  "description": "extDebug is a simple debug menu for Unity.",
+  "license": "MIT",
+  "author": "dr. ext <ext@iron-wall.org> (https://github.com/iam1337)",
+  "keywords": [
+    "debug",
+    "menu"
+  ],
+  "category": "Network",
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.6",
+    "com.unity.ugui": "1.0.0"
+  },
+  "samples": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iam1337/extDebug.git#upm"
+  }
+}

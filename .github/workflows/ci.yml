@@ -1,0 +1,86 @@
+name: ⚙ Build and Release
+on:
+  push:
+    branches:
+    - master
+jobs:
+  release:
+    name: ⚙ Release
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Build unitypackage
+      run: |
+        echo Assets/extDebug.meta >> metaList
+        find Assets/extDebug -name \*.meta >> metaList
+    - uses: pCYSl5EDgo/create-unitypackage@master
+      with:
+        package-path: extDebug.unitypackage
+        include-files: metaList
+        project-folder: ./
+    - name: Semantic release
+      id: semantic
+      uses: cycjimmy/semantic-release-action@v2
+      with:
+        extra_plugins: |
+          @semantic-release/changelog
+          @semantic-release/git
+        branch: master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Update upm branch
+      run: |
+        echo '>>> Start'
+        git log -1
+
+        mkdir Temp
+        cp README.md Temp/README.md
+        cp CHANGELOG.md Temp/CHANGELOG.md
+        cp LICENSE Temp/LICENSE
+
+        echo '>>> Delete local upm branch'
+        git branch -d upm &> /dev/null || echo upm branch not found
+
+        echo
+        echo '>>> Split upm branch'
+        git subtree split -P "$PKG_ROOT" -b upm
+
+        echo
+        echo '>>> Checkout upm branch'
+        git checkout upm
+
+        cp Temp/README.md README.md
+        git add README.md
+
+        cp Temp/CHANGELOG.md CHANGELOG.md
+        git add CHANGELOG.md
+
+        cp Temp/LICENSE LICENSE
+        git add LICENSE
+
+        if [[ -d "Examples" ]]; then
+          echo
+          echo '>>> Examples move to Examples~'
+          git mv Examples Examples~
+          rm -f Examples.meta
+        fi
+
+        git config --global user.name 'github-bot'
+        git config --global user.email 'github-bot@users.noreply.github.com'
+        git commit -am "$MSG"
+
+        echo
+        echo '>>> Force overwrite remote upm branch'
+        git push -f -u origin upm
+      env:
+        PKG_ROOT: Assets/extDebug
+        MSG: Finalize v${{ steps.semantic.outputs.new_release_version }} commit.
+    - name: Create upm git tag
+      if: steps.semantic.outputs.new_release_published == 'true'
+      run: |
+        git tag $TAG upm
+        git push origin --tags
+      env:
+        TAG: upm/v${{ steps.semantic.outputs.new_release_version }} 
