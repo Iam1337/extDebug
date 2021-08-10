@@ -4,7 +4,7 @@ using System;
 
 namespace extDebug
 {
-    public class DebugMenuAction : DebugMenuItem
+    public class DMAction : DMItem
     {
 		#region Public Vars
 
@@ -13,16 +13,15 @@ namespace extDebug
 
 		#region Private Vars
 
-		private Action<DebugMenuAction, EventArgs> _action;
+		private Action<DMAction, EventArgs> _action;
 
 		#endregion
 
 		#region Public Methods
 		
-		public DebugMenuAction(DebugMenuBranch parent, string path, string description = null, Action<DebugMenuAction, EventArgs> action = null, int order = 0) : base(parent, path, order)
+		public DMAction(DMBranch parent, string path, string description = null, Action<DMAction, EventArgs> action = null, int order = 0) : base(parent, path, description, order)
 		{
 			_action = action;
-			_value = description;
 		}
 
 		#endregion
@@ -49,7 +48,7 @@ namespace extDebug
 					}
 					case KeyType.Left:
 					{
-						DebugMenu.Back();
+						DM.Back();
 
 						break;
 					}
@@ -60,12 +59,12 @@ namespace extDebug
 
 						_action.Invoke(this, eventArgs);
 						
-						FlashName(DebugMenu.Colors.ActionFlash, true);
+						FlashName(DM.Colors.ActionFlash, true);
 						
 						break;
 					}
 					case KeyType.Back:
-						DebugMenu.Back();
+						DM.Back();
 						break;
 				}
 			}

@@ -32,5 +32,5 @@ namespace extDebug
 		public KeyType Key;
 	}
 
-	public delegate void ActionDelegate(DebugMenuAction actionItem, EventArgs args);
+	public delegate void ActionDelegate(DMAction actionItem, EventArgs args);
 }
