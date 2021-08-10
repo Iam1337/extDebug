@@ -1,12 +1,14 @@
 ﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
+using System;
 using UnityEngine;
 
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace extDebug
 {
-    public abstract class DebugMenuItem
+    public abstract class DMItem
     {
 		#region External
 
@@ -14,9 +16,22 @@ namespace extDebug
 
 		#endregion
 
-		#region Static Private Vars
+		#region Static Private Methods
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static float _flashMap(float flashTime) => Mathf.Clamp01((Time.unscaledTime - flashTime) / FLASH_DURATION);
+
+		private static string GetPathDirectory(string path)
+		{
+			var idx = path.LastIndexOf("/");
+			return idx < 0 ? string.Empty : path.Substring(0, idx);
+		}
+
+		private static string GetPathName(string path)
+		{
+			var idx = path.LastIndexOf("/");
+			return idx < 0 ? path : path.Substring(idx + 1);
+		}
 
 		#endregion
 
@@ -28,7 +43,7 @@ namespace extDebug
 			set
 			{
 				_order = value;
-				_parent.Resort();
+				_parent?.Resort();
 			}
 		}
 
@@ -38,7 +53,7 @@ namespace extDebug
 			set
 			{
 				_name = value;
-				_parent.Resort();
+				_parent?.Resort();
 			}
 		}
 
@@ -48,7 +63,7 @@ namespace extDebug
 			set
 			{
 				_nameColor = value;
-				_parent.RequestRepaint();
+				_parent?.RequestRepaint();
 			}
 		}
 
@@ -58,7 +73,7 @@ namespace extDebug
 			set
 			{
 				_value = value;
-				_parent.RequestRepaint();
+				_parent?.RequestRepaint();
 			}
 		}
 
@@ -68,20 +83,17 @@ namespace extDebug
 			set
 			{
 				_valueColor = value;
-				_parent.RequestRepaint();
+				_parent?.RequestRepaint();
 			}
 		}
 
-		public DebugMenuBranch Parent
-		{
-			get => _parent;
-		}
+		public DMBranch Parent => _parent;
 
 		#endregion
 
 		#region Protected Vars
 
-		protected readonly DebugMenuBranch _parent;
+		protected readonly DMBranch _parent;
 
 		protected string _name;
 
@@ -116,39 +128,39 @@ namespace extDebug
 			_flashNameTime = Time.unscaledTime;
 			_flashNameColor = color;
 
-			if (_parent != null)
-				_parent.RequestRepaint();
+			_parent?.RequestRepaint();
 
-			if (DebugMenu.IsVisible == false && notify)
-				DebugMenu.Notify(this);
+			if (DM.IsVisible == false && notify)
+				DM.Notify(this);
 		}
 
 		public void FlashValue(Color color, bool notify)
 		{
 			_flashValueTime = Time.unscaledTime;
 			_flashValueColor = color;
+			
+			_parent?.RequestRepaint();
 
-			if (_parent != null)
-				_parent.RequestRepaint();
-
-			if (DebugMenu.IsVisible == false && notify)
-				DebugMenu.Notify(this);
+			if (DM.IsVisible == false && notify)
+				DM.Notify(this);
 		}
+
+		public override string ToString() => $"{_name,-16}  {_value,-16}";
 
 		#endregion
 
 		#region Protected Methods
 
-		protected DebugMenuItem(DebugMenuBranch parent, string path, int order = 0)
+		protected DMItem(DMBranch parent, string path, string value = "", int order = 0)
 		{
-			var directory = Path.GetDirectoryName(path);
-			var name = Path.GetFileName(path);
-
-			Order = order;
+			var directory = GetPathDirectory(path);
+			var name = GetPathName(path);
 
 			_name = name;
-			_parent = parent.Get(directory, true) ?? DebugMenu.Root.Get(directory, true);
-			_parent.Add(this);
+			_value = value;
+			_order = order;
+			_parent = parent?.Get(directory, true) ?? DM.Root?.Get(directory, true);
+			_parent?.Add(this);
 		}
 
 		protected abstract void OnEvent(EventArgs eventArgs);
