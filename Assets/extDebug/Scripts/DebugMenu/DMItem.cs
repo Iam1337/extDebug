@@ -89,6 +89,12 @@ namespace extDebug
 
 		public DMBranch Parent => _parent;
 
+		public object Data
+		{
+			get => _data ?? _parent?._data;
+			set => _data = value;
+		}
+
 		#endregion
 
 		#region Protected Vars
@@ -97,11 +103,11 @@ namespace extDebug
 
 		protected string _name;
 
-		protected Color _nameColor;
+		protected Color _nameColor = DM.Colors.Name;
 
 		protected string _value;
 
-		protected Color _valueColor;
+		protected Color _valueColor = DM.Colors.Value;
 
 		protected int _order;
 
@@ -109,19 +115,21 @@ namespace extDebug
 
 		#region Private Vars
 
-		private float _flashNameTime = float.MaxValue;
+		private float _flashNameTime = 0;
 
-		private Color _flashNameColor = Color.clear;
+		private Color _flashNameColor = DM.Colors.NameFlash;
 
-		private float _flashValueTime = float.MaxValue;
+		private float _flashValueTime = 0;
 
-		private Color _flashValueColor = Color.clear;
+		private Color _flashValueColor = DM.Colors.ValueFlash;
+
+		private object _data;
 
 		#endregion
 
 		#region Public Methods
 
-		public void SendEvent(EventArgs eventArgs) => OnEvent(eventArgs);
+		public void SendEvent(EventArgs eventArgs) => OnEvent(eventArgs); // Syntax sugar
 
 		public void FlashName(Color color, bool notify)
 		{
@@ -159,8 +167,8 @@ namespace extDebug
 			_name = name;
 			_value = value;
 			_order = order;
-			_parent = parent?.Get(directory, true) ?? DM.Root?.Get(directory, true);
-			_parent?.Add(this);
+			_parent = parent?.Get(directory, true);// ?? DM.Root?.Get(directory, true);
+			_parent?.Insert(this);
 		}
 
 		protected abstract void OnEvent(EventArgs eventArgs);

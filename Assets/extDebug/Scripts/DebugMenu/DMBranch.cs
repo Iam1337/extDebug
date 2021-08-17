@@ -1,9 +1,11 @@
 ﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
+
+using System;
+using System.Linq;
+using System.Text;
+using System.Collections.Generic;
 
 namespace extDebug
 {
@@ -25,11 +27,19 @@ namespace extDebug
 			}
 		}
 
+		public Action<DMBranch> OnOpen;
+
+		public Action<DMBranch> OnClose;
+
 		#endregion
 
 		#region Private Vars
 
 		private readonly List<DMItem> _items = new List<DMItem>();
+
+		private readonly List<DMRequest> _requests = new List<DMRequest>();
+
+		private readonly List<DMItem> _requestsItems = new List<DMItem>();
 
 		private int _currentItem;
 
@@ -44,32 +54,22 @@ namespace extDebug
 		public DMBranch(DMBranch parent, string path, string description = "", int order = 0) : base(parent, path, description, order)
 		{ }
 
-		public override string ToString()
+		public DMBranchRequest<T> Branch<T>(Func<IList<T>> request, Func<T, string> name = null, Func<T, string> description = null)
 		{
-			var builder = new StringBuilder();
-			BuildArchitecture(builder, 0);
-			return builder.ToString();
+			var item = new DMBranchRequest<T>(request, name, description);
+			_requests.Add(item);
+			return item;
 		}
 
-		private void BuildArchitecture(StringBuilder builder, int depth)
+		public DMActionRequest<T> Action<T>(Func<IList<T>> request, Func<T, string> name = null, Action<DMAction, EventArgs> action = null, Func<T, string> description = null)
 		{
-			builder.AppendLine($"{new string(' ', depth * 2)}+{_name}");
-			
-			foreach (var item in _items)
-            {
-				if (item is DMBranch branch)
-				{
-					branch.BuildArchitecture(builder, depth + 1);
-				}
-				else
-				{
-					builder.AppendLine($"{new string(' ', depth * 2)}|{item}");
-				}
-            }
+			var item = new DMActionRequest<T>(request, name, action, description);
+			_requests.Add(item);
+			return item;
 		}
 
 		// Manage
-		public void Add(DMItem item)
+		public void Insert(DMItem item)
 		{
 			_items.Add(item);
 
@@ -140,8 +140,6 @@ namespace extDebug
 
 		#region Internal Methods
 
-
-
 		internal void Build(StringBuilder builder)
 		{
 			const string kSuffix = " ";
@@ -164,7 +162,7 @@ namespace extDebug
 			var lineEmpty = new string(kHorizontalChar, lineLength);
 
 			// header
-			builder.AppendFormat($"{kPrefix}<color=#{ColorUtility.ToHtmlStringRGB(NameColor)}>{{0,-fullLength}}</color>{kSuffix}{Environment.NewLine}", Name);
+			builder.AppendFormat($"{kPrefix}<color=#{ColorUtility.ToHtmlStringRGB(NameColor)}>{{0,{-fullLength}}}</color>{kSuffix}{Environment.NewLine}", Name);
 			builder.AppendLine(lineEmpty);
 
 			// items
@@ -188,11 +186,11 @@ namespace extDebug
 				if (string.IsNullOrEmpty(value))
 				{
 					// only name
-					builder.AppendFormat($"{prefix}<color=#{ColorUtility.ToHtmlStringRGB(NameColor)}>{{0,-{fullLength}}}</color>{kSuffix}{Environment.NewLine}", name);
+					builder.AppendFormat($"{prefix}<color=#{ColorUtility.ToHtmlStringRGB(item.NameColor)}>{{0,-{fullLength}}}</color>{kSuffix}{Environment.NewLine}", name);
 				}
 				else
 				{
-					// only value
+					// with value
 					builder.AppendFormat($"{prefix}<color=#{ColorUtility.ToHtmlStringRGB(item.NameColor)}>{{0,-{maxNameLength}}}</color>{kSpace}<color=#{ColorUtility.ToHtmlStringRGB(item.ValueColor)}>{{1,-{maxValueLength}}}</color>{kSuffix}{Environment.NewLine}", name, value);
 				}
 			}
@@ -266,11 +264,33 @@ namespace extDebug
 			}
 			else if (eventArgs.Event == EventType.OpenMenu)
 			{
-				// TODO: Event on open menu
+				// Requests
+				if (_requestsItems.Count == 0)
+				{
+					foreach (var request in _requests)
+					{
+						_requestsItems.AddRange(request.BuildItems(this));
+					}
+				}
+
+				if (OnOpen != null)
+					OnOpen.Invoke(this);
 			}
 			else if (eventArgs.Event == EventType.CloseMenu)
 			{
-				// TODO: Event on close menu
+				// Requests
+				if (_requestsItems.Count != 0)
+				{
+					foreach (var item in _requestsItems)
+					{
+						Remove(item);
+					}
+
+					_requestsItems.Clear();
+				}
+
+				if (OnClose != null)
+					OnClose.Invoke(this);
 			}
 		}
 
@@ -278,7 +298,7 @@ namespace extDebug
 
 		#region Private Methods
 
-		public void CalculateLengths(int space, out int fullLength, out int maxNameLength, out int maxValueLength)
+		private void CalculateLengths(int space, out int fullLength, out int maxNameLength, out int maxValueLength)
 		{
 			maxNameLength = 0;
 			maxValueLength = 0;

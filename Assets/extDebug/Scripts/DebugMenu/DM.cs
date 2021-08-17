@@ -1,6 +1,7 @@
 /* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
@@ -12,8 +13,8 @@ namespace extDebug
 
 		public struct ColorScheme
 		{
-			public Color Label;
-			public Color LabelFlash;
+			public Color Name;
+			public Color NameFlash;
 
 			public Color Value;
 			public Color ValueFlash;
@@ -40,18 +41,18 @@ namespace extDebug
 		// Colors
 		public static ColorScheme Colors = new ColorScheme()
 		{
-			Label = (ColorUtility.TryParseHtmlString("eeeeee", out var color0) ? color0 : Color.clear),
-			LabelFlash = (ColorUtility.TryParseHtmlString("ffff00", out var color1) ? color1 : Color.clear),
+			Name = new Color32(238, 238, 238, 255),
+			NameFlash = new Color32(255, 255, 0, 255),
 
-			Value = (ColorUtility.TryParseHtmlString("c9e3db", out var color2) ? color2 : Color.clear),
-			ValueFlash = (ColorUtility.TryParseHtmlString("ffff00", out var color3) ? color3 : Color.clear),
+			Value = new Color(201, 227, 219, 255),
+			ValueFlash = new Color32(255, 255, 0, 255),
 
-			ToggleDisabled = (ColorUtility.TryParseHtmlString("ffff00", out var color4) ? color4 : Color.clear),
-			ToggleEnabled = (ColorUtility.TryParseHtmlString("ffff00", out var color5) ? color5 : Color.clear),
+			ToggleDisabled = new Color32(255, 255, 0, 255),
+			ToggleEnabled = new Color32(255, 255, 0, 255),
 
-			Action = (ColorUtility.TryParseHtmlString("eeeeee", out var color7) ? color7 : Color.clear),
-			ActionFlash = (ColorUtility.TryParseHtmlString("5ab190", out var color8) ? color8 : Color.clear),
-			ActionDisabled = (ColorUtility.TryParseHtmlString("707070", out var color6) ? color6 : Color.clear),
+			Action = new Color32(238, 238, 238, 255),
+			ActionFlash = new Color32(90, 177, 144, 255),
+			ActionDisabled = new Color32(112, 112, 112, 255)
 		};
 
 		#endregion
@@ -60,22 +61,56 @@ namespace extDebug
 
 		private static DMBranch _currentBranch;
 
+		private static DMBranch _previousBranch => _branchesStack.Count > 0 ? _branchesStack.Peek() : null;
+
+		private static Stack<DMBranch> _branchesStack = new Stack<DMBranch>();
+
 		private static readonly StringBuilder _builder = new StringBuilder();
 
 		#endregion
 
 		#region Public Methods
 
+		public static void Open() => Open(Root);
+
 		public static void Open(DMBranch branch) // TODO: Change name on Switch?
 		{
-			_currentBranch = branch;
-			_currentBranch.SendEvent(new EventArgs
+			if (_currentBranch != null)
 			{
-				Event = EventType.OpenMenu,
-				Key = KeyType.None
-			});
+				_branchesStack.Push(_currentBranch);
+			}
 
+            _currentBranch = branch;
+            _currentBranch.SendEvent(new EventArgs
+            {
+                Event = EventType.OpenMenu,
+                Key = KeyType.None
+            });
+        }
 
+		public static void Back()
+		{
+			if (_previousBranch != null)
+			{
+				_currentBranch.SendEvent(new EventArgs
+                {
+                    Event = EventType.CloseMenu,
+                    Key = KeyType.None
+                });
+
+				_currentBranch = _previousBranch;
+				_currentBranch.SendEvent(new EventArgs
+				{
+					Event = EventType.OpenMenu,
+					Key = KeyType.None
+				});
+
+				_branchesStack.Pop();
+			}
+			else
+			{
+				Close();
+			}
 		}
 
 		public static void Close()
@@ -83,24 +118,11 @@ namespace extDebug
 
 		}
 
-		public static void Back()
+		public static void SendEvent(EventArgs eventArgs)
 		{
-			if (_currentBranch.Parent != null)
-			{
-				_currentBranch.SendEvent(new EventArgs
-				{
-					Event = EventType.CloseMenu,
-					Key = KeyType.None
-				});
-
-				Open(_currentBranch.Parent);
-			}
-			else
-			{
-				Close();	
-			}
+			if (_currentBranch != null)
+				_currentBranch.SendEvent(eventArgs);
 		}
-
 
 		public static void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null)
 		{ }
@@ -112,7 +134,7 @@ namespace extDebug
 
 		public static DMBranch Add(DMBranch parent, string path, string description = "", int order = 0)
 		{
-			return new DMBranch(parent, path, description, order);
+			return Root.Get(path) ?? new DMBranch(parent, path, description, order);
 		}
 
 		public static DMAction Add(string path, Action<DMAction, EventArgs> action, string description = "", int order = 0)
@@ -125,18 +147,19 @@ namespace extDebug
 			return new DMAction(parent, path, description, action, order);
 		}
 
-
 		#endregion
 
 		#region Private Methods
 
-		private static string Build(DMBranch branch)
+		public static string Build()
 		{
 			_builder.Clear();
-			branch.Build(_builder);
+			_currentBranch.Build(_builder);
 			return _builder.ToString();
 		}
 
 		#endregion
+
+		
 	}
 }
