@@ -6,14 +6,9 @@ namespace extDebug
 {
     public class DMAction : DMItem
     {
-		#region Public Vars
-
-
-		#endregion
-
 		#region Private Vars
 
-		private Action<DMAction, EventArgs> _action;
+		private readonly Action<DMAction, EventArgs> _action;
 
 		#endregion
 
