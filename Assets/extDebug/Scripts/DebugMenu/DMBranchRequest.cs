@@ -53,7 +53,7 @@ namespace extDebug
 					item.Data = null;
 			}
 
-			var branch = DM.Add(parent, GetName(@object), GetDescription(@object), order);
+			var branch = DM.Add(parent, name, GetDescription(@object), order);
 			branch.OnOpen += OnOpenCallback;
 			branch.OnClose += OnCloseCallback;
 

@@ -4,6 +4,8 @@ using EventType = extDebug.EventType;
 
 public class Example : MonoBehaviour
 {
+	private int valueInt = 0;
+
 	void Start()
 	{
 		string GetName(Component component) => $"{component.name} ({component.GetType().Name})";
@@ -13,11 +15,17 @@ public class Example : MonoBehaviour
 		DM.Add("Hello/Action 2", (action, args) => { Debug.Log("Action 2"); });
 		DM.Add("Hello/World/Action 3", (action, args) => { Debug.Log("Action 3"); });
 		DM.Add("Hello/World/Action 4", (action, args) => { Debug.Log("Action 4"); });
-		DM.Add("Hello/Request Action").Action(FindObjectsOfType<Component>, GetName, Action);
+		DM.Add("Hello/Integer", () => valueInt, v => valueInt = v);
 
+		// DMBranchRequest
 		var branch = DM.Add("Hello/Request Branch").Branch(FindObjectsOfType<Component>, GetName);
 		branch.Add("Debug.Log", (action, args) => { Debug.Log(action.Data); });
 		branch.Add("Object.Destroy", (action, args) => { Object.Destroy((Component)action.Data); });
+
+		// DMActionRequest
+		DM.Add("Hello/Request Action").Action(FindObjectsOfType<Component>, Action);
+
+		
 
 		DM.IsVisible = true;
 		DM.Open();
@@ -61,6 +69,8 @@ public class Example : MonoBehaviour
 			return KeyType.Left;
 		if (Input.GetKeyDown(KeyCode.D))
 			return KeyType.Right;
+		if (Input.GetKeyDown(KeyCode.R))
+			return KeyType.Reset;
 
 		return KeyType.None;
 	}
@@ -75,6 +85,8 @@ public class Example : MonoBehaviour
 			return KeyType.Left;
 		if (Input.GetKeyUp(KeyCode.D))
 			return KeyType.Right;
+		if (Input.GetKeyUp(KeyCode.R))
+			return KeyType.Reset;
 
 		return KeyType.None;
 	}
