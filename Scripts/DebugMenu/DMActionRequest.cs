@@ -17,7 +17,7 @@ namespace extDebug
 
 		#region Public Methods
 
-		public DMActionRequest(Func<IList<T>> request, Func<T, string> name = null, Action<DMAction, EventArgs> action = null, Func<T, string> description = null) : base(request, name)
+		public DMActionRequest(Func<IList<T>> request, Action<DMAction, EventArgs> action = null, Func<T, string> name = null, Func<T, string> description = null) : base(request, name)
 		{
 			_action = action;
 			_description = description;
@@ -29,18 +29,14 @@ namespace extDebug
 
 		#region Protected Methods
 
-		protected override DMItem BuildItem(DMBranch parent, T @object, string name, int order)
-		{
-			return DM.Add(parent, GetName(@object), _action, GetDescription(@object), order);
-		}
+		protected override DMItem BuildItem(DMBranch parent, T @object, string name, int order) => DM.Add(parent, name, _action, GetDescription(@object), order);
 
 		#endregion
 
 		#region Private Vars
-		
+
 		private string GetDescription(T @object) => _description != null ? _description.Invoke(@object) : string.Empty;
 
 		#endregion
 	}
-
 }

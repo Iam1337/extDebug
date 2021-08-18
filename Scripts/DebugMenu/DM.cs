@@ -134,6 +134,10 @@ namespace extDebug
 
 		public static DMBranch Add(DMBranch parent, string path, string description = "", int order = 0)
 		{
+			// TODO: Check
+			//if (parent == null)
+			//	return new DMBranch(parent, path, description, order);
+
 			return Root.Get(path) ?? new DMBranch(parent, path, description, order);
 		}
 
@@ -145,6 +149,16 @@ namespace extDebug
 		public static DMAction Add(DMBranch parent, string path, Action<DMAction, EventArgs> action, string description = "", int order = 0)
 		{
 			return new DMAction(parent, path, description, action, order);
+		}
+
+		public static DMInteger Add(string path, Func<int> getter, Action<int> setter, int order = 0)
+		{
+			return Add(Root, path, getter, setter, order);
+		}
+
+		public static DMInteger Add(DMBranch parent, string path, Func<int> getter, Action<int> setter = null, int order = 0)
+		{
+			return new DMInteger(parent, path, getter, setter, order);
 		}
 
 		#endregion
@@ -159,7 +173,5 @@ namespace extDebug
 		}
 
 		#endregion
-
-		
 	}
 }

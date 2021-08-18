@@ -3,7 +3,6 @@
 using UnityEngine;
 
 using System;
-using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
@@ -61,9 +60,16 @@ namespace extDebug
 			return item;
 		}
 
-		public DMActionRequest<T> Action<T>(Func<IList<T>> request, Func<T, string> name = null, Action<DMAction, EventArgs> action = null, Func<T, string> description = null)
+		public DMActionRequest<T> Action<T>(Func<IList<T>> request, Action<DMAction, EventArgs> action = null, Func<T, string> name = null, Func<T, string> description = null)
 		{
-			var item = new DMActionRequest<T>(request, name, action, description);
+			var item = new DMActionRequest<T>(request, action, name, description);
+			_requests.Add(item);
+			return item;
+		}
+
+		public DMIntegerRequest<T> Integer<T>(Func<IList<T>> request, Func<int> getter, Action<int> setter = null, Func<T, string> name = null)
+		{
+			var item = new DMIntegerRequest<T>(request, getter, setter, name);
 			_requests.Add(item);
 			return item;
 		}
@@ -149,11 +155,14 @@ namespace extDebug
 			const char kHorizontalChar = '─';
 
 			// send event.
-			SendEvent(new EventArgs
+			foreach (var item in _items)
 			{
-				Event = EventType.Repaint,
-				Key = KeyType.None
-			});
+				item.SendEvent(new EventArgs
+				{
+					Event = EventType.Repaint,
+					Key = KeyType.None
+				});
+			}
 
 			CalculateLengths(kSpace.Length, out var fullLength, out var maxNameLength, out var maxValueLength);
 
@@ -228,9 +237,10 @@ namespace extDebug
 					}
 					case KeyType.Left:
 					{
-						if (DM.IsVisible && currentItem is DMBranch)
+						if (currentItem is DMBranch)
 						{
-							DM.Back();
+							if (DM.IsVisible)
+								DM.Back();
 						}
 						else
 						{
@@ -242,9 +252,24 @@ namespace extDebug
 					}
 					case KeyType.Right:
 					{
-						if (DM.IsVisible && currentItem is DMBranch currentBranch)
+						if (currentItem is DMBranch currentBranch)
 						{
-							DM.Open(currentBranch);
+							if (DM.IsVisible)
+								DM.Open(currentBranch);
+						}
+						else
+						{
+							if (currentItem != null)
+								currentItem.SendEvent(eventArgs);
+						}
+
+						break;
+					}
+					case KeyType.Reset:
+					{
+						if (currentItem is DMBranch currentBranch)
+						{
+							
 						}
 						else
 						{
@@ -257,7 +282,6 @@ namespace extDebug
 					case KeyType.Back:
 					{
 						DM.Back();
-						
 						break;
 					}
 				}
