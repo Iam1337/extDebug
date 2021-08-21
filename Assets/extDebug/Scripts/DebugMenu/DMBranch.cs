@@ -53,23 +53,38 @@ namespace extDebug
 		public DMBranch(DMBranch parent, string path, string description = "", int order = 0) : base(parent, path, description, order)
 		{ }
 
-		public DMBranchRequest<T> Branch<T>(Func<IList<T>> request, Func<T, string> name = null, Func<T, string> description = null)
+		// Requests
+		public DMBranchRequest<T> Add<T>(Func<IList<T>> request, Func<T, string> name = null, Func<T, string> description = null)
 		{
 			var item = new DMBranchRequest<T>(request, name, description);
 			_requests.Add(item);
 			return item;
 		}
 
-		public DMActionRequest<T> Action<T>(Func<IList<T>> request, Action<DMAction, EventArgs> action = null, Func<T, string> name = null, Func<T, string> description = null)
+		public DMActionRequest<T> Add<T>(Func<IList<T>> request, Action<DMAction, EventArgs> action = null, Func<T, string> name = null, Func<T, string> description = null)
 		{
 			var item = new DMActionRequest<T>(request, action, name, description);
 			_requests.Add(item);
 			return item;
 		}
 
-		public DMIntegerRequest<T> Integer<T>(Func<IList<T>> request, Func<int> getter, Action<int> setter = null, Func<T, string> name = null)
+		public DMIntegerRequest<T> Add<T>(Func<IList<T>> request, Func<int> getter, Action<int> setter = null, Func<T, string> name = null)
 		{
 			var item = new DMIntegerRequest<T>(request, getter, setter, name);
+			_requests.Add(item);
+			return item;
+		}
+
+		public DMFloatRequest<T> Add<T>(Func<IList<T>> request, Func<float> getter, Action<float> setter = null, Func<T, string> name = null)
+		{
+			var item = new DMFloatRequest<T>(request, getter, setter, name);
+			_requests.Add(item);
+			return item;
+		}
+
+		public DMBoolRequest<T> Add<T>(Func<IList<T>> request, Func<bool> getter, Action<bool> setter = null, Func<T, string> name = null)
+		{
+			var item = new DMBoolRequest<T>(request, getter, setter, name);
 			_requests.Add(item);
 			return item;
 		}

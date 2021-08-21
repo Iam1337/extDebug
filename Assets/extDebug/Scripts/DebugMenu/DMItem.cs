@@ -1,9 +1,7 @@
 ﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
-using System;
 using UnityEngine;
 
-using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace extDebug

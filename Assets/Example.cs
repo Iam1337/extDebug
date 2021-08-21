@@ -4,7 +4,11 @@ using EventType = extDebug.EventType;
 
 public class Example : MonoBehaviour
 {
-	private int valueInt = 0;
+	private int _int = 0;
+
+	private float _float = 0;
+
+	private bool _bool;
 
 	void Start()
 	{
@@ -15,16 +19,20 @@ public class Example : MonoBehaviour
 		DM.Add("Hello/Action 2", (action, args) => { Debug.Log("Action 2"); });
 		DM.Add("Hello/World/Action 3", (action, args) => { Debug.Log("Action 3"); });
 		DM.Add("Hello/World/Action 4", (action, args) => { Debug.Log("Action 4"); });
-		DM.Add("Hello/Integer", () => valueInt, v => valueInt = v);
+		DM.Add("Hello/Integer", () => _int, v => _int = v);
+		DM.Add("Hello/Float", () => _float, v => _float = v).SetPrecision(2);
+		DM.Add("Hello/Bool", () => _bool, v => _bool = v);
 
 		// DMBranchRequest
-		var branch = DM.Add("Hello/Request Branch").Branch(FindObjectsOfType<Component>, GetName);
+		var branch = DM.Add("Hello/Request Branch").Add(FindObjectsOfType<Component>, GetName);
 		branch.Add("Debug.Log", (action, args) => { Debug.Log(action.Data); });
 		branch.Add("Object.Destroy", (action, args) => { Object.Destroy((Component)action.Data); });
 
 		// DMActionRequest
-		DM.Add("Hello/Request Action").Action(FindObjectsOfType<Component>, Action);
+		DM.Add("Hello/Request Action").Add(FindObjectsOfType<Component>, Action);
 
+		// DMFloatRequest
+		//DM.Add("Hello/Request Float").Add(FindObjectOfType<Transform>(), ())
 		
 
 		DM.IsVisible = true;
