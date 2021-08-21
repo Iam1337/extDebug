@@ -18,7 +18,7 @@ namespace extDebug
 
 		public string Format;
 
-		public int Step;
+		public int Step = 1;
 
 		#endregion
 

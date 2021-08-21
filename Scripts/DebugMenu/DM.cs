@@ -1,9 +1,10 @@
 /* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
+using UnityEngine;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
 
 namespace extDebug
 {
@@ -127,39 +128,29 @@ namespace extDebug
 		public static void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null)
 		{ }
 
-		public static DMBranch Add(string path, string description = "", int order = 0)
-		{
-			return Add(Root, path, description, order);
-		}
+		public static DMBranch Add(string path, string description = "", int order = 0) => Add(Root, path, description, order);
 
-		public static DMBranch Add(DMBranch parent, string path, string description = "", int order = 0)
-		{
-			// TODO: Check
-			//if (parent == null)
-			//	return new DMBranch(parent, path, description, order);
+		public static DMBranch Add(DMBranch parent, string path, string description = "", int order = 0) => parent == null ? new DMBranch(null, path, description, order) : Root.Get(path) ?? new DMBranch(parent, path, description, order);
 
-			return Root.Get(path) ?? new DMBranch(parent, path, description, order);
-		}
+		// Action
+		public static DMAction Add(string path, Action<DMAction, EventArgs> action, string description = "", int order = 0) => Add(Root, path, action, description, order);
 
-		public static DMAction Add(string path, Action<DMAction, EventArgs> action, string description = "", int order = 0)
-		{
-			return Add(Root, path, action, description, order);
-		}
+		public static DMAction Add(DMBranch parent, string path, Action<DMAction, EventArgs> action, string description = "", int order = 0) => new DMAction(parent, path, description, action, order);
 
-		public static DMAction Add(DMBranch parent, string path, Action<DMAction, EventArgs> action, string description = "", int order = 0)
-		{
-			return new DMAction(parent, path, description, action, order);
-		}
+		// Integer
+		public static DMInteger Add(string path, Func<int> getter, Action<int> setter, int order = 0) => Add(Root, path, getter, setter, order);
 
-		public static DMInteger Add(string path, Func<int> getter, Action<int> setter, int order = 0)
-		{
-			return Add(Root, path, getter, setter, order);
-		}
+		public static DMInteger Add(DMBranch parent, string path, Func<int> getter, Action<int> setter = null, int order = 0) => new DMInteger(parent, path, getter, setter, order);
 
-		public static DMInteger Add(DMBranch parent, string path, Func<int> getter, Action<int> setter = null, int order = 0)
-		{
-			return new DMInteger(parent, path, getter, setter, order);
-		}
+		// Float
+		public static DMFloat Add(string path, Func<float> getter, Action<float> setter, int order = 0) => Add(Root, path, getter, setter, order);
+
+		public static DMFloat Add(DMBranch parent, string path, Func<float> getter, Action<float> setter = null, int order = 0) => new DMFloat(parent, path, getter, setter, order);
+
+		// Bools
+		public static DMBool Add(string path, Func<bool> getter, Action<bool> setter, int order = 0) => Add(Root, path, getter, setter, order);
+
+		public static DMBool Add(DMBranch parent, string path, Func<bool> getter, Action<bool> setter = null, int order = 0) => new DMBool(parent, path, getter, setter, order);
 
 		#endregion
 
