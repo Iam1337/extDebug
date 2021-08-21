@@ -89,6 +89,13 @@ namespace extDebug
 			return item;
 		}
 
+		public DMEnumRequest<TEnum, TObject> Add<TEnum, TObject>(Func<IList<TObject>> request, Func<TEnum> getter, Action<TEnum> setter = null, Func<TObject, string> name = null) where TEnum : struct, Enum
+		{
+			var item = new DMEnumRequest<TEnum, TObject>(request, getter, setter, name);
+			_requests.Add(item);
+			return item;
+		}
+
 		// Manage
 		public void Insert(DMItem item)
 		{

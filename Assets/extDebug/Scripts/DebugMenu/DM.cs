@@ -154,6 +154,11 @@ namespace extDebug
 
 		public static DMBool Add(DMBranch parent, string path, Func<bool> getter, Action<bool> setter = null, int order = 0) => new DMBool(parent, path, getter, setter, order);
 
+		// Enum
+		public static DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter, int order = 0) where T : struct, Enum => Add(Root, path, getter, setter, order);
+
+		public static DMEnum<T> Add<T>(DMBranch parent, string path, Func<T> getter, Action<T> setter = null, int order = 0) where T : struct, Enum => new DMEnum<T>(parent, path, getter, setter, order);
+
 		#endregion
 
 		#region Private Methods
