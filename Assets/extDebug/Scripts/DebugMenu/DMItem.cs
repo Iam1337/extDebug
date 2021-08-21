@@ -1,5 +1,6 @@
 ﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
+using System;
 using UnityEngine;
 
 using System.Runtime.CompilerServices;
@@ -21,13 +22,13 @@ namespace extDebug
 
 		private static string GetPathDirectory(string path)
 		{
-			var idx = path.LastIndexOf("/");
+			var idx = path.LastIndexOf("/", StringComparison.Ordinal);
 			return idx < 0 ? string.Empty : path.Substring(0, idx);
 		}
 
 		private static string GetPathName(string path)
 		{
-			var idx = path.LastIndexOf("/");
+			var idx = path.LastIndexOf("/", StringComparison.Ordinal);
 			return idx < 0 ? path : path.Substring(idx + 1);
 		}
 

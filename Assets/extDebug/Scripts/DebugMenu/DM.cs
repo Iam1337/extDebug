@@ -36,11 +36,8 @@ namespace extDebug
 		// Main
 		public static readonly DMBranch Root = new DMBranch(null, "Debug Menu");
 
-		// Manage
-		public static bool IsVisible;
-
 		// Colors
-		public static ColorScheme Colors = new ColorScheme()
+		public static readonly ColorScheme Colors = new ColorScheme()
 		{
 			Name = new Color32(238, 238, 238, 255),
 			NameFlash = new Color32(255, 255, 0, 255),
@@ -55,6 +52,9 @@ namespace extDebug
 			ActionFlash = new Color32(90, 177, 144, 255),
 			ActionDisabled = new Color32(112, 112, 112, 255)
 		};
+
+		// Manage
+		public static bool IsVisible;
 
 		#endregion
 
@@ -74,7 +74,7 @@ namespace extDebug
 
 		public static void Open() => Open(Root);
 
-		public static void Open(DMBranch branch) // TODO: Change name on Switch?
+		public static void Open(DMBranch branch)
 		{
 			if (_currentBranch != null)
 			{
@@ -84,7 +84,7 @@ namespace extDebug
             _currentBranch = branch;
             _currentBranch.SendEvent(new EventArgs
             {
-                Event = EventType.OpenMenu,
+                Event = EventType.OpenBranch,
                 Key = KeyType.None
             });
         }
@@ -95,14 +95,14 @@ namespace extDebug
 			{
 				_currentBranch.SendEvent(new EventArgs
                 {
-                    Event = EventType.CloseMenu,
+                    Event = EventType.CloseBranch,
                     Key = KeyType.None
                 });
 
 				_currentBranch = _previousBranch;
 				_currentBranch.SendEvent(new EventArgs
 				{
-					Event = EventType.OpenMenu,
+					Event = EventType.OpenBranch,
 					Key = KeyType.None
 				});
 
@@ -110,18 +110,20 @@ namespace extDebug
 			}
 			else
 			{
-				Close();
+				Hide();
 			}
 		}
 
-		public static void Close()
-		{
+		public static void Show()
+		{ }
 
-		}
+		public static void Hide()
+		{ }
+
 
 		public static void SendEvent(EventArgs eventArgs)
 		{
-			if (_currentBranch != null)
+			if (_currentBranch != null) 
 				_currentBranch.SendEvent(eventArgs);
 		}
 
@@ -147,7 +149,7 @@ namespace extDebug
 
 		public static DMFloat Add(DMBranch parent, string path, Func<float> getter, Action<float> setter = null, int order = 0) => new DMFloat(parent, path, getter, setter, order);
 
-		// Bools
+		// Bool
 		public static DMBool Add(string path, Func<bool> getter, Action<bool> setter, int order = 0) => Add(Root, path, getter, setter, order);
 
 		public static DMBool Add(DMBranch parent, string path, Func<bool> getter, Action<bool> setter = null, int order = 0) => new DMBool(parent, path, getter, setter, order);

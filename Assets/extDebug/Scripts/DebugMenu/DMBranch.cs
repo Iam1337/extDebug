@@ -301,7 +301,7 @@ namespace extDebug
 					}
 				}
 			}
-			else if (eventArgs.Event == EventType.OpenMenu)
+			else if (eventArgs.Event == EventType.OpenBranch)
 			{
 				// Requests
 				if (_requestsItems.Count == 0)
@@ -315,7 +315,7 @@ namespace extDebug
 				if (OnOpen != null)
 					OnOpen.Invoke(this);
 			}
-			else if (eventArgs.Event == EventType.CloseMenu)
+			else if (eventArgs.Event == EventType.CloseBranch)
 			{
 				// Requests
 				if (_requestsItems.Count != 0)

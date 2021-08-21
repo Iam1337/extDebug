@@ -5,8 +5,8 @@ namespace extDebug
 	public enum EventType
 	{
 		None,       // Nothing
-		OpenMenu,   // Menu open
-		CloseMenu,  // Menu closed
+		OpenBranch,   // Menu open
+		CloseBranch,  // Menu closed
 		ToggleMenu, // Menu toggled
 		Repaint,    // Repaint item
 		KeyDown,    // Key down
