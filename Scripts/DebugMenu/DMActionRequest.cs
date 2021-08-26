@@ -11,13 +11,13 @@ namespace extDebug
 
 		private readonly Func<T, string> _description;
 
-		private readonly Action<DMAction, EventArgs> _action;
+		private readonly Action<DMAction> _action;
 
 		#endregion
 
 		#region Public Methods
 
-		public DMActionRequest(Func<IList<T>> request, Action<DMAction, EventArgs> action = null, Func<T, string> name = null, Func<T, string> description = null) : base(request, name)
+		public DMActionRequest(Func<IList<T>> request, Action<DMAction> action = null, Func<T, string> name = null, Func<T, string> description = null) : base(request, name)
 		{
 			_action = action;
 			_description = description;

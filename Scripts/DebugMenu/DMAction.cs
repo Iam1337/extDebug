@@ -8,13 +8,13 @@ namespace extDebug
     {
 		#region Private Vars
 
-		private readonly Action<DMAction, EventArgs> _action;
+		private readonly Action<DMAction> _action;
 
 		#endregion
 
 		#region Public Methods
 		
-		public DMAction(DMBranch parent, string path, string description = null, Action<DMAction, EventArgs> action = null, int order = 0) : base(parent, path, description, order)
+		public DMAction(DMBranch parent, string path, string description = null, Action<DMAction> action = null, int order = 0) : base(parent, path, description, order)
 		{
 			_action = action;
 		}
@@ -23,45 +23,25 @@ namespace extDebug
 
 		#region Protected Methods
 
-		protected override void OnEvent(EventArgs eventArgs)
+		protected override void OnEvent(EventTag eventTag)
 		{
-			if (eventArgs.Event == EventType.Repaint)
+			if (eventTag == EventTag.Repaint)
 			{
 				// TODO: Repaint
 			}
-			else if (eventArgs.Event == EventType.KeyDown)
+			else if (eventTag == EventTag.Left)
 			{
-				switch (eventArgs.Key)
-				{
-					case KeyType.Up:
-					{
-						break;
-					}
-					case KeyType.Down:
-					{
-						break;
-					}
-					case KeyType.Left:
-					{
-						DM.Back();
+				DM.Back();
+			}
+			else if (eventTag == EventTag.Right && _action != null)
+			{
+				_action.Invoke(this);
 
-						break;
-					}
-					case KeyType.Right:
-					{
-						if (_action == null)
-							break;
-
-						_action.Invoke(this, eventArgs);
-						
-						FlashName(DM.Colors.ActionFlash, true);
-						
-						break;
-					}
-					case KeyType.Back:
-						DM.Back();
-						break;
-				}
+				FlashName(DM.Colors.ActionFlash, true);
+			}
+			else if (eventTag == EventTag.Back)
+			{
+				DM.Back();
 			}
 		}
 

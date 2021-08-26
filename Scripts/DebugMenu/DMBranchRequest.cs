@@ -30,7 +30,7 @@ namespace extDebug
 			return Insert(DM.Add(null, path, description, order));
 		}
 
-		public DMAction Add(string path, Action<DMAction, EventArgs> action, string description = "", int order = 0)
+		public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0)
 		{
 			return Insert(DM.Add(null, path, action, description, order));
 		}
