@@ -3,8 +3,8 @@
 using UnityEngine;
 
 using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Collections.Generic;
 
 namespace extDebug
 {
@@ -26,7 +26,6 @@ namespace extDebug
 			public Color Action;
 			public Color ActionFlash;
 			public Color ActionDisabled;
-			
 		}
 
 		#endregion
@@ -36,8 +35,10 @@ namespace extDebug
 		// Main
 		public static readonly DMBranch Root = new DMBranch(null, "Debug Menu");
 
+		public static IDMInput Input = new DMDefaultInput();
+
 		// Colors
-		public static readonly ColorScheme Colors = new ColorScheme()
+		public static readonly ColorScheme Colors = new ColorScheme
 		{
 			Name = new Color32(238, 238, 238, 255),
 			NameFlash = new Color32(255, 255, 0, 255),
@@ -82,50 +83,58 @@ namespace extDebug
 			}
 
             _currentBranch = branch;
-            _currentBranch.SendEvent(new EventArgs
-            {
-                Event = EventType.OpenBranch,
-                Key = KeyType.None
-            });
-        }
+            _currentBranch.SendEvent(EventTag.OpenBranch);
+
+            IsVisible = true;
+		}
 
 		public static void Back()
 		{
 			if (_previousBranch != null)
 			{
-				_currentBranch.SendEvent(new EventArgs
-                {
-                    Event = EventType.CloseBranch,
-                    Key = KeyType.None
-                });
+				_currentBranch.SendEvent(EventTag.CloseBranch);
 
 				_currentBranch = _previousBranch;
-				_currentBranch.SendEvent(new EventArgs
-				{
-					Event = EventType.OpenBranch,
-					Key = KeyType.None
-				});
+				_currentBranch.SendEvent(EventTag.OpenBranch);
 
 				_branchesStack.Pop();
 			}
 			else
 			{
-				Hide();
+				IsVisible = false;
 			}
 		}
 
-		public static void Show()
-		{ }
-
-		public static void Hide()
-		{ }
-
-
-		public static void SendEvent(EventArgs eventArgs)
+		public static void Update()
 		{
-			if (_currentBranch != null) 
-				_currentBranch.SendEvent(eventArgs);
+			// Input
+			if (Input != null)
+			{
+				var eventTag = GetEvent();
+				if (eventTag != EventTag.None)
+                {
+					SendEvent(eventTag);
+                }
+			}
+
+			// Render
+			if (_currentBranch != null)
+			{
+
+			}
 		}
+
+		public static void SendEvent(EventTag eventTag)
+		{
+			if (eventTag == EventTag.ToggleMenu)
+			{
+				IsVisible = !IsVisible;
+			}
+
+			if (_currentBranch != null) 
+				_currentBranch.SendEvent(eventTag);
+		}
+
 
 		public static void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null)
 		{ }
@@ -135,9 +144,9 @@ namespace extDebug
 		public static DMBranch Add(DMBranch parent, string path, string description = "", int order = 0) => parent == null ? new DMBranch(null, path, description, order) : Root.Get(path) ?? new DMBranch(parent, path, description, order);
 
 		// Action
-		public static DMAction Add(string path, Action<DMAction, EventArgs> action, string description = "", int order = 0) => Add(Root, path, action, description, order);
+		public static DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) => Add(Root, path, action, description, order);
 
-		public static DMAction Add(DMBranch parent, string path, Action<DMAction, EventArgs> action, string description = "", int order = 0) => new DMAction(parent, path, description, action, order);
+		public static DMAction Add(DMBranch parent, string path, Action<DMAction> action, string description = "", int order = 0) => new DMAction(parent, path, description, action, order);
 
 		// Integer
 		public static DMInteger Add(string path, Func<int> getter, Action<int> setter, int order = 0) => Add(Root, path, getter, setter, order);
@@ -162,6 +171,38 @@ namespace extDebug
 		#endregion
 
 		#region Private Methods
+
+		private const float kRepeatDelay = 0.75f;
+
+		private const float kRepeatInterval = 0.1f;
+
+		private static EventTag _previousEvent;
+
+		private static float _repeatTime;
+
+		private static EventTag GetEvent()
+		{
+			if (Input != null)
+			{
+				var eventArg = Input.GetEvent();
+				if (eventArg != _previousEvent)
+				{
+					_previousEvent = eventArg;
+					_repeatTime = Time.unscaledTime + kRepeatDelay;
+
+					return eventArg;
+				}
+
+				if (eventArg != EventTag.None && _repeatTime < Time.unscaledTime)
+				{
+					_repeatTime = Time.unscaledTime + kRepeatInterval;
+
+					return eventArg;
+				}
+			}
+
+			return EventTag.None;
+		}
 
 		public static string Build()
 		{

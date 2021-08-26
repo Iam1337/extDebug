@@ -30,42 +30,32 @@ namespace extDebug
 
         #region Protected Methods
 
-        protected override void OnEvent(EventArgs eventArgs)
+        protected override void OnEvent(EventTag eventArgs)
         {
-			if (eventArgs.Event == EventType.Repaint)
+			if (eventArgs == EventTag.Repaint)
 			{
 				var value = _getter.Invoke();
 
 				_valueColor = _defaultValue.Equals(value) ? DM.Colors.Value : DM.Colors.ValueFlash;
 				_value = ValueToString(value);
 			}
-			else if (eventArgs.Event == EventType.KeyDown)
+			else if (eventArgs == EventTag.Left)
 			{
-				switch (eventArgs.Key)
-				{
-					case KeyType.Left:
-					{
-						_setter?.Invoke(ValueDecrement(_getter.Invoke()));
-						break;
-					}
-					case KeyType.Right:
-					{
-						_setter?.Invoke(ValueIncrement(_getter.Invoke()));
-						break;
-					}
-					case KeyType.Reset:
-					{
-						_setter?.Invoke(_defaultValue);
-						break;
-					}
-					case KeyType.Back:
-					{
-						DM.Back();
-						break;
-					}
-				}
+				_setter?.Invoke(ValueDecrement(_getter.Invoke()));
 			}
-		}
+			else if (eventArgs == EventTag.Right)
+			{
+				_setter?.Invoke(ValueIncrement(_getter.Invoke()));
+			}
+			else if (eventArgs == EventTag.Reset)
+			{
+				_setter?.Invoke(_defaultValue);
+			}
+			else if (eventArgs == EventTag.Back)
+			{
+				DM.Back();
+			}
+        }
 
         protected abstract string ValueToString(T value);
 

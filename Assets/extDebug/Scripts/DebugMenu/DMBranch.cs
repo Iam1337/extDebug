@@ -61,7 +61,7 @@ namespace extDebug
 			return item;
 		}
 
-		public DMActionRequest<T> Add<T>(Func<IList<T>> request, Action<DMAction, EventArgs> action = null, Func<T, string> name = null, Func<T, string> description = null)
+		public DMActionRequest<T> Add<T>(Func<IList<T>> request, Action<DMAction> action = null, Func<T, string> name = null, Func<T, string> description = null)
 		{
 			var item = new DMActionRequest<T>(request, action, name, description);
 			_requests.Add(item);
@@ -179,11 +179,7 @@ namespace extDebug
 			// send event.
 			foreach (var item in _items)
 			{
-				item.SendEvent(new EventArgs
-				{
-					Event = EventType.Repaint,
-					Key = KeyType.None
-				});
+				item.SendEvent(EventTag.Repaint);
 			}
 
 			CalculateLengths(kSpace.Length, out var fullLength, out var maxNameLength, out var maxValueLength);
@@ -231,84 +227,11 @@ namespace extDebug
 
 		#region Protected Methods
 
-		protected override void OnEvent(EventArgs eventArgs)
+		protected override void OnEvent(EventTag eventTag)
 		{
 			var currentItem = Current;
 
-			if (eventArgs.Event == EventType.KeyDown)
-			{
-				switch (eventArgs.Key)
-				{
-					case KeyType.Up:
-					{
-						_currentItem--;
-
-						if (_currentItem < 0)
-							_currentItem = _items.Count - 1;
-
-						break;
-					}
-					case KeyType.Down:
-					{
-						_currentItem++;
-
-						if (_currentItem >= _items.Count)
-							_currentItem = 0;
-
-						break;
-					}
-					case KeyType.Left:
-					{
-						if (currentItem is DMBranch)
-						{
-							if (DM.IsVisible)
-								DM.Back();
-						}
-						else
-						{
-							if (currentItem != null)
-								currentItem.SendEvent(eventArgs);
-						}
-
-						break;
-					}
-					case KeyType.Right:
-					{
-						if (currentItem is DMBranch currentBranch)
-						{
-							if (DM.IsVisible)
-								DM.Open(currentBranch);
-						}
-						else
-						{
-							if (currentItem != null)
-								currentItem.SendEvent(eventArgs);
-						}
-
-						break;
-					}
-					case KeyType.Reset:
-					{
-						if (currentItem is DMBranch currentBranch)
-						{
-							
-						}
-						else
-						{
-							if (currentItem != null)
-								currentItem.SendEvent(eventArgs);
-						}
-
-						break;
-					}
-					case KeyType.Back:
-					{
-						DM.Back();
-						break;
-					}
-				}
-			}
-			else if (eventArgs.Event == EventType.OpenBranch)
+			if (eventTag == EventTag.OpenBranch)
 			{
 				// Requests
 				if (_requestsItems.Count == 0)
@@ -322,7 +245,7 @@ namespace extDebug
 				if (OnOpen != null)
 					OnOpen.Invoke(this);
 			}
-			else if (eventArgs.Event == EventType.CloseBranch)
+			else if (eventTag == EventTag.CloseBranch)
 			{
 				// Requests
 				if (_requestsItems.Count != 0)
@@ -337,6 +260,62 @@ namespace extDebug
 
 				if (OnClose != null)
 					OnClose.Invoke(this);
+			}
+			else if (eventTag == EventTag.Up)
+			{
+				_currentItem--;
+
+				if (_currentItem < 0)
+					_currentItem = _items.Count - 1;
+			}
+			else if (eventTag == EventTag.Down)
+			{
+				_currentItem++;
+
+				if (_currentItem >= _items.Count)
+					_currentItem = 0;
+			}
+			else if (eventTag == EventTag.Left)
+			{
+				if (currentItem is DMBranch)
+				{
+					if (DM.IsVisible)
+						DM.Back();
+				}
+				else
+				{
+					if (currentItem != null)
+						currentItem.SendEvent(eventTag);
+				}
+			}
+			else if (eventTag == EventTag.Right)
+			{
+				if (currentItem is DMBranch currentBranch)
+				{
+					if (DM.IsVisible)
+						DM.Open(currentBranch);
+				}
+				else
+				{
+					if (currentItem != null)
+						currentItem.SendEvent(eventTag);
+				}
+			}
+			else if (eventTag == EventTag.Reset)
+			{
+				if (currentItem is DMBranch currentBranch)
+				{
+
+				}
+				else
+				{
+					if (currentItem != null)
+						currentItem.SendEvent(eventTag);
+				}
+			}
+			else if (eventTag == EventTag.Back)
+			{
+				DM.Back();
 			}
 		}
 

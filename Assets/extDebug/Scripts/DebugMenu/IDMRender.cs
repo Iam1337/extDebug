@@ -2,6 +2,7 @@
 
 namespace extDebug
 {
+	// INFO: Может быть оно и не нужно.
 	public interface IDMRender
 	{
 

@@ -4,6 +4,10 @@ namespace extDebug
 {
     public interface IDMInput
     {
+	    #region Methods
 
+	    EventTag GetEvent();
+
+	    #endregion
     }
 }

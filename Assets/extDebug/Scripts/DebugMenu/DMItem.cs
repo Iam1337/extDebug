@@ -11,14 +11,14 @@ namespace extDebug
     {
 		#region External
 
-		private const float FLASH_DURATION = 0.3f;
+		private const float kFlashDuration = 0.3f;
 
 		#endregion
 
 		#region Static Private Methods
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static float _flashMap(float flashTime) => Mathf.Clamp01((Time.unscaledTime - flashTime) / FLASH_DURATION);
+		private static float _flashMap(float flashTime) => Mathf.Clamp01((Time.unscaledTime - flashTime) / kFlashDuration);
 
 		private static string GetPathDirectory(string path)
 		{
@@ -128,7 +128,7 @@ namespace extDebug
 
 		#region Public Methods
 
-		public void SendEvent(EventArgs eventArgs) => OnEvent(eventArgs); // Syntax sugar
+		public void SendEvent(EventTag eventArgs) => OnEvent(eventArgs); // Syntax sugar
 
 		public void FlashName(Color color, bool notify)
 		{
@@ -170,7 +170,7 @@ namespace extDebug
 			_parent?.Insert(this);
 		}
 
-		protected abstract void OnEvent(EventArgs eventArgs);
+		protected abstract void OnEvent(EventTag eventTag);
 
 		#endregion
 
