@@ -94,10 +94,19 @@ namespace extDebug
 		{
 			if (!DM.IsVisible)
 				return;
-			
-			GUILayout.BeginVertical("Box");
-			GUILayout.Label(_text);
-			GUILayout.EndVertical();
+
+			var textSize = GUI.skin.label.CalcSize(new GUIContent(_text)) + new Vector2(10, 10);
+			var position = new Vector2(20, 20);
+			var rect = new Rect(position, textSize);
+
+			GUI.Box(rect, GUIContent.none);
+
+			rect.x += 5f;
+			rect.width -= 5f * 2f;
+			rect.y += 5f;
+			rect.height -= 5f * 2f;
+
+			GUI.Label(rect, _text);
 		}
 
 		private void CalculateLengths(DMBranch branch, int space, out int fullLength, out int maxNameLength, out int maxValueLength)
