@@ -15,22 +15,26 @@ namespace extDebug
 
 		#endregion
 
-		#region Static Private Methods
+		#region Static Protected Methods
 
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static float _flashMap(float flashTime) => Mathf.Clamp01((Time.unscaledTime - flashTime) / kFlashDuration);
-
-		private static string GetPathDirectory(string path)
+		protected static string GetPathDirectory(string path)
 		{
 			var idx = path.LastIndexOf("/", StringComparison.Ordinal);
 			return idx < 0 ? string.Empty : path.Substring(0, idx);
 		}
 
-		private static string GetPathName(string path)
+		protected static string GetPathName(string path)
 		{
 			var idx = path.LastIndexOf("/", StringComparison.Ordinal);
 			return idx < 0 ? path : path.Substring(idx + 1);
 		}
+
+		#endregion
+
+		#region Static Private Methods
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private static float _flashMap(float flashTime) => Mathf.Clamp01((Time.unscaledTime - flashTime) / kFlashDuration);
 
 		#endregion
 

@@ -30,28 +30,28 @@ namespace extDebug
 
         #region Protected Methods
 
-        protected override void OnEvent(EventTag eventArgs)
+        protected override void OnEvent(EventTag eventTag)
         {
-			if (eventArgs == EventTag.Repaint)
+			if (eventTag == EventTag.Repaint)
 			{
 				var value = _getter.Invoke();
 
 				_valueColor = _defaultValue.Equals(value) ? DM.Colors.Value : DM.Colors.ValueFlash;
 				_value = ValueToString(value);
 			}
-			else if (eventArgs == EventTag.Left)
+			else if (eventTag == EventTag.Left)
 			{
 				_setter?.Invoke(ValueDecrement(_getter.Invoke()));
 			}
-			else if (eventArgs == EventTag.Right)
+			else if (eventTag == EventTag.Right)
 			{
 				_setter?.Invoke(ValueIncrement(_getter.Invoke()));
 			}
-			else if (eventArgs == EventTag.Reset)
+			else if (eventTag == EventTag.Reset)
 			{
 				_setter?.Invoke(_defaultValue);
 			}
-			else if (eventArgs == EventTag.Back)
+			else if (eventTag == EventTag.Back)
 			{
 				DM.Back();
 			}
