@@ -1,3 +1,4 @@
+using System;
 using extDebug;
 using UnityEngine;
 
@@ -8,6 +9,25 @@ public class Example : MonoBehaviour
 	private float _float = 0;
 
 	private bool _bool;
+
+	private enum ExampleEnums
+	{
+		One = 1 << 0,
+		Two = 1 << 1,
+		Three = 1 << 2,
+	}
+
+	private ExampleEnums _enum;
+
+	[Flags]
+	private enum ExampleFlags
+	{
+		One = 1 << 0,
+		Two = 1 << 1,
+		Three = 1 << 2,
+	}
+
+	private ExampleFlags _flags;
 
 	void Start()
 	{
@@ -21,6 +41,8 @@ public class Example : MonoBehaviour
 		DM.Add("Hello/Integer", () => _int, v => _int = v);
 		DM.Add("Hello/Float", () => _float, v => _float = v).SetPrecision(2);
 		DM.Add("Hello/Bool", () => _bool, v => _bool = v);
+		DM.Add("Hello/Enum", () => _enum, v => _enum = v);
+		DM.Add("Hello/Flags", () => _flags, v => _flags = v);
 
 		// DMBranchRequest
 		var branch = DM.Add("Hello/Request Branch").Add(FindObjectsOfType<Component>, GetName);
@@ -33,18 +55,6 @@ public class Example : MonoBehaviour
 		// DMFloatRequest
 		//DM.Add("Hello/Request Float").Add(FindObjectOfType<Transform>(), ())
 
-		DM.IsVisible = true;
 		DM.Open();
-	}
-
-	void Update()
-	{
-		DM.Update();
-	}
-
-	void OnGUI()
-	{
-		if (DM.IsVisible)
-			GUILayout.Label(DM.Build());
 	}
 }

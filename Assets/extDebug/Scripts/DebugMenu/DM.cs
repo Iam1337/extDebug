@@ -37,6 +37,8 @@ namespace extDebug
 
 		public static IDMInput Input = new DMDefaultInput();
 
+		public static IDMRender Render = new DMDefaultRender();
+
 		// Colors
 		public static readonly ColorScheme Colors = new ColorScheme
 		{
@@ -65,13 +67,16 @@ namespace extDebug
 
 		private static DMBranch _previousBranch => _branchesStack.Count > 0 ? _branchesStack.Peek() : null;
 
-		private static Stack<DMBranch> _branchesStack = new Stack<DMBranch>();
-
-		private static readonly StringBuilder _builder = new StringBuilder();
+		private static readonly Stack<DMBranch> _branchesStack = new Stack<DMBranch>();
 
 		#endregion
 
 		#region Public Methods
+
+		static DM()
+		{
+			Hooks.UpdateCallback += Update;
+		}
 
 		public static void Open() => Open(Root);
 
@@ -102,25 +107,6 @@ namespace extDebug
 			else
 			{
 				IsVisible = false;
-			}
-		}
-
-		public static void Update()
-		{
-			// Input
-			if (Input != null)
-			{
-				var eventTag = GetEvent();
-				if (eventTag != EventTag.None)
-                {
-					SendEvent(eventTag);
-                }
-			}
-
-			// Render
-			if (_currentBranch != null)
-			{
-
 			}
 		}
 
@@ -204,11 +190,21 @@ namespace extDebug
 			return EventTag.None;
 		}
 
-		public static string Build()
+		private static void Update()
 		{
-			_builder.Clear();
-			_currentBranch.Build(_builder);
-			return _builder.ToString();
+			// Input
+			if (Input != null)
+			{
+				var eventTag = GetEvent();
+				if (eventTag != EventTag.None)
+				{
+					SendEvent(eventTag);
+				}
+			}
+
+			// Render
+			if (Render != null && _currentBranch != null && _currentBranch.CanRepaint())
+				Render.Repaint(_currentBranch);
 		}
 
 		#endregion
