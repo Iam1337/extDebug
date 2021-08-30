@@ -3,7 +3,6 @@
 using UnityEngine;
 
 using System;
-using System.Text;
 using System.Collections.Generic;
 
 namespace extDebug
@@ -63,11 +62,19 @@ namespace extDebug
 
 		#region Private Vars
 
+		private const float kRepeatDelay = 0.75f;
+
+		private const float kRepeatInterval = 0.1f;
+
 		private static DMBranch _currentBranch;
 
 		private static DMBranch _previousBranch => _branchesStack.Count > 0 ? _branchesStack.Peek() : null;
 
 		private static readonly Stack<DMBranch> _branchesStack = new Stack<DMBranch>();
+
+		private static EventTag _previousEvent;
+
+		private static float _repeatTime;
 
 		#endregion
 
@@ -121,9 +128,25 @@ namespace extDebug
 				_currentBranch.SendEvent(eventTag);
 		}
 
-
 		public static void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null)
-		{ }
+		{
+			if (nameColor != null && valueColor != null)
+			{
+				DN.Notify(item, $"<color=#{ColorUtility.ToHtmlStringRGB(nameColor.Value)}>{item.Name}</color> <color=#{ColorUtility.ToHtmlStringRGB(valueColor.Value)}>{item.Value}</color>", 5);
+			}
+			else if (nameColor != null)
+			{
+				DN.Notify(item, $"<color=#{ColorUtility.ToHtmlStringRGB(nameColor.Value)}>{item.Name}</color> {item.Value}", 5);
+			}
+			else if (valueColor != null)
+			{
+				DN.Notify(item, $"{item.Name} <color=#{ColorUtility.ToHtmlStringRGB(valueColor.Value)}>{item.Value}</color>", 5);
+			}
+			else
+			{
+				DN.Notify(item, $"{item.Name} {item.Value}", 5);
+			}
+		}
 
 		public static DMBranch Add(string path, string description = "", int order = 0) => Add(Root, path, description, order);
 
@@ -157,14 +180,6 @@ namespace extDebug
 		#endregion
 
 		#region Private Methods
-
-		private const float kRepeatDelay = 0.75f;
-
-		private const float kRepeatInterval = 0.1f;
-
-		private static EventTag _previousEvent;
-
-		private static float _repeatTime;
 
 		private static EventTag GetEvent()
 		{

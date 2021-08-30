@@ -2,10 +2,6 @@
 
 using UnityEngine;
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-
 namespace extDebug
 {
 	internal class DMDefaultInput : IDMInput
@@ -21,6 +17,15 @@ namespace extDebug
 					return EventTag.Up;
 				if (Input.GetKey(KeyCode.S))
 					return EventTag.Down;
+				if (Input.GetKey(KeyCode.A))
+					return EventTag.Left;
+				if (Input.GetKey(KeyCode.D))
+					return EventTag.Right;
+				if (Input.GetKey(KeyCode.R))
+					return EventTag.Reset;
+			}
+			else if (Input.GetKey(KeyCode.LeftShift))
+			{
 				if (Input.GetKey(KeyCode.A))
 					return EventTag.Left;
 				if (Input.GetKey(KeyCode.D))
