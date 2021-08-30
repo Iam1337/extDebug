@@ -1,7 +1,8 @@
 /* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
-using System;
 using UnityEngine;
+
+using System;
 
 namespace extDebug
 {

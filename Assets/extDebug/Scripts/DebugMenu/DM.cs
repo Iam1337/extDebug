@@ -32,13 +32,6 @@ namespace extDebug
 
 		#region Static Public Vars
 
-		// Main
-		public static readonly DMBranch Root = new DMBranch(null, "Debug Menu");
-
-		public static IDMInput Input = new DMDefaultInput();
-
-		public static IDMRender Render = new DMDefaultRender();
-
 		// Colors
 		public static readonly ColorScheme Colors = new ColorScheme
 		{
@@ -55,6 +48,13 @@ namespace extDebug
 			ActionFlash = new Color32(90, 177, 144, 255),
 			ActionDisabled = new Color32(112, 112, 112, 255)
 		};
+
+		// Main
+		public static readonly DMBranch Root = new DMBranch(null, "Debug Menu");
+
+		public static IDMInput Input = new DMDefaultInput();
+
+		public static IDMRender Render = new DMDefaultRender();
 
 		// Manage
 		public static bool IsVisible;

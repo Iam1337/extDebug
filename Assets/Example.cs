@@ -12,9 +12,9 @@ public class Example : MonoBehaviour
 
 	private enum ExampleEnums
 	{
-		One = 1 << 0,
-		Two = 1 << 1,
-		Three = 1 << 2,
+		One,
+		Two,
+		Three
 	}
 
 	private ExampleEnums _enum;
@@ -34,10 +34,8 @@ public class Example : MonoBehaviour
 		string GetName(Component component) => $"{component.name} ({component.GetType().Name})";
 		void Action(DMAction action) => Debug.Log(action.Data); 
 
-		DM.Add("Hello/Action 1", action => { Debug.Log("Action 1"); });
-		DM.Add("Hello/Action 2", action => { Debug.Log("Action 2"); });
-		DM.Add("Hello/World/Action 3", action => { Debug.Log("Action 3"); });
-		DM.Add("Hello/World/Action 4", action => { Debug.Log("Action 4"); });
+		DM.Add("Hello/Action", action => { Debug.Log("Hello/Action"); });
+		DM.Add("Hello/World/Action", action => { Debug.Log("Hello/World/Action"); });
 		DM.Add("Hello/Integer", () => _int, v => _int = v);
 		DM.Add("Hello/Float", () => _float, v => _float = v).SetPrecision(2);
 		DM.Add("Hello/Bool", () => _bool, v => _bool = v);
