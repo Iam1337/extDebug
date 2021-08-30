@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace extDebug
 {
-	internal class DMDefaultRender : MonoBehaviour, IDMRender
+	internal class DMDefaultRender : IDMRender
 	{
 		#region Private Vars
 

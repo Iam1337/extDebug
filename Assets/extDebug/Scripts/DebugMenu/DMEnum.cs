@@ -83,11 +83,13 @@ namespace extDebug
 		{
 			if (_flagBranch != null && eventTag == EventTag.Left)
 			{
-				DM.Back();
+				if (DM.IsVisible)
+					DM.Back();
 			}
 			else if (_flagBranch != null && eventTag == EventTag.Right)
 			{
-				DM.Open(_flagBranch);
+				if (DM.IsVisible)
+					DM.Open(_flagBranch);
 			}
 			else
 			{

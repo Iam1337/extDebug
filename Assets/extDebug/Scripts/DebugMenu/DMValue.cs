@@ -39,17 +39,30 @@ namespace extDebug
 				_valueColor = _defaultValue.Equals(value) ? DM.Colors.Value : DM.Colors.ValueFlash;
 				_value = ValueToString(value);
 			}
-			else if (eventTag == EventTag.Left)
+			else if (eventTag == EventTag.Left && _setter != null)
 			{
-				_setter?.Invoke(ValueDecrement(_getter.Invoke()));
+				var value = ValueDecrement(_getter.Invoke());
+
+				_setter.Invoke(value);
+				_value = ValueToString(value);
+
+				FlashValue(DM.Colors.ActionFlash, true);
 			}
-			else if (eventTag == EventTag.Right)
+			else if (eventTag == EventTag.Right && _setter != null)
 			{
-				_setter?.Invoke(ValueIncrement(_getter.Invoke()));
+				var value = ValueIncrement(_getter.Invoke());
+
+				_setter.Invoke(value);
+				_value = ValueToString(value);
+				
+				FlashValue(DM.Colors.ActionFlash, true);
 			}
-			else if (eventTag == EventTag.Reset)
+			else if (eventTag == EventTag.Reset && _setter != null)
 			{
-				_setter?.Invoke(_defaultValue);
+				_setter.Invoke(_defaultValue);
+				_value = ValueToString(_defaultValue);
+
+				FlashValue(DM.Colors.ActionFlash, true);
 			}
 			else if (eventTag == EventTag.Back)
 			{

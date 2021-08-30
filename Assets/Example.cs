@@ -41,6 +41,7 @@ public class Example : MonoBehaviour
 		DM.Add("Hello/Bool", () => _bool, v => _bool = v);
 		DM.Add("Hello/Enum", () => _enum, v => _enum = v);
 		DM.Add("Hello/Flags", () => _flags, v => _flags = v);
+		DM.Add("Hello/Notice", action => { DN.Notify("Notice Example"); });
 
 		// DMBranchRequest
 		var branch = DM.Add("Hello/Request Branch").Add(FindObjectsOfType<Component>, GetName);

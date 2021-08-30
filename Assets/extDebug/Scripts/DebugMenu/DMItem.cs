@@ -1,8 +1,8 @@
 ﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
-using System;
 using UnityEngine;
 
+using System;
 using System.Runtime.CompilerServices;
 
 namespace extDebug
@@ -153,7 +153,7 @@ namespace extDebug
 			_parent?.RequestRepaint();
 
 			if (DM.IsVisible == false && notify)
-				DM.Notify(this);
+				DM.Notify(this, null, ValueColor);
 		}
 
 		public override string ToString() => $"{_name,-16}  {_value,-16}";
