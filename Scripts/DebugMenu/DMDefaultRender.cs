@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace extDebug
 {
-	public class DMDefaultRender : MonoBehaviour, IDMRender
+	internal class DMDefaultRender : MonoBehaviour, IDMRender
 	{
 		#region Private Vars
 
@@ -82,6 +82,7 @@ namespace extDebug
 				}
 			}
 
+			_builder.Remove(_builder.Length - Environment.NewLine.Length, Environment.NewLine.Length);
 			_text = _builder.ToString();
 		}
 
