@@ -16,6 +16,4 @@ namespace extDebug.Menu
 		Back,  // Key back
 		Reset  // Key reset value
 	}
-
-	public delegate void ActionDelegate(DMAction actionItem, EventTag @event);
 }
