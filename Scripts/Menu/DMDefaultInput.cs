@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace extDebug
+namespace extDebug.Menu
 {
 	internal class DMDefaultInput : IDMInput
 	{

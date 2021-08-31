@@ -5,7 +5,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-namespace extDebug
+namespace extDebug.Menu
 {
     public class DMBranch : DMItem
     {
