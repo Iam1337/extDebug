@@ -69,20 +69,6 @@ namespace extDebug.Menu
 			return item;
 		}
 
-		public DMIntegerRequest<T> Add<T>(Func<IList<T>> request, Func<int> getter, Action<int> setter = null, Func<T, string> name = null)
-		{
-			var item = new DMIntegerRequest<T>(request, getter, setter, name);
-			_requests.Add(item);
-			return item;
-		}
-
-		public DMFloatRequest<T> Add<T>(Func<IList<T>> request, Func<float> getter, Action<float> setter = null, Func<T, string> name = null)
-		{
-			var item = new DMFloatRequest<T>(request, getter, setter, name);
-			_requests.Add(item);
-			return item;
-		}
-
 		public DMBoolRequest<T> Add<T>(Func<IList<T>> request, Func<bool> getter, Action<bool> setter = null, Func<T, string> name = null)
 		{
 			var item = new DMBoolRequest<T>(request, getter, setter, name);
@@ -93,6 +79,20 @@ namespace extDebug.Menu
 		public DMEnumRequest<TEnum, TObject> Add<TEnum, TObject>(Func<IList<TObject>> request, Func<TEnum> getter, Action<TEnum> setter = null, Func<TObject, string> name = null) where TEnum : struct, Enum
 		{
 			var item = new DMEnumRequest<TEnum, TObject>(request, getter, setter, name);
+			_requests.Add(item);
+			return item;
+		}
+
+		public DMInt32Request<T> Add<T>(Func<IList<T>> request, Func<int> getter, Action<int> setter = null, Func<T, string> name = null)
+		{
+			var item = new DMInt32Request<T>(request, getter, setter, name);
+			_requests.Add(item);
+			return item;
+		}
+
+		public DMFloatRequest<T> Add<T>(Func<IList<T>> request, Func<float> getter, Action<float> setter = null, Func<T, string> name = null)
+		{
+			var item = new DMFloatRequest<T>(request, getter, setter, name);
 			_requests.Add(item);
 			return item;
 		}
