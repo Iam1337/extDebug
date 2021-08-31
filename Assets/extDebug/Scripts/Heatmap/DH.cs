@@ -31,7 +31,6 @@ namespace extDebug.Heatmap
             _currentSession = null;
         }
 
-        // Push event
         public static void Point(string tag, Vector3 position, Quaternion rotation) => _currentSession?.Point(tag, position, rotation);
 
         public static void StartTrack(string tag, Transform transform) => _currentSession?.StartTrack(tag, transform);
