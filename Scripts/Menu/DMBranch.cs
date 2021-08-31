@@ -83,7 +83,7 @@ namespace extDebug.Menu
 			return item;
 		}
 
-		public DMInt32Request<T> Add<T>(Func<IList<T>> request, Func<int> getter, Action<int> setter = null, Func<T, string> name = null)
+		public DMInt32Request<T> Add<T>(Func<IList<T>> request, Func<Int32> getter, Action<Int32> setter = null, Func<T, string> name = null)
 		{
 			var item = new DMInt32Request<T>(request, getter, setter, name);
 			_requests.Add(item);
