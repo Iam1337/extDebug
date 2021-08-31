@@ -28,12 +28,12 @@ namespace extDebug.Notifications
 
 		public DNDefaultRender()
 		{
-			Hooks.ImGuiCallback += ImGuiCallback;
+			Hooks.OnGUI += OnGUI;
 		}
 
 		~DNDefaultRender()
 		{
-			Hooks.ImGuiCallback -= ImGuiCallback;
+			Hooks.OnGUI -= OnGUI;
 		}
 
 		public Vector2 CalcSize(string text)
@@ -47,7 +47,7 @@ namespace extDebug.Notifications
 
 		#region Private Methods
 
-		private void ImGuiCallback()
+		private void OnGUI()
 		{
 			_currentSkin = GUI.skin;
 

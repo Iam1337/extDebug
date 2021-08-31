@@ -25,11 +25,7 @@ namespace extDebug.Menu
 
 		protected override void OnEvent(EventTag eventTag)
 		{
-			if (eventTag == EventTag.Repaint)
-			{
-				// TODO: Repaint
-			}
-			else if (eventTag == EventTag.Left)
+			if (eventTag == EventTag.Left)
 			{
 				DM.Back();
 			}

@@ -177,9 +177,5 @@ namespace extDebug.Menu
 		protected abstract void OnEvent(EventTag eventTag);
 
 		#endregion
-
-		#region Private Methods
-
-		#endregion
-	}
+    }
 }

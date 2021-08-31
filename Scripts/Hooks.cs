@@ -4,34 +4,26 @@ using UnityEngine;
 
 using System;
 
-namespace extDebug.Menu
+namespace extDebug
 {
-	public class Hooks : MonoBehaviour
+	public static class Hooks
 	{
 		#region Static Public Vars
 
-		public static Action UpdateCallback;
+		public static Action Update;
 
-		public static Action LateUpdateCallback;
+		public static Action LateUpdate;
 
-		public static Action ImGuiCallback;
+		public static Action FixedUpdate;
+
+		public static Action OnGUI;
 
 		#endregion
 
 		#region Static Public Methods
 
-		static Hooks() => DontDestroyOnLoad(new GameObject("extDebug Hooks", typeof(Hooks)));
+		static Hooks() => UnityEngine.Object.DontDestroyOnLoad(new GameObject("extDebug Hooks", typeof(HooksBehaviour)));
 
         #endregion
-
-        #region Unity Methods
-
-        protected void Update() => UpdateCallback?.Invoke();
-
-        protected void LateUpdate() => LateUpdateCallback?.Invoke();
-
-		protected void OnGUI() => ImGuiCallback?.Invoke();
-
-		#endregion
 	}
 }

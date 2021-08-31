@@ -171,8 +171,6 @@ namespace extDebug.Menu
 
 		protected override void OnEvent(EventTag eventTag)
 		{
-			var currentItem = Current;
-
 			if (eventTag == EventTag.OpenBranch)
 			{
 				// Requests
@@ -184,8 +182,7 @@ namespace extDebug.Menu
 					}
 				}
 
-				if (OnOpen != null)
-					OnOpen.Invoke(this);
+				OnOpen?.Invoke(this);
 			}
 			else if (eventTag == EventTag.CloseBranch)
 			{
@@ -200,8 +197,7 @@ namespace extDebug.Menu
 					_requestsItems.Clear();
 				}
 
-				if (OnClose != null)
-					OnClose.Invoke(this);
+				OnClose?.Invoke(this);
 			}
 			else if (eventTag == EventTag.Up)
 			{
@@ -219,6 +215,7 @@ namespace extDebug.Menu
 			}
 			else if (eventTag == EventTag.Left)
 			{
+				var currentItem = Current;
 				if (currentItem is DMBranch)
 				{
 					if (DM.IsVisible)
@@ -226,12 +223,12 @@ namespace extDebug.Menu
 				}
 				else
 				{
-					if (currentItem != null)
-						currentItem.SendEvent(eventTag);
+					currentItem?.SendEvent(eventTag);
 				}
 			}
 			else if (eventTag == EventTag.Right)
 			{
+				var currentItem = Current;
 				if (currentItem is DMBranch currentBranch)
 				{
 					if (DM.IsVisible)
@@ -239,20 +236,19 @@ namespace extDebug.Menu
 				}
 				else
 				{
-					if (currentItem != null)
-						currentItem.SendEvent(eventTag);
+					currentItem?.SendEvent(eventTag);
 				}
 			}
 			else if (eventTag == EventTag.Reset)
 			{
+				var currentItem = Current;
 				if (currentItem is DMBranch currentBranch)
 				{
-
+					// None
 				}
 				else
 				{
-					if (currentItem != null)
-						currentItem.SendEvent(eventTag);
+					currentItem?.SendEvent(eventTag);
 				}
 			}
 			else if (eventTag == EventTag.Back)
