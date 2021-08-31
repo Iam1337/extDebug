@@ -18,6 +18,8 @@ namespace extDebug.Notifications
 
 		#region Static Private Methods
 
+		private const float kDurationDefault = 5f;
+
 		private static readonly List<DNNotice> _notices = new List<DNNotice>();
 
 		private static readonly Dictionary<object, DNNotice> _noticesContext = new Dictionary<object, DNNotice>();
@@ -35,9 +37,9 @@ namespace extDebug.Notifications
 			Hooks.Update += Update;
 		}
 
-		public static void Notify(string text, float duration = 5) => Notify(null, text, duration);
+		public static void Notify(string text, float duration = kDurationDefault) => Notify(null, text, duration);
 
-		public static void Notify(object context, string text, float duration)
+		public static void Notify(object context, string text, float duration = kDurationDefault)
 		{
 			if (context != null && _noticesContext.TryGetValue(context, out var notice))
 			{
@@ -63,6 +65,15 @@ namespace extDebug.Notifications
 			{
 				_noticesContext.Add(context, notice);
 			}
+		}
+
+		public static void Kill(object context)
+		{
+			if (!_noticesContext.TryGetValue(context, out var notice))
+				return;
+
+			notice.StartTime = Time.unscaledTime;
+			notice.Duration = 0.75f;
 		}
 
 		#endregion
