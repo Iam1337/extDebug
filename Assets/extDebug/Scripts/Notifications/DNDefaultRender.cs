@@ -56,13 +56,17 @@ namespace extDebug.Notifications
 				notice.Size = CalcSize(notice.Text);
 
 				var rect = new Rect(notice.Position, notice.Size);
+				//if (rect.Contains(Event.current.mousePosition))
+				//{
+				//	notice.StartTime = Time.unscaledTime;
+				//	notice.Duration = 0.75f;
+				//}
+
 				GUI.Box(rect, GUIContent.none);
-
 				rect.x += 5f;
-				rect.width -= 5f * 2f;
+				rect.width -= 10f;
 				rect.y += 5f;
-				rect.height -= 5f * 2f;
-
+				rect.height -= 10f;
 				GUI.Label(rect, new GUIContent(notice.Text));
 			}
 		}
