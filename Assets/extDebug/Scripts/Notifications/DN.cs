@@ -32,7 +32,7 @@ namespace extDebug.Notifications
 
 		static DN()
 		{
-			Hooks.UpdateCallback += Update;
+			Hooks.Update += Update;
 		}
 
 		public static void Notify(string text, float duration = 5) => Notify(null, text, duration);

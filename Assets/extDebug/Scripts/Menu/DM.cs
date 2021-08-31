@@ -84,13 +84,16 @@ namespace extDebug.Menu
 
 		static DM()
 		{
-			Hooks.UpdateCallback += Update;
+			Hooks.Update += Update;
 		}
 
 		public static void Open() => Open(Root);
 
 		public static void Open(DMBranch branch)
 		{
+			if (branch == null)
+				throw new ArgumentNullException(nameof(branch));
+
 			if (_currentBranch != null)
 			{
 				_branchesStack.Push(_currentBranch);
@@ -126,15 +129,12 @@ namespace extDebug.Menu
 				IsVisible = !IsVisible;
 			}
 
-			if (_currentBranch != null) 
-				_currentBranch.SendEvent(eventTag);
+			_currentBranch?.SendEvent(eventTag);
 		}
 
-		public static void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null)
-		{
-			Notice?.Notify(item, nameColor, valueColor);
-		}
+		public static void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null) => Notice?.Notify(item, nameColor, valueColor);
 
+		// Branch
 		public static DMBranch Add(string path, string description = "", int order = 0) => Add(Root, path, description, order);
 
 		public static DMBranch Add(DMBranch parent, string path, string description = "", int order = 0) => parent == null ? new DMBranch(null, path, description, order) : Root.Get(path) ?? new DMBranch(parent, path, description, order);

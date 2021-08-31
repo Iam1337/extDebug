@@ -20,12 +20,12 @@ namespace extDebug.Menu
 
 		public DMDefaultRender()
 		{
-			Hooks.ImGuiCallback += ImGuiCallback;
+			Hooks.OnGUI += OnGUI;
 		}
 
 		~DMDefaultRender()
 		{
-			Hooks.ImGuiCallback -= ImGuiCallback;
+			Hooks.OnGUI -= OnGUI;
 		}
 
 		public void Repaint(DMBranch branch)
@@ -90,7 +90,7 @@ namespace extDebug.Menu
 
 		#region Private Methods
 
-		private void ImGuiCallback()
+		private void OnGUI()
 		{
 			if (!DM.IsVisible)
 				return;
