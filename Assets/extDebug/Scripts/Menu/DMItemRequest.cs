@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace extDebug
+namespace extDebug.Menu
 {
     public abstract class DMItemRequest<TValue, TObject> : DMRequest<TObject>
     {

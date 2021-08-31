@@ -1,5 +1,5 @@
 using System;
-using extDebug;
+using extDebug.Menu;
 using UnityEngine;
 
 public class Example : MonoBehaviour

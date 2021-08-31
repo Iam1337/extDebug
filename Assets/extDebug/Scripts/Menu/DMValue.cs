@@ -2,7 +2,7 @@
 
 using System;
 
-namespace extDebug
+namespace extDebug.Menu
 {
     public abstract class DMValue<T> : DMItem
     {

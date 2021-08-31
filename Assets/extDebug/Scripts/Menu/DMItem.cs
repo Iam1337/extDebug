@@ -5,7 +5,7 @@ using UnityEngine;
 using System;
 using System.Runtime.CompilerServices;
 
-namespace extDebug
+namespace extDebug.Menu
 {
     public abstract class DMItem
     {

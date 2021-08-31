@@ -4,7 +4,7 @@ using System;
 using System.Text;
 using UnityEngine;
 
-namespace extDebug
+namespace extDebug.Menu
 {
 	internal class DMDefaultRender : IDMRender
 	{

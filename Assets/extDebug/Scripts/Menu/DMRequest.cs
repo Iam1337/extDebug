@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace extDebug
+namespace extDebug.Menu
 {
 	public abstract class DMRequest
 	{

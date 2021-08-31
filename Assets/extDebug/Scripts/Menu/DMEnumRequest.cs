@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace extDebug
+namespace extDebug.Menu
 {
 	public class DMEnumRequest<TEnum, TObject> : DMItemRequest<TEnum, TObject> where TEnum : struct, Enum
 	{

@@ -2,14 +2,14 @@
 
 using UnityEngine;
 
-namespace extDebug
+namespace extDebug.Notifications
 {
-    public class DNDefaultRender : IDNRender
-    {
+	public class DNDefaultRender : IDNRender
+	{
 		#region Public Vars
 
 		public float ScreenWidth => Screen.width;
-		
+
 		public float ScreenHeight => Screen.height;
 
 		public Vector2 AreaOffset => new Vector2(20, 20);
@@ -38,7 +38,9 @@ namespace extDebug
 
 		public Vector2 CalcSize(string text)
 		{
-			return _currentSkin == null ? Vector2.zero : _currentSkin.label.CalcSize(new GUIContent(text)) + new Vector2(10, 10);
+			return _currentSkin == null
+				? Vector2.zero
+				: _currentSkin.label.CalcSize(new GUIContent(text)) + new Vector2(10, 10);
 		}
 
 		#endregion

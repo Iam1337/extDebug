@@ -4,7 +4,7 @@ using UnityEngine;
 
 using System.Collections.Generic;
 
-namespace extDebug
+namespace extDebug.Notifications
 {
 	public static class DN
 	{

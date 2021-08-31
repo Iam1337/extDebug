@@ -2,7 +2,7 @@
 
 using System;
 
-namespace extDebug
+namespace extDebug.Menu
 {
     public class DMEnum<T> : DMValue<T> where T : struct, Enum
     {

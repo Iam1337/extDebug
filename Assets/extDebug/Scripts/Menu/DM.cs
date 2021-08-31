@@ -5,7 +5,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-namespace extDebug
+namespace extDebug.Menu
 {
 	public static class DM
 	{
@@ -54,6 +54,8 @@ namespace extDebug
 		public static IDMInput Input = new DMDefaultInput();
 
 		public static IDMRender Render = new DMDefaultRender();
+
+		public static IDMNotice Notice = new DMDefaultNotice();
 
 		// Manage
 		public static bool IsVisible;
@@ -130,22 +132,7 @@ namespace extDebug
 
 		public static void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null)
 		{
-			if (nameColor != null && valueColor != null)
-			{
-				DN.Notify(item, $"<color=#{ColorUtility.ToHtmlStringRGB(nameColor.Value)}>{item.Name}</color> <color=#{ColorUtility.ToHtmlStringRGB(valueColor.Value)}>{item.Value}</color>", 5);
-			}
-			else if (nameColor != null)
-			{
-				DN.Notify(item, $"<color=#{ColorUtility.ToHtmlStringRGB(nameColor.Value)}>{item.Name}</color> {item.Value}", 5);
-			}
-			else if (valueColor != null)
-			{
-				DN.Notify(item, $"{item.Name} <color=#{ColorUtility.ToHtmlStringRGB(valueColor.Value)}>{item.Value}</color>", 5);
-			}
-			else
-			{
-				DN.Notify(item, $"{item.Name} {item.Value}", 5);
-			}
+			Notice?.Notify(item, nameColor, valueColor);
 		}
 
 		public static DMBranch Add(string path, string description = "", int order = 0) => Add(Root, path, description, order);

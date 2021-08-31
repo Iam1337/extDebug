@@ -4,7 +4,7 @@ using UnityEngine;
 
 using System;
 
-namespace extDebug
+namespace extDebug.Menu
 {
 	public class DMString : DMValue<string>
 	{

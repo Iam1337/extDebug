@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace extDebug
+namespace extDebug.Notifications
 {
 	public interface IDNRender
 	{

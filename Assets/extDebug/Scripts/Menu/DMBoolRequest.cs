@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace extDebug
+namespace extDebug.Menu
 {
 	public class DMBoolRequest<T> : DMItemRequest<bool, T>
 	{
