@@ -35,7 +35,7 @@ namespace extDebug.Menu
 		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) => Insert(DM.Add(path, getter, setter, order));
 
 		// Enum
-		public DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0) where T : struct, Enum => Insert(DM.Add(path, getter, setter, order));
+		public DMEnum<TEnum> Add<TEnum>(string path, Func<TEnum> getter, Action<TEnum> setter = null, int order = 0) where TEnum : struct, Enum => Insert(DM.Add(path, getter, setter, order));
 
 		// UInt8
 		public DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, int order = 0) => Insert(DM.Add(path, getter, setter, order));
