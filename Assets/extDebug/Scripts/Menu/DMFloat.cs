@@ -34,7 +34,7 @@ namespace extDebug.Menu
 
 		public DMFloat(DMBranch parent, string path, Func<float> getter, Action<float> setter = null, int order = 0) : base(parent, path, getter, setter, order)
 		{
-			SetPrecision(1);
+			SetPrecision(2);
 		}
 
 		public void SetPrecision(int value)

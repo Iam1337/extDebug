@@ -8,26 +8,36 @@ namespace extDebug.Menu
 {
     internal class DMDefaultNotice : IDMNotice
     {
-	    #region Public Methods
+	    #region Private Vars
 
-	    public void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null)
-	    {
+	    private const float kDefaultDuration = 5;
+
+	    #endregion
+
+		#region Public Methods
+
+		public void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null)
+		{
+			string notifyText;
+
 			if (nameColor != null && valueColor != null)
 			{
-				DN.Notify(item, $"<color=#{ColorUtility.ToHtmlStringRGB(nameColor.Value)}>{item.Name}</color> <color=#{ColorUtility.ToHtmlStringRGB(valueColor.Value)}>{item.Value}</color>", 5);
+				notifyText = $"<color=#{ColorUtility.ToHtmlStringRGB(nameColor.Value)}>{item.Name}</color> <color=#{ColorUtility.ToHtmlStringRGB(valueColor.Value)}>{item.Value}</color>";
 			}
 			else if (nameColor != null)
 			{
-				DN.Notify(item, $"<color=#{ColorUtility.ToHtmlStringRGB(nameColor.Value)}>{item.Name}</color> {item.Value}", 5);
+				notifyText = $"<color=#{ColorUtility.ToHtmlStringRGB(nameColor.Value)}>{item.Name}</color> {item.Value}";
 			}
 			else if (valueColor != null)
 			{
-				DN.Notify(item, $"{item.Name} <color=#{ColorUtility.ToHtmlStringRGB(valueColor.Value)}>{item.Value}</color>", 5);
+				notifyText = $"{item.Name} <color=#{ColorUtility.ToHtmlStringRGB(valueColor.Value)}>{item.Value}</color>";
 			}
 			else
 			{
-				DN.Notify(item, $"{item.Name} {item.Value}", 5);
+				notifyText = $"{item.Name} {item.Value}";
 			}
+
+			DN.Notify(item, notifyText, kDefaultDuration);
 		}
 
 	    #endregion

@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
-    public class DMBranch : DMItem
-    {
+	public class DMBranch : DMItem
+	{
 		#region Public Methods
 
 		public DMItem Current
@@ -24,9 +24,7 @@ namespace extDebug.Menu
 				return _items[_currentItem];
 			}
 		}
-
-		public List<DMItem> Items => _items;
-
+		
 		public Action<DMBranch> OnOpen;
 
 		public Action<DMBranch> OnClose;
@@ -52,7 +50,9 @@ namespace extDebug.Menu
 		#region Public Methods
 
 		public DMBranch(DMBranch parent, string path, string description = "", int order = 0) : base(parent, path, description, order)
-		{ }
+		{
+			_valueColor = DM.Colors.Description;
+		}
 
 		// Requests
 		public DMBranchRequest<T> Add<T>(Func<IList<T>> request, Func<T, string> name = null, Func<T, string> description = null)
@@ -105,9 +105,33 @@ namespace extDebug.Menu
 			Resort();
 		}
 
-		public DMBranch Get(string path, bool create = false) => Get(string.IsNullOrEmpty(path) ? null : path.Split('/'), create);
+		public void Remove(DMItem item)
+		{
+			_items.Remove(item);
+		}
 
-		public DMBranch Get(string[] path, bool create = false)
+		// Repaint
+		public void RequestRepaint() => _canRepaint = true;
+
+		public void RequestRepaint(float duration) => _canRepaintUntil = Time.unscaledTime + duration;
+
+		#endregion
+
+		#region Internal Methods
+
+		internal IReadOnlyList<DMItem> GetItems() => _items.AsReadOnly();
+
+		internal void Resort()
+		{
+			int Comparison(DMItem x, DMItem y) => x.Order.CompareTo(y.Order);
+
+			_items.Sort(Comparison);
+			_canRepaint = true;
+		}
+		
+		internal DMBranch Get(string path, bool create = false) => Get(string.IsNullOrEmpty(path) ? null : path.Split('/'), create);
+
+		internal DMBranch Get(string[] path, bool create = false)
 		{
 			if (path == null)
 				return this;
@@ -122,7 +146,7 @@ namespace extDebug.Menu
 				if (item == null)
 				{
 					if (create)
-                    {
+					{
 						item = new DMBranch(branch, name);
 					}
 					else
@@ -140,30 +164,11 @@ namespace extDebug.Menu
 
 				branch = newBranch;
 			}
-
-
+			
 			return branch;
 		}
 
-		public void Remove(DMItem item)
-		{
-			_items.Remove(item);
-		}
-
-		public void Resort()
-		{
-			int Comparison(DMItem x, DMItem y) => x.Order.CompareTo(y.Order);
-
-			_items.Sort(Comparison);
-			_canRepaint = true;
-		}
-
-		// Repaint
-		public bool CanRepaint() => _canRepaint || _canRepaintUntil > Time.unscaledDeltaTime;
-
-		public void RequestRepaint() => _canRepaint = true;
-
-		public void RequestRepaint(float duration) => _canRepaintUntil = Time.unscaledTime + duration;
+		internal bool CanRepaint() => _canRepaint || _canRepaintUntil > Time.unscaledDeltaTime;
 
 		#endregion
 
@@ -258,5 +263,5 @@ namespace extDebug.Menu
 		}
 
 		#endregion
-    }
+	}
 }

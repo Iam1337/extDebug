@@ -1,7 +1,5 @@
 ﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
-using UnityEngine;
-
 using System;
 
 namespace extDebug.Menu
