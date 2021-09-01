@@ -1,8 +1,10 @@
 ﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
+using UnityEngine;
+
 using System;
 using System.Text;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
@@ -28,7 +30,7 @@ namespace extDebug.Menu
 			Hooks.OnGUI -= OnGUI;
 		}
 
-		public void Repaint(DMBranch branch)
+		public void Repaint(DMBranch branch, IReadOnlyList<DMItem> items)
 		{
 			const string kSuffix = " ";
 			const string kPrefix = " ";
@@ -37,12 +39,12 @@ namespace extDebug.Menu
 			const char kHorizontalChar = '─';
 
 			// send event.
-			foreach (var item in branch.Items)
+			foreach (var item in items)
 			{
 				item.SendEvent(EventTag.Repaint);
 			}
 
-			CalculateLengths(branch, kSpace.Length, out var fullLength, out var maxNameLength, out var maxValueLength);
+			CalculateLengths(branch, items, kSpace.Length, out var fullLength, out var maxNameLength, out var maxValueLength);
 
 			var order = -1;
 			var lineLength = fullLength + kSuffix.Length + kPrefix.Length;
@@ -53,9 +55,9 @@ namespace extDebug.Menu
 			_builder.AppendLine(lineEmpty);
 
 			// items
-			for (var i = 0; i < branch.Items.Count; i++)
+			for (var i = 0; i < items.Count; i++)
 			{
-				var item = branch.Items[i];
+				var item = items[i];
 				var prefix = item == branch.Current ? kPrefix_Selected : kPrefix;
 
 				// items separator
@@ -109,7 +111,7 @@ namespace extDebug.Menu
 			GUI.Label(rect, _text);
 		}
 
-		private void CalculateLengths(DMBranch branch, int space, out int fullLength, out int maxNameLength, out int maxValueLength)
+		private void CalculateLengths(DMBranch branch, IReadOnlyList<DMItem> items, int space, out int fullLength, out int maxNameLength, out int maxValueLength)
 		{
 			_builder.Clear();
 
@@ -117,9 +119,9 @@ namespace extDebug.Menu
 			maxValueLength = 0;
 			fullLength = branch.Name.Length;
 
-			for (var i = 0; i < branch.Items.Count; i++)
+			for (var i = 0; i < items.Count; i++)
 			{
-				var item = branch.Items[i];
+				var item = items[i];
 				var nameLength = item.Name.Length;
 				var valueLength = item.Name.Length;
 

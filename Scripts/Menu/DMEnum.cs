@@ -47,11 +47,10 @@ namespace extDebug.Menu
 				var type = typeof(T);
 				if (type.IsDefined(typeof(FlagsAttribute), false))
 				{
-					_flagBranch = new DMBranch(null, GetPathName(path), getter.Invoke().ToString());
-
-					var i = 0;
+					_flagBranch = DM.Add(null, GetPathName(path), getter.Invoke().ToString());
+					
 					var values = (T[])Enum.GetValues(type);
-					for (; i < values.Length; i++)
+					for (var i = 0; i < values.Length; i++)
 					{
 						var value = values[i];
 
@@ -70,7 +69,7 @@ namespace extDebug.Menu
 						}, i);
 					}
 
-					DM.Add(_flagBranch, "Back", _ => DM.Back(), string.Empty, i + 10);
+					DM.Add(_flagBranch, "Back", _ => DM.Back(), string.Empty, int.MaxValue);
 				}
 			}
 		}

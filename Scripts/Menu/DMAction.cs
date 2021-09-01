@@ -17,6 +17,7 @@ namespace extDebug.Menu
 		public DMAction(DMBranch parent, string path, string description = null, Action<DMAction> action = null, int order = 0) : base(parent, path, description, order)
 		{
 			_action = action;
+			_valueColor = DM.Colors.Description;
 		}
 
 		#endregion
@@ -34,10 +35,6 @@ namespace extDebug.Menu
 				_action.Invoke(this);
 
 				FlashName(DM.Colors.ActionFlash, true);
-			}
-			else if (eventTag == EventTag.Back)
-			{
-				DM.Back();
 			}
 		}
 
