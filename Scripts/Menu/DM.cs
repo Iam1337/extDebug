@@ -37,7 +37,7 @@ namespace extDebug.Menu
 			Name = new Color32(238, 238, 238, 255),
 			NameFlash = new Color32(255, 255, 0, 255),
 
-			Value = new Color(201, 227, 219, 255),
+			Value = new Color32(201, 227, 219, 255),
 			ValueFlash = new Color32(255, 255, 0, 255),
 
 			ToggleDisabled = new Color32(255, 255, 0, 255),
