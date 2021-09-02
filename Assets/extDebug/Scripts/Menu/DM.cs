@@ -62,7 +62,7 @@ namespace extDebug.Menu
 		public static IDMNotice Notice = new DMDefaultNotice();
 
 		// Manage
-		public static bool IsVisible;
+		public static bool IsVisible { get; private set; }
 
 		#endregion
 
@@ -105,6 +105,7 @@ namespace extDebug.Menu
 
             _currentBranch = branch;
             _currentBranch.SendEvent(EventTag.OpenBranch);
+			_currentBranch.RequestRepaint();
 
             IsVisible = true;
 		}
@@ -117,6 +118,7 @@ namespace extDebug.Menu
 
 				_currentBranch = _previousBranch;
 				_currentBranch.SendEvent(EventTag.OpenBranch);
+				_currentBranch.RequestRepaint();
 
 				_branchesStack.Pop();
 			}
@@ -244,8 +246,19 @@ namespace extDebug.Menu
 			}
 
 			// Render
-			if (Render != null && _currentBranch != null && _currentBranch.CanRepaint())
-				Render.Repaint(_currentBranch, _currentBranch.GetItems());
+			if (IsVisible && Render != null && _currentBranch != null && _currentBranch.CanRepaint())
+			{
+				var items = _currentBranch.GetItems();
+
+				foreach (var item in items)
+				{
+					item.SendEvent(EventTag.Repaint);
+				}
+
+				Render.Repaint(_currentBranch, items);
+
+				_currentBranch.CompleteRepaint();
+			}
 		}
 
 		#endregion

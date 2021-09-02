@@ -29,6 +29,16 @@ namespace extDebug.Menu
 
 		public Action<DMBranch> OnClose;
 
+		public float AutoRepaint
+		{
+			get => _autoRepaintPeriod;
+			set
+			{
+				_autoRepaintPeriod = value;
+				_autoRepaintAt = value > 0 ? 0 : float.MaxValue;
+			}
+		}
+
 		#endregion
 
 		#region Private Vars
@@ -44,6 +54,10 @@ namespace extDebug.Menu
 		private bool _canRepaint;
 
 		private float _canRepaintUntil = float.MinValue;
+
+		private float _autoRepaintPeriod;
+
+		private float _autoRepaintAt = float.MaxValue;
 
 		#endregion
 
@@ -168,7 +182,15 @@ namespace extDebug.Menu
 			return branch;
 		}
 
-		internal bool CanRepaint() => _canRepaint || _canRepaintUntil > Time.unscaledDeltaTime;
+		internal bool CanRepaint() => _canRepaint || _canRepaintUntil > Time.unscaledTime || Time.unscaledTime > _autoRepaintAt;
+
+		internal void CompleteRepaint()
+		{
+			if (_autoRepaintPeriod > 0)
+				_autoRepaintAt = Time.unscaledTime + _autoRepaintPeriod;
+
+			_canRepaint = false;
+		}
 
 		#endregion
 
@@ -210,6 +232,8 @@ namespace extDebug.Menu
 
 				if (_currentItem < 0)
 					_currentItem = _items.Count - 1;
+
+				RequestRepaint();
 			}
 			else if (eventTag == EventTag.Down)
 			{
@@ -217,6 +241,8 @@ namespace extDebug.Menu
 
 				if (_currentItem >= _items.Count)
 					_currentItem = 0;
+
+				RequestRepaint();
 			}
 			else if (eventTag == EventTag.Left)
 			{
