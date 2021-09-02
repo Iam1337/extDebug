@@ -38,12 +38,6 @@ namespace extDebug.Menu
 			const string kSpace = "  ";
 			const char kHorizontalChar = '─';
 
-			// send event.
-			foreach (var item in items)
-			{
-				item.SendEvent(EventTag.Repaint);
-			}
-
 			CalculateLengths(branch, items, kSpace.Length, out var fullLength, out var maxNameLength, out var maxValueLength);
 
 			var order = -1;
@@ -86,13 +80,15 @@ namespace extDebug.Menu
 
 			_builder.Remove(_builder.Length - Environment.NewLine.Length, Environment.NewLine.Length);
 			_text = _builder.ToString();
+
+            Debug.Log("Repaint");
 		}
 
-		#endregion
+        #endregion
 
-		#region Private Methods
+        #region Private Methods
 
-		private void OnGUI()
+        private void OnGUI()
 		{
 			if (!DM.IsVisible)
 				return;
