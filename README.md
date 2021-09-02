@@ -1,171 +1,141 @@
-# Extended Debug Menu
+# extDebug - Debug Tools for Unity
 
-It is easy to use, lightweight library initially forked from [hww/varp_debug_menu](https://github.com/hww/varp_debug_menu) but deeply modifyed.
+Created by [iam1337](https://github.com/iam1337) and [hww](https://github.com/hww)
 
-The library renders as text, in game menu.  
+![](https://img.shields.io/badge/unity-2021.1%20or%20later-green.svg)
 
+### What Is extDebug?
+
+extDebug are tools for easy development and testing of games on Unity. Supported platforms are PC, Mac and Linux / iOS / tvOS / Android / Universal Windows Platform (UWP) and other.
+
+### Features:
+
+- **Debug Menu**<br>
+Allows you to add a debug menu in game, with many different functions.
+- **Debug Notifications**<br>
+TODO: Description
+- **Analytics Heatmaps**<br>
+TODO: Description
+
+**And also:**
+
+- TODO
+
+**And much more**
+
+### Installation:
+**Old school**
+
+Just copy the [Assets/extDebug](Assets/extDebug) folder into your Assets directory within your Unity project, or [download latest extDebug.unitypackage](https://github.com/iam1337/extDebug/releases).
+
+**Package Manager**
+
+Project supports Unity Package Manager. To install the project as a Git package do the following:
+
+1. In Unity, open **Window > Package Manager**.
+2. Press the **+** button, choose **"Add package from git URL..."**
+3. Enter "https://github.com/iam1337/extDebug.git#upm" and press Add.
+
+## extDebug.Menu - Debug Menu
+
+It is easy to use, lightweight library initially forked from [hww/varp_debug_menu](https://github.com/hww/varp_debug_menu) but deeply modifyed. The library allows you to add a debug menu in game, with many different functions.
+
+### Features:
+
+- Changing values: numeric values, booleans, strings, enums, flags and other
+- Store and restore default values
+- Invoke actions
+- Dynamic generation
+
+### Examples:
+**Values**<br>
 ```C#
+byte _uint8;
+UInt16 _uint16; // ushort
+UInt32 _uint32; // uint
+UInt64 _uint64; // ulong
+sbyte _int8;
+Int16 _int16; // short
+Int32 _int32; // int
+Int64 _int64; // long
+float _float;
+bool _bool;
 
-// The fields to modify by menu
-public enum TrafficLight { Red,Green, Blue }
-public TrafficLight enumValue;
-public bool toggleValue;
-public int integerValue;
-public float floatValue;
-        
-// Create new menu
-new DebugMenu("Edit/Preferences");
-new DebugMenuToggle("Edit/Preferences/Toggle", () => toggleValue, value => toggleValue = value, 1);
-new DebugMenuInteger("Edit/Preferences/Integer", () => integerValue, value => integerValue = value, 2);
-new DebugMenuFloat("Edit/Preferences/Float", () => floatValue, value => floatValue = value, 3);
-new DebugMenuAction("Edit/Preferences/Action", (item,tag) => { Debug.Log("Action"); }, 4);
-new DebugMenuEnum<TrafficLight>("Edit/Preferences/TraficLight", () => enumValue, value => enumValue = value, 5);
-new DebugMenu("Edit/Preferences/Extra Preferences", 10);
+DM.Add("Values/UInt8", () => _uint8, v => _uint8 = v);
+DM.Add("Values/UInt16", () => _uint16, v => _uint16 = v);
+DM.Add("Values/UInt32", () => _uint32, v => _uint32 = v);
+DM.Add("Values/UInt64", () => _uint64, v => _uint64 = v);
+DM.Add("Values/Int8", () => _int8, v => _int8 = v);
+DM.Add("Values/Int16", () => _int16, v => _int16 = v);
+DM.Add("Values/Int32", () => _int32, v => _int32 = v);
+DM.Add("Values/Int64", () => _int64, v => _int64 = v);
+DM.Add("Values/Float", () => _float, v => _float = v);
+DM.Add("Values/Bool", () => _bool, v => _bool = v);
 ```
+TODO: Screenshots
 
-![Picture1](Documentation/menu-picture1.png)
-![Picture2](Documentation/menu-picture2.png)
-![Picture3](Documentation/menu-picture3.png)
-
-Other way is to add items directly to menu.
-
+**Enums and Flags**<br>
 ```C#
-var menu, new DebugMenu("Edit/Preferences");
-new DebugMenuToggle(menu, "Toggle", () => toggleValue, value => toggleValue = value, 1);
-new DebugMenuInteger( menu, "Integer",() => integerValue, value => integerValue = value, 2);
-new DebugMenuFloat(menu, "Float", () => floatValue, value => floatValue = value, 3);
-new DebugMenuAction(menu, "Action", (item,tag) => { Debug.Log("Action"); }, 4);
-new DebugMenuEnum<TrafficLight>(menu, "TraficLight", () => enumValue, value => enumValue = value, 5);
-```
-
-## Default Value
-
-For integer, floats and enum types creating new DebugMenuItem will capture current value as defaut. When value is default it displayed as bright green color. Information about other color tags see below.
-
-- **booleans**
-  - yellow _color of label for enabed feture_
-  - white _color of label for disabled feature_
-- **integers**, **floats**, **enums**
-  - bright green _color of value for default_ 
-  - yellow _color of value and label for not default value_
-- **actions**
-  - gray _color for inactive action_
-  - other _color for active action_ 
-
-## Keyboard Shortcuts
-
-- E show or hide menu without closing it
-- ESC close current menu and display previous, or hide menu if there are no more
-- W,S move previous and next menu item
-- A,D edit menu item, open close submenu
-- R reset value to default
-- Shift-A,Shift-D edit menu item even if menu is closed
-- Shift-R reset value to default even if menu is closed
-
-## Events
-
-Menu manager sends messages to menu items for rendering and modifying items .
-
-```C#
-public enum EvenTag
+enum ExampleEnums
 {
-    Null,               //< Nothing 
-    Render,             //< Render item, update label, value and colors
-    Left,               //< Decrease value or call action
-    Right,              //< Increase value or call action
-    Up,                 //< Go to previous item 
-    Down,               //< Go to next item
-    Reset,              //< Reset value to default
-    OpenMenu,           //< When menu open    
-    CloseMenu           //< When menu closed
+	One,
+	Two,
+	Three
 }
+
+ExampleEnums _enum;
+
+[Flags]
+enum ExampleFlags
+{
+	One = 1 << 0,
+	Two = 1 << 1,
+	Three = 1 << 2,
+}
+
+ExampleFlags _flags;
+
+DM.Add("Values/Enum", () => _enum, v => _enum = v);
+DM.Add("Values/Flags", () => _flags, v => _flags = v);
 ```
-## Actions
+TODO: Screenshots
 
-The action code can update the item's fields, and differently response for events: Inc,Dec and Reset
-
+**Actions**<br>
 ```C#
-new DebugMenuAction("Edit/Preferences/Action", (item,tag) => { 
-        switch (tag)
-        {
-        case EventTag.Right:
-           item.value = "Increment";
-           break;
-        case EventTag.Left:
-           item.value = "Decrement";
-           break;
-        ...
-        }
-}, 1);
+DM.Add("Debug/Action", action => Debug.Log("Hello World"));
+DM.Add("Debug/Action 2", action => Debug.Log("Hello World"), "Action description"); // Action with description
 ```
+TODO: Screenshots
 
-## Open and Close Menu Events
-
-Possible to add menu items when menu opens, and remove items when it closes.
-
+**Branches**<br>
 ```C#
-new DebugMenu("Edit/Preferences/Extra Preferences", 30)
-    .OnOpen(menu => 
-    {
-        new DebugMenuToggle("Toggle2", menu, () => toggleValue, value => toggleValue = value);
-    })
-    .OnClose(menu =>
-    {
-        menu.Clear();
-    });
+DM.Add("Example/Branch 1");
+DM.Add("Example/Branch 2", "Branch description");
+
+// Another way to add menu item in specific branch 
+var branch = DM.Add("Example/Branch 3");
+DM.Add(branch, "Action", action => Debug.Log("Hello World"));
 ```
+TODO: Screenshots
 
-## Refresh and AutoRefresh Menu
+### Keyboard Shortcuts:
 
-If values in menu can be modified by game, to display it the menu should be rendered time to time.
+- `Q` - Show or hide menu without closing it
+- `W`, `S` - Move previous and next menu item
+- `A`, `D` - Rdit menu item, open close submenu
+- `R` - Reset value to default
+- `Shift+A`, `Shift+D` - Edit menu item even if menu is closed
+- `Shift+R` - Reset value to default even if menu is closed
 
-```C#
-new DebugMenu("Edit/Preferences").AutoRefresh(1f);
-```
+To change the default keyboard shortcuts, you need to create a class inherited from the [IDMInput](https://github.com/Iam1337/extDebug/blob/main/Assets/extDebug/Scripts/Menu/IDMInput.cs) interface, and set its instance to `DM.Input`.
 
-Set value 0 will never refresh menu. Alternative way is calling _RequestRefresh_ method.
+### Rendering
 
-```C#
-menu.RequestRefresh()
-```
-## Increment Step and Precision
+To change the default IMGUI render, you need to create a class inherited from the [IDMRender](https://github.com/Iam1337/extDebug/blob/main/Assets/extDebug/Scripts/Menu/IDMRender.cs) interface, and set its instance to `DM.Render`.
 
-For integers and floats: The _step_ field is a step for _Inc_ and _Dec_ evens.  The _format_ field is argument for ToString(...) method.
+### Author Contacts:
+\> [telegram.me/iam1337](http://telegram.me/iam1337) <br>
+\> [ext@iron-wall.org](mailto:ext@iron-wall.org)
 
-**For floats** The _precision_ field is number of digits after period. For example _increment=5_ and _precision=2_ will make increment step 0.05
-
-## Other Syntax Sugar
-
-```C#
-// For DebugMenu class
-DebugMenu OnOpen(Action<DebugMenu> onOpen)
-DebugMenu OnClose(Action<DebugMenu> onClose)
-DebugMenu AutoRefresh(float period)
-
-// For MenuItem class
-DebugMenuItem Order(int order)
-DebugMenuItem AddToMenu(DebugMenu menu)
-DebugMenuItem Value(string value)
-DebugMenuItem LabelColor(string value)
-DebugMenuItem ValueColor(string value)
-
-// For DebugMenuEnum class
-DebugMenuEnum<T> Default(T value)
-
-// For DebugMenuInteger class
-DebugMenuInteger Default(int value)
-DebugMenuInteger Step(int value)
-DebugMenuInteger Format(string value)
-
-// For DebugMenuFloat class
-DebugMenuFloat Default(float value)
-DebugMenuFloat Precision(int value)
-DebugMenuFloat Step(int value)
-DebugMenuFloat Format(string value)
-```
-
-
-
-
-
-
+### License
+This project is under the MIT License.
