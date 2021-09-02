@@ -80,8 +80,6 @@ namespace extDebug.Menu
 
 			_builder.Remove(_builder.Length - Environment.NewLine.Length, Environment.NewLine.Length);
 			_text = _builder.ToString();
-
-            Debug.Log("Repaint");
 		}
 
         #endregion
