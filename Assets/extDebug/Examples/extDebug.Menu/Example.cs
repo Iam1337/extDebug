@@ -1,21 +1,27 @@
+/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
+
 using UnityEngine;
 
 using System;
+using System.Linq.Expressions;
+using System.Reflection;
 
 using extDebug.Menu;
 using extDebug.Notifications;
 
-namespace extDebug.Example
+namespace extDebug.Examples.Menu
 {
 	public class Example : MonoBehaviour
 	{
+		#region Internal Types
+
 		private enum ExampleEnums
 		{
 			One,
 			Two,
 			Three
 		}
-
+		
 		[Flags]
 		private enum ExampleFlags
 		{
@@ -23,6 +29,19 @@ namespace extDebug.Example
 			Two = 1 << 1,
 			Three = 1 << 2,
 		}
+
+		private class ExampleStruct
+		{
+			public int Int32;
+
+			public ExampleFlags Flags;
+
+			public float Float;
+		}
+
+		#endregion
+		
+		#region Private Vars
 
 		private byte _uint8;
 
@@ -51,16 +70,20 @@ namespace extDebug.Example
 		private object _longContext = new object();
 
 		private object _infinityContext = new object();
-		
-		void Start()
-		{
-			// TODO: Refresh and AutoRefresh Menu
 
+		#endregion
+
+		private ExampleStruct str = new ExampleStruct();
+
+		#region Unity Methods
+
+		private void Start()
+		{
 			string GetName(Component component) => $"{component.name} ({component.GetType().Name})";
-			void LogAction(DMAction action) => Debug.Log(action.Data);
+			void ExampleAction(DMAction action) => Debug.Log(action.Data);
 
 			// Simple Menus
-			DM.Add("Simple Menus/Action", action => { Debug.Log("Hello/Action"); }, order: 0);
+			DM.Add("Simple Menus/Action", action => Debug.Log("Hello/Action"), order: 0);
 			DM.Add("Simple Menus/UInt8", () => _uint8, v => _uint8 = v, order: 1);
 			DM.Add("Simple Menus/UInt16", () => _uint16, v => _uint16 = v, order: 2);
 			DM.Add("Simple Menus/UInt32", () => _uint32, v => _uint32 = v, order: 3);
@@ -81,19 +104,18 @@ namespace extDebug.Example
 			branch.Add("Object.Destroy", action => { Destroy((Component)action.Data); });
 
 			// DMActionRequest
-			DM.Add("Requests Menus/Actions", order: 1).Add(FindObjectsOfType<Component>, LogAction);
+			DM.Add("Requests Menus/Actions", order: 1).Add(FindObjectsOfType<Component>, ExampleAction);
 
-			// DMFloatRequest
-			//DM.Add("Hello/Request Float").Add(FindObjectOfType<Transform>(), ())
-
-			// Notifications
-			DM.Add("Notifications/Simple Notice", action => { DN.Notify("Simple Notice Example"); }, order: 1);
-			DM.Add("Notifications/Show Long Notice", action => { DN.Notify(_longContext, "Long Notice Example", 15f); }, order: 2);
-			DM.Add("Notifications/Kill Long Notice", action => { DN.Kill(_longContext); }, order: 3);
-			DM.Add("Notifications/Show Infinity Notice", action => { DN.Notify(_infinityContext, "Infinity Notice Example", -1); }, order: 4);
-			DM.Add("Notifications/Kill Infinity Notice", action => { DN.Kill(_infinityContext); }, order: 5);
+			// Notifications Examples
+			DM.Add("Notifications/Simple Notice", action => DN.Notify("Simple Notice Example"), order: 0);
+			DM.Add("Notifications/Show Long Notice", action => DN.Notify(_longContext, "Long Notice Example", 15f), order: 10);
+			DM.Add("Notifications/Kill Long Notice", action => DN.Kill(_longContext), order: 11);
+			DM.Add("Notifications/Show Infinity Notice", action => DN.Notify(_infinityContext, "Infinity Notice Example", -1), order: 20);
+			DM.Add("Notifications/Kill Infinity Notice", action => DN.Kill(_infinityContext), order: 21);
 
 			DM.Open();
 		}
+
+		#endregion
 	}
 }
