@@ -6,35 +6,39 @@ namespace extDebug.Menu
 {
 	internal class DMDefaultInput : IDMInput
 	{
-		public EventTag GetEvent()
+		public EventKey GetKey(out bool shift)
 		{
+			shift = false;
+			
 			if (Input.GetKey(KeyCode.Q))
-				return EventTag.ToggleMenu;
+				return EventKey.ToggleMenu;
 
 			if (DM.IsVisible)
 			{
+				shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+				
 				if (Input.GetKey(KeyCode.W))
-					return EventTag.Up;
+					return EventKey.Up;
 				if (Input.GetKey(KeyCode.S))
-					return EventTag.Down;
+					return EventKey.Down;
 				if (Input.GetKey(KeyCode.A))
-					return EventTag.Left;
+					return EventKey.Left;
 				if (Input.GetKey(KeyCode.D))
-					return EventTag.Right;
+					return EventKey.Right;
 				if (Input.GetKey(KeyCode.R))
-					return EventTag.Reset;
+					return EventKey.Reset;
 			}
 			else if (Input.GetKey(KeyCode.LeftShift))
 			{
 				if (Input.GetKey(KeyCode.A))
-					return EventTag.Left;
+					return EventKey.Left;
 				if (Input.GetKey(KeyCode.D))
-					return EventTag.Right;
+					return EventKey.Right;
 				if (Input.GetKey(KeyCode.R))
-					return EventTag.Reset;
+					return EventKey.Reset;
 			}
 
-			return EventTag.None;
+			return EventKey.None;
 		}
 	}
 }

@@ -196,9 +196,9 @@ namespace extDebug.Menu
 
 		#region Protected Methods
 
-		protected override void OnEvent(EventTag eventTag)
+		protected override void OnEvent(EventArgs eventArgs)
 		{
-			if (eventTag == EventTag.OpenBranch)
+			if (eventArgs.Tag == EventTag.OpenBranch)
 			{
 				// Requests
 				if (_requestsItems.Count == 0)
@@ -211,7 +211,7 @@ namespace extDebug.Menu
 
 				OnOpen?.Invoke(this);
 			}
-			else if (eventTag == EventTag.CloseBranch)
+			else if (eventArgs.Tag == EventTag.CloseBranch)
 			{
 				// Requests
 				if (_requestsItems.Count != 0)
@@ -226,65 +226,68 @@ namespace extDebug.Menu
 
 				OnClose?.Invoke(this);
 			}
-			else if (eventTag == EventTag.Up)
+			else if (eventArgs.Tag == EventTag.Input)
 			{
-				_currentItem--;
+				if (eventArgs.Key == EventKey.Up)
+				{
+					_currentItem--;
 
-				if (_currentItem < 0)
-					_currentItem = _items.Count - 1;
+					if (_currentItem < 0)
+						_currentItem = _items.Count - 1;
 
-				RequestRepaint();
-			}
-			else if (eventTag == EventTag.Down)
-			{
-				_currentItem++;
+					RequestRepaint();
+				}
+				else if (eventArgs.Key == EventKey.Down)
+				{
+					_currentItem++;
 
-				if (_currentItem >= _items.Count)
-					_currentItem = 0;
+					if (_currentItem >= _items.Count)
+						_currentItem = 0;
 
-				RequestRepaint();
-			}
-			else if (eventTag == EventTag.Left)
-			{
-				var currentItem = Current;
-				if (currentItem is DMBranch)
-				{
-					if (DM.IsVisible)
-						DM.Back();
+					RequestRepaint();
 				}
-				else
+				else if (eventArgs.Key == EventKey.Left)
 				{
-					currentItem?.SendEvent(eventTag);
+					var currentItem = Current;
+					if (currentItem is DMBranch)
+					{
+						if (DM.IsVisible)
+							DM.Back();
+					}
+					else
+					{
+						currentItem?.SendEvent(eventArgs);
+					}
 				}
-			}
-			else if (eventTag == EventTag.Right)
-			{
-				var currentItem = Current;
-				if (currentItem is DMBranch currentBranch)
+				else if (eventArgs.Key == EventKey.Right)
 				{
-					if (DM.IsVisible)
-						DM.Open(currentBranch);
+					var currentItem = Current;
+					if (currentItem is DMBranch currentBranch)
+					{
+						if (DM.IsVisible)
+							DM.Open(currentBranch);
+					}
+					else
+					{
+						currentItem?.SendEvent(eventArgs);
+					}
 				}
-				else
+				else if (eventArgs.Key == EventKey.Reset)
 				{
-					currentItem?.SendEvent(eventTag);
+					var currentItem = Current;
+					if (currentItem is DMBranch currentBranch)
+					{
+						// None
+					}
+					else
+					{
+						currentItem?.SendEvent(eventArgs);
+					}
 				}
-			}
-			else if (eventTag == EventTag.Reset)
-			{
-				var currentItem = Current;
-				if (currentItem is DMBranch currentBranch)
+				else if (eventArgs.Key == EventKey.Back)
 				{
-					// None
+					DM.Back();
 				}
-				else
-				{
-					currentItem?.SendEvent(eventTag);
-				}
-			}
-			else if (eventTag == EventTag.Back)
-			{
-				DM.Back();
 			}
 		}
 

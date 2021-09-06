@@ -78,7 +78,7 @@ namespace extDebug.Menu
 
 		private static readonly Stack<DMBranch> _branchesStack = new Stack<DMBranch>();
 
-		private static EventTag _previousEvent;
+		private static EventKey _previousKey;
 
 		private static float _repeatTime;
 
@@ -104,7 +104,7 @@ namespace extDebug.Menu
 			}
 
             _currentBranch = branch;
-            _currentBranch.SendEvent(EventTag.OpenBranch);
+            _currentBranch.SendEvent(EventArgs.OpenBranch);
 			_currentBranch.RequestRepaint();
 
             IsVisible = true;
@@ -114,10 +114,10 @@ namespace extDebug.Menu
 		{
 			if (_previousBranch != null)
 			{
-				_currentBranch.SendEvent(EventTag.CloseBranch);
+				_currentBranch.SendEvent(EventArgs.CloseBranch);
 
 				_currentBranch = _previousBranch;
-				_currentBranch.SendEvent(EventTag.OpenBranch);
+				_currentBranch.SendEvent(EventArgs.OpenBranch);
 				_currentBranch.RequestRepaint();
 
 				_branchesStack.Pop();
@@ -126,16 +126,6 @@ namespace extDebug.Menu
 			{
 				IsVisible = false;
 			}
-		}
-
-		public static void SendEvent(EventTag eventTag)
-		{
-			if (eventTag == EventTag.ToggleMenu)
-			{
-				IsVisible = !IsVisible;
-			}
-
-			_currentBranch?.SendEvent(eventTag);
 		}
 
 		public static void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null) => Notice?.Notify(item, nameColor, valueColor);
@@ -209,39 +199,56 @@ namespace extDebug.Menu
 
 		#region Private Methods
 
-		private static EventTag GetEvent()
+		private static EventKey GetKey(out bool shift)
 		{
 			if (Input != null)
 			{
-				var eventArg = Input.GetEvent();
-				if (eventArg != _previousEvent)
+				var eventKey = Input.GetKey(out shift);
+				if (eventKey != _previousKey)
 				{
-					_previousEvent = eventArg;
+					_previousKey = eventKey;
 					_repeatTime = Time.unscaledTime + kRepeatDelay;
 
-					return eventArg;
+					return eventKey;
 				}
 
-				if (eventArg != EventTag.None && _repeatTime < Time.unscaledTime)
+				if (eventKey != EventKey.None && _repeatTime < Time.unscaledTime)
 				{
 					_repeatTime = Time.unscaledTime + kRepeatInterval;
 
-					return eventArg;
+					return eventKey;
 				}
 			}
 
-			return EventTag.None;
+			shift = false;
+			
+			return EventKey.None;
 		}
 
+		private static void SendKey(EventKey eventKey, bool isShift)
+		{
+			if (eventKey == EventKey.ToggleMenu)
+			{
+				IsVisible = !IsVisible;
+			}
+
+			_currentBranch?.SendEvent(new EventArgs
+			{
+				Tag = EventTag.Input,
+				Key = eventKey,
+				IsShift = isShift
+			});
+		}
+		
 		private static void Update()
 		{
 			// Input
 			if (Input != null)
 			{
-				var eventTag = GetEvent();
-				if (eventTag != EventTag.None)
+				var eventKey = GetKey(out var isShift);
+				if (eventKey != EventKey.None)
 				{
-					SendEvent(eventTag);
+					SendKey(eventKey, isShift);
 				}
 			}
 
@@ -252,7 +259,7 @@ namespace extDebug.Menu
 
 				foreach (var item in items)
 				{
-					item.SendEvent(EventTag.Repaint);
+					item.SendEvent(EventArgs.Repaint);
 				}
 
 				Render.Repaint(_currentBranch, items);

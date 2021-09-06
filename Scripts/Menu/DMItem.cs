@@ -132,7 +132,7 @@ namespace extDebug.Menu
 
 		#region Public Methods
 
-		public void SendEvent(EventTag eventArgs) => OnEvent(eventArgs); // Syntax sugar
+		public void SendEvent(EventArgs eventArgs) => OnEvent(eventArgs); // Syntax sugar
 
 		public void FlashName(Color color, bool notify)
 		{
@@ -174,7 +174,7 @@ namespace extDebug.Menu
 			_parent?.Insert(this);
 		}
 
-		protected abstract void OnEvent(EventTag eventTag);
+		protected abstract void OnEvent(EventArgs eventArgs);
 
 		#endregion
     }
