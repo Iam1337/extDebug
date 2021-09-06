@@ -78,21 +78,21 @@ namespace extDebug.Menu
 
 		#region Protected Methods
 
-		protected override void OnEvent(EventTag eventTag)
+		protected override void OnEvent(EventArgs eventArgs)
 		{
-			if (_flagBranch != null && eventTag == EventTag.Left)
+			if (_flagBranch != null && eventArgs.Tag == EventTag.Input && eventArgs.Key == EventKey.Left)
 			{
 				if (DM.IsVisible)
 					DM.Back();
 			}
-			else if (_flagBranch != null && eventTag == EventTag.Right)
+			else if (_flagBranch != null && eventArgs.Tag == EventTag.Input && eventArgs.Key == EventKey.Right)
 			{
 				if (DM.IsVisible)
 					DM.Open(_flagBranch);
 			}
 			else
 			{
-				base.OnEvent(eventTag);
+				base.OnEvent(eventArgs);
 			}
 		}
 

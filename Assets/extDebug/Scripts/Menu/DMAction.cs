@@ -24,13 +24,16 @@ namespace extDebug.Menu
 
 		#region Protected Methods
 
-		protected override void OnEvent(EventTag eventTag)
+		protected override void OnEvent(EventArgs eventArgs)
 		{
-			if (eventTag == EventTag.Left)
+			if (eventArgs.Tag != EventTag.Input)
+				return;
+
+			if (eventArgs.Key == EventKey.Left)
 			{
 				DM.Back();
 			}
-			else if (eventTag == EventTag.Right && _action != null)
+			else if (eventArgs.Key == EventKey.Right && _action != null)
 			{
 				_action.Invoke(this);
 

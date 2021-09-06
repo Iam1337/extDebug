@@ -30,43 +30,46 @@ namespace extDebug.Menu
 
         #region Protected Methods
 
-        protected override void OnEvent(EventTag eventTag)
+        protected override void OnEvent(EventArgs eventArgs)
         {
-			if (eventTag == EventTag.Repaint)
+			if (eventArgs.Tag == EventTag.Repaint)
 			{
 				var value = _getter.Invoke();
 
 				_valueColor = _defaultValue.Equals(value) ? DM.Colors.Value : DM.Colors.ValueFlash;
 				_value = ValueToString(value);
 			}
-			else if (eventTag == EventTag.Left && _setter != null)
+			else if (eventArgs.Tag == EventTag.Input)
 			{
-				var value = ValueDecrement(_getter.Invoke());
+				if (eventArgs.Key == EventKey.Left && _setter != null)
+				{
+					var value = ValueDecrement(_getter.Invoke());
 
-				_setter.Invoke(value);
-				_value = ValueToString(value);
+					_setter.Invoke(value);
+					_value = ValueToString(value);
 
-				FlashValue(DM.Colors.ActionFlash, true);
-			}
-			else if (eventTag == EventTag.Right && _setter != null)
-			{
-				var value = ValueIncrement(_getter.Invoke());
+					FlashValue(DM.Colors.ActionFlash, true);
+				}
+				else if (eventArgs.Key == EventKey.Right && _setter != null)
+				{
+					var value = ValueIncrement(_getter.Invoke());
 
-				_setter.Invoke(value);
-				_value = ValueToString(value);
+					_setter.Invoke(value);
+					_value = ValueToString(value);
 				
-				FlashValue(DM.Colors.ActionFlash, true);
-			}
-			else if (eventTag == EventTag.Reset && _setter != null)
-			{
-				_setter.Invoke(_defaultValue);
-				_value = ValueToString(_defaultValue);
+					FlashValue(DM.Colors.ActionFlash, true);
+				}
+				else if (eventArgs.Key == EventKey.Reset && _setter != null)
+				{
+					_setter.Invoke(_defaultValue);
+					_value = ValueToString(_defaultValue);
 
-				FlashValue(DM.Colors.ActionFlash, true);
-			}
-			else if (eventTag == EventTag.Back)
-			{
-				DM.Back();
+					FlashValue(DM.Colors.ActionFlash, true);
+				}
+				else if (eventArgs.Key == EventKey.Back)
+				{
+					DM.Back();
+				}	
 			}
         }
 
