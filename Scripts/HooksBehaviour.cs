@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace extDebug
 {
-	public sealed class HooksBehaviour : MonoBehaviour
+	internal sealed class HooksBehaviour : MonoBehaviour
     {
 	    #region Unity Methods
 
@@ -19,3 +19,4 @@ namespace extDebug
 	    #endregion
     }
 }
+ 
