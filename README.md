@@ -3,6 +3,7 @@
 Created by [iam1337](https://github.com/iam1337) and [hww](https://github.com/hww)
 
 ![](https://img.shields.io/badge/unity-2021.1%20or%20later-green.svg)
+[![⚙ Build and Release](https://github.com/Iam1337/extDebug/actions/workflows/ci.yml/badge.svg)](https://github.com/Iam1337/extDebug/actions/workflows/ci.yml)
 
 ### What Is extDebug?
 
