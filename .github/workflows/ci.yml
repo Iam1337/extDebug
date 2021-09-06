@@ -76,7 +76,7 @@ jobs:
         git push -f -u origin upm
       env:
         PKG_ROOT: Assets/extDebug
-        MSG: Finalize v${{ steps.semantic.outputs.new_release_version }} commit.
+        MSG: "chore(release): finalize UPM package"
     - name: Create upm git tag
       if: steps.semantic.outputs.new_release_published == 'true'
       run: |
