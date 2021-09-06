@@ -27,7 +27,7 @@ jobs:
         extra_plugins: |
           @semantic-release/changelog
           @semantic-release/git
-        branch: master
+        branch: main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Update upm branch
