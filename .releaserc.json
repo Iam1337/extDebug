@@ -1,0 +1,18 @@
+{
+  "tagFormat": "v${version}",
+  "plugins": [
+    ["@semantic-release/commit-analyzer", { "preset": "angular" }],
+    "@semantic-release/release-notes-generator",
+    ["@semantic-release/changelog", { "preset": "angular" }],
+    ["@semantic-release/npm", { "npmPublish": false, "pkgRoot": "Assets/extDebug" }],
+    ["@semantic-release/git", {
+      "assets": ["Assets/extDebug/package.json", "CHANGELOG.md"],
+      "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+    }],
+    ["@semantic-release/github", {
+      "assets": [
+        {"path": "extDebug.unitypackage", "label": "extDebug v${nextRelease.version}"}
+      ]
+    }]
+  ]
+}
