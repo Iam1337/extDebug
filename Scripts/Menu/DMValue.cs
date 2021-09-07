@@ -43,7 +43,7 @@ namespace extDebug.Menu
 			{
 				if (eventArgs.Key == EventKey.Left && _setter != null)
 				{
-					var value = ValueDecrement(_getter.Invoke());
+					var value = ValueDecrement(_getter.Invoke(), eventArgs.IsShift);
 
 					_setter.Invoke(value);
 					_value = ValueToString(value);
@@ -52,7 +52,7 @@ namespace extDebug.Menu
 				}
 				else if (eventArgs.Key == EventKey.Right && _setter != null)
 				{
-					var value = ValueIncrement(_getter.Invoke());
+					var value = ValueIncrement(_getter.Invoke(), eventArgs.IsShift);
 
 					_setter.Invoke(value);
 					_value = ValueToString(value);
@@ -75,9 +75,9 @@ namespace extDebug.Menu
 
         protected abstract string ValueToString(T value);
 
-        protected abstract T ValueIncrement(T value);
+        protected abstract T ValueIncrement(T value, bool isShift);
 
-        protected abstract T ValueDecrement(T value);
+        protected abstract T ValueDecrement(T value, bool isShift);
 
         #endregion
     }

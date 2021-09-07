@@ -110,9 +110,9 @@ namespace extDebug.Menu
 			return value.ToString();
 		}
 
-		protected override T ValueIncrement(T value) => NextEnum(value);
+		protected override T ValueIncrement(T value, bool isShift) => NextEnum(value);
 
-		protected override T ValueDecrement(T value) => PrevEnum(value);
+		protected override T ValueDecrement(T value, bool isShift) => PrevEnum(value);
 
 		#endregion
 	}

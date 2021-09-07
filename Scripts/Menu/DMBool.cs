@@ -17,9 +17,9 @@ namespace extDebug.Menu
 
 		protected override string ValueToString(bool value) => value ? "True" : "False";
 
-		protected override bool ValueIncrement(bool value) => !value;
+		protected override bool ValueIncrement(bool value, bool isShift) => !value;
 
-		protected override bool ValueDecrement(bool value) => !value;
+		protected override bool ValueDecrement(bool value, bool isShift) => !value;
 
 		#endregion
 	}

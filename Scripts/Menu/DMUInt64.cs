@@ -9,6 +9,8 @@ namespace extDebug.Menu
 		#region Public Vars
 
 		public UInt64 Step = 1;
+		
+		public UInt64 ShiftStep = 10;
 
 		public string Format = "0";
 
@@ -25,9 +27,9 @@ namespace extDebug.Menu
 
 		protected override string ValueToString(UInt64 value) => value.ToString(Format);
 
-		protected override UInt64 ValueIncrement(UInt64 value) => value + Step;
+		protected override UInt64 ValueIncrement(UInt64 value, bool isShift) => value + (isShift ? ShiftStep : Step);
 
-		protected override UInt64 ValueDecrement(UInt64 value) => value - Step;
+		protected override UInt64 ValueDecrement(UInt64 value, bool isShift) => value - (isShift ? ShiftStep : Step);
 
 		#endregion
 	}

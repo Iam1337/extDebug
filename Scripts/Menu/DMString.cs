@@ -17,9 +17,9 @@ namespace extDebug.Menu
 
 		protected override string ValueToString(string value) => value;
 
-		protected override string ValueIncrement(string value) => throw new NotImplementedException(nameof(ValueIncrement));
+		protected override string ValueIncrement(string value, bool isShift) => throw new NotImplementedException(nameof(ValueIncrement));
 
-		protected override string ValueDecrement(string value) => throw new NotImplementedException(nameof(ValueDecrement));
+		protected override string ValueDecrement(string value, bool isShift) => throw new NotImplementedException(nameof(ValueDecrement));
 
 		#endregion
 	}
