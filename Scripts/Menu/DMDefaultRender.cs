@@ -120,7 +120,7 @@ namespace extDebug.Menu
 				var valueLength = item.Name.Length;
 
 				if (item is DMBranch)
-					nameLength += 3; // TODO: 3 for "..."
+					nameLength += 3;
 
 				maxNameLength = Math.Max(maxNameLength, nameLength);
 				maxValueLength = Math.Max(maxValueLength, valueLength);
