@@ -30,15 +30,6 @@ namespace extDebug.Examples.Menu
 			Three = 1 << 2,
 		}
 
-		private class ExampleStruct
-		{
-			public int Int32;
-
-			public ExampleFlags Flags;
-
-			public float Float;
-		}
-
 		#endregion
 		
 		#region Private Vars
@@ -73,8 +64,6 @@ namespace extDebug.Examples.Menu
 
 		#endregion
 
-		private ExampleStruct str = new ExampleStruct();
-
 		#region Unity Methods
 
 		private void Start()
@@ -105,13 +94,6 @@ namespace extDebug.Examples.Menu
 
 			// DMActionRequest
 			DM.Add("Requests Menus/Actions", order: 1).Add(FindObjectsOfType<Component>, ExampleAction);
-
-			// Notifications Examples
-			DM.Add("Notifications/Simple Notice", action => DN.Notify("Simple Notice Example"), order: 0);
-			DM.Add("Notifications/Show Long Notice", action => DN.Notify(_longContext, "Long Notice Example", 15f), order: 10);
-			DM.Add("Notifications/Kill Long Notice", action => DN.Kill(_longContext), order: 11);
-			DM.Add("Notifications/Show Infinity Notice", action => DN.Notify(_infinityContext, "Infinity Notice Example", -1), order: 20);
-			DM.Add("Notifications/Kill Infinity Notice", action => DN.Kill(_infinityContext), order: 21);
 
 			DM.Open();
 		}
