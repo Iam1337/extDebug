@@ -1,6 +1,6 @@
 {
     "name": "extDebug",
-    "rootNamespace": "",
+    "rootNamespace": "extDebug",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
