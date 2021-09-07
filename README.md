@@ -14,7 +14,7 @@ extDebug are tools for easy development and testing of games on Unity. Supported
 - **Debug Menu**<br>
 Allows you to add a debug menu in game, with many different functions.
 - **Debug Notifications**<br>
-TODO: Description
+Allows you to show a debug notification in game.
 - **Analytics Heatmaps**<br>
 TODO: Description
 
@@ -121,11 +121,16 @@ TODO: Screenshots
 
 ### Keyboard Shortcuts:
 
+**Shared**
 - `Q` - Show or hide menu without closing it
-- `W`, `S` - Move previous and next menu item
-- `A`, `D` - Rdit menu item, open close submenu
+
+**When the menu is open:**
+- `W`, `S` - Moving through the menu
+- `A`, `D` - Change value, invoke action, open/close branch
 - `R` - Reset value to default
-- `Shift+A`, `Shift+D` - Edit menu item even if menu is closed
+
+**When the menu is closed:**
+- `Shift+A`, `Shift+D` - Change value, invoke action if menu is closed
 - `Shift+R` - Reset value to default even if menu is closed
 
 To change the default keyboard shortcuts, you need to create a class inherited from the [IDMInput](https://github.com/Iam1337/extDebug/blob/main/Assets/extDebug/Scripts/Menu/IDMInput.cs) interface, and set its instance to `DM.Input`.
@@ -134,9 +139,38 @@ To change the default keyboard shortcuts, you need to create a class inherited f
 
 To change the default IMGUI render, you need to create a class inherited from the [IDMRender](https://github.com/Iam1337/extDebug/blob/main/Assets/extDebug/Scripts/Menu/IDMRender.cs) interface, and set its instance to `DM.Render`.
 
-### Author Contacts:
+## extDebug.Notifications - Debug Notifications
+
+It is easy to use, in-game notification system. Based on [Garry's Mod notification](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/lua/includes/modules/notification.lua) system.
+
+### Examples:
+
+**Simple notification**<br>
+```C#
+// Show notification for five seconds
+DN.Notify("Simple notification", 5f); 
+```
+
+**Context notification**<br>
+Calling a method with the same context allows you to declare infinite notifications. Also, the last call to the method with the new parameters and the same context will overwrite the parameters of the previous notification.
+```C#
+// Create simple context
+object _context = new object();
+
+// Show infinity notification
+DN.Notify(_context, "Infinity notification", -1f);
+
+// Hide infinity notification
+DN.Kill(_context);
+```
+
+### Rendering
+
+To change the default IMGUI render, you need to create a class inherited from the [IDNRender](https://github.com/Iam1337/extDebug/blob/main/Assets/extDebug/Scripts/Notifications/IDNRender.cs) interface, and set its instance to `DN.Render`.
+
+## Author Contacts:
 \> [telegram.me/iam1337](http://telegram.me/iam1337) <br>
 \> [ext@iron-wall.org](mailto:ext@iron-wall.org)
 
-### License
+## License
 This project is under the MIT License.
