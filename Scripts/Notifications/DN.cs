@@ -2,6 +2,7 @@
 
 using UnityEngine;
 
+using System;
 using System.Collections.Generic;
 
 namespace extDebug.Notifications
@@ -49,6 +50,9 @@ namespace extDebug.Notifications
 
 				return;
 			}
+
+			if (context == null && duration < 0)
+				throw new Exception("[DN.Notify] Cannot declare infinite notification without context.");
 
 			notice = new DNNotice();
 			notice.Text = text;
