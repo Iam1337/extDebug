@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Iam1337/extDebug/compare/v1.0.1...v1.1.0) (2021-09-07)
+
+
+### Features
+
+* **extDebug:** now when you clamp left or right shift, the step in value items changes. ([ada1464](https://github.com/Iam1337/extDebug/commit/ada146484f098bffda4c02695cd27da555f760e5))
+
 ## [1.0.1](https://github.com/Iam1337/extDebug/compare/v1.0.0...v1.0.1) (2021-09-07)
 
 
