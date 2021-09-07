@@ -20,6 +20,8 @@ namespace extDebug.Menu
 
 		public int Step = 1;
 
+		public int ShiftStep = 10;
+
 		#endregion
 
 		#region Private Vars
@@ -49,9 +51,9 @@ namespace extDebug.Menu
 
 		protected override string ValueToString(float value) => value.ToString(string.IsNullOrEmpty(Format) ? _formats[_precision] : Format );
 
-		protected override float ValueIncrement(float value) => (Mathf.Floor(value * _floatPointScale + 0.1f) + Step) / _floatPointScale;
+		protected override float ValueIncrement(float value, bool isShift) => (Mathf.Floor(value * _floatPointScale + 0.1f) + (isShift ? ShiftStep : Step)) / _floatPointScale;
 
-		protected override float ValueDecrement(float value) => (Mathf.Floor(value * _floatPointScale + 0.1f) - Step) / _floatPointScale;
+		protected override float ValueDecrement(float value, bool isShift) => (Mathf.Floor(value * _floatPointScale + 0.1f) - (isShift ? ShiftStep : Step)) / _floatPointScale;
 
 		#endregion
 	}

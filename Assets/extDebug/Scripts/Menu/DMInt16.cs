@@ -10,6 +10,8 @@ namespace extDebug.Menu
 
 		public Int16 Step = 1;
 
+		public Int16 ShiftStep = 10;
+
 		public string Format = "0";
 
 		#endregion
@@ -25,9 +27,9 @@ namespace extDebug.Menu
 
 		protected override string ValueToString(Int16 value) => value.ToString(Format);
 
-		protected override Int16 ValueIncrement(Int16 value) => (Int16)(value + Step);
+		protected override Int16 ValueIncrement(Int16 value, bool isShift) => (Int16)(value + (isShift ? ShiftStep : Step));
 
-		protected override Int16 ValueDecrement(Int16 value) => (Int16)(value - Step);
+		protected override Int16 ValueDecrement(Int16 value, bool isShift) => (Int16)(value - (isShift ? ShiftStep : Step));
 
 		#endregion
 	}

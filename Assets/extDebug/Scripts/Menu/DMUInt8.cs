@@ -9,6 +9,8 @@ namespace extDebug.Menu
 		#region Public Vars
 
 		public byte Step = 1;
+		
+		public byte ShiftStep = 10;
 
 		public string Format = "0";
 
@@ -25,9 +27,9 @@ namespace extDebug.Menu
 
 		protected override string ValueToString(byte value) => value.ToString(Format);
 
-		protected override byte ValueIncrement(byte value) => (byte)(value + Step);
+		protected override byte ValueIncrement(byte value, bool isShift) => (byte)(value + (isShift ? ShiftStep : Step));
 
-		protected override byte ValueDecrement(byte value) => (byte)(value - Step);
+		protected override byte ValueDecrement(byte value, bool isShift) => (byte)(value - (isShift ? ShiftStep : Step));
 
 		#endregion
 	}
