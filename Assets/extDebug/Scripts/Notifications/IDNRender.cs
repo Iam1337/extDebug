@@ -6,25 +6,13 @@ namespace extDebug.Notifications
 {
 	public interface IDNRender
 	{
-		#region Vars
-
-		float ScreenWidth { get; }
-
-		float ScreenHeight { get; }
-
-		Vector2 AreaOffset { get; }
-
-		float ItemSpace { get; }
-
-		#endregion
-
 		#region Methods
 
-		void AddNotice(DNNotice notice);
+		void SetupNotice(DNNotice notice, float currentHeight);
 
 		void RemoveNotice(DNNotice notice);
-		
-		Vector2 CalcSize(string text);
+
+		void Repaint(DNNotice notice, float timeLeft, ref float currentHeight);
 
 		#endregion
 	}
