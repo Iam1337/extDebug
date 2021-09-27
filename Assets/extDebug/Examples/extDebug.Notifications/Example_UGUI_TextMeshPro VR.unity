@@ -171,8 +171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d6a838ec7d04548b0717ba8601949b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NotifyAnimation: 1
   NotifyAnchor: {fileID: 4451767}
-  NotifyPrefab: {fileID: 724420846467639584, guid: 8aa833ec904784247a2af22d0dc63741, type: 3}
+  NotifyPrefab: {fileID: 724420846467639584, guid: 5e60048049d1e3a4588a045f34a4afc3, type: 3}
 --- !u!1 &1453127490
 GameObject:
   m_ObjectHideFlags: 0

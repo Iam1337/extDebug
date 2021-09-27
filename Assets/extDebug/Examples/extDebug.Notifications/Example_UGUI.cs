@@ -5,13 +5,17 @@ using UnityEngine;
 using extDebug.Menu;
 using extDebug.Notifications;
 
+using UnityEngine.Serialization;
+
 namespace extDebug.Examples.Notifications
 {
 	public class Example_UGUI : MonoBehaviour
 	{
 		#region Public Vars
 
-		public Canvas NotifyCanvas;
+		public DNUGUIAnimation NotifyAnimation;
+
+		public RectTransform NotifyAnchor;
 
 		public DNUGUIItem NotifyPrefab;
 
@@ -29,7 +33,7 @@ namespace extDebug.Examples.Notifications
 
 		private void Start()
 		{
-			DN.Render = new DNUGUIRender(NotifyCanvas, NotifyPrefab);
+			DN.Render = new DNUGUIRender(NotifyAnchor, NotifyPrefab, NotifyAnimation);
 
 			DM.Add("Simple Notice", action => DN.Notify("Simple notification"), order: 0);
 			
