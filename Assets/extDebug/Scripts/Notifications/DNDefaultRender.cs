@@ -1,5 +1,7 @@
 ﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
+using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace extDebug.Notifications
@@ -21,16 +23,18 @@ namespace extDebug.Notifications
 		
 		#region Public Vars
 
-		public Vector2 ItemsOffset = new Vector2(20, 20);
+		public Vector2 ItemsOffset = new Vector2(10, 10);
 
 		public float ItemSpace = 4;
 
 		#endregion
 		
 		#region Private Vars
-
+		
 		private GUISkin _currentSkin;
 
+		private readonly List<DNNotice> _notices = new List<DNNotice>();
+		
 		#endregion
 
 		#region IDNRender Methods
@@ -44,11 +48,13 @@ namespace extDebug.Notifications
 			noticeData.Position = new Vector2(Screen.width, Screen.height - ItemsOffset.y - currentHeight - (noticeData.Size.y + ItemSpace));
 
 			notice.Data = noticeData;
+			
+			_notices.Add(notice);
 		}
 
 		void IDNRender.RemoveNotice(DNNotice notice)
 		{
-			
+			_notices.Remove(notice);
 		}
 
 		void IDNRender.Repaint(DNNotice notice, float timeLeft, ref float currentHeight)
@@ -94,7 +100,7 @@ namespace extDebug.Notifications
 		{
 			_currentSkin = GUI.skin;
 
-			foreach (var notice in DN.Notices)
+			foreach (var notice in _notices)
 			{
 				if (!(notice.Data is NoticeData noticeData))
 					continue;

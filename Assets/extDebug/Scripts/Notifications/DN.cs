@@ -12,9 +12,7 @@ namespace extDebug.Notifications
 		#region Static Public Methods
 
 		public static IDNRender Render = new DNDefaultRender();
-
-		public static List<DNNotice> Notices => _notices;
-
+		
 		#endregion
 
 		#region Static Private Methods
