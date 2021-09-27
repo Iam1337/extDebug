@@ -9,7 +9,7 @@ namespace extDebug.Examples.Notifications
 {
 	public class Example : MonoBehaviour
 	{
-		#region Internal Types
+		#region Private Vars
 		
 		private object _longContext = new object();
 
