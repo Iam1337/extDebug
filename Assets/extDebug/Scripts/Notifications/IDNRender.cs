@@ -20,6 +20,10 @@ namespace extDebug.Notifications
 
 		#region Methods
 
+		void AddNotice(DNNotice notice);
+
+		void RemoveNotice(DNNotice notice);
+		
 		Vector2 CalcSize(string text);
 
 		#endregion

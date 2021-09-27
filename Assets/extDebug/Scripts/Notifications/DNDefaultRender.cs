@@ -35,6 +35,12 @@ namespace extDebug.Notifications
 		{
 			Hooks.OnGUI -= OnGUI;
 		}
+		
+		public void AddNotice(DNNotice notice)
+		{ }
+
+		public void RemoveNotice(DNNotice notice)
+		{ }
 
 		public Vector2 CalcSize(string text)
 		{
