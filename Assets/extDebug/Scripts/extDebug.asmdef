@@ -1,7 +1,10 @@
 {
     "name": "extDebug",
     "rootNamespace": "extDebug",
-    "references": [],
+    "references": [
+        "UnityEditor.UI",
+        "Unity.TextMeshPro"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
