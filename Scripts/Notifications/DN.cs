@@ -69,6 +69,8 @@ namespace extDebug.Notifications
 			{
 				_noticesContext.Add(context, notice);
 			}
+			
+			Render.AddNotice(notice);
 		}
 
 		public static void Kill(object context)
@@ -104,6 +106,8 @@ namespace extDebug.Notifications
 
 				if (notice.Context != null)
 					_noticesContext.Remove(notice.Context);
+
+				Render.RemoveNotice(notice);
 			}
 
 			_noticesToRemove.Clear();
