@@ -1,3 +1,18 @@
+# [1.3.0](https://github.com/Iam1337/extDebug/compare/v1.2.0...v1.3.0) (2021-09-27)
+
+
+### Bug Fixes
+
+* **Examples:** fix region naming ([4955569](https://github.com/Iam1337/extDebug/commit/495556904ad1c3521c5bc194b5471c61fd949786))
+* **Menu:** fix menu width in default renderer ([2a1533c](https://github.com/Iam1337/extDebug/commit/2a1533cc87e3a2542e7b82900c06575c454b9c70))
+
+
+### Features
+
+* **Notifications:** added UGUI render ([36158cd](https://github.com/Iam1337/extDebug/commit/36158cdb8006cd80a5847778d07fb705be47863b))
+* **Notifications:** update callbacks in renderers ([9ecda82](https://github.com/Iam1337/extDebug/commit/9ecda82066310a5679aa696716635ee483ad7789))
+* **Notifications:** update notifications logic ([6bb01c7](https://github.com/Iam1337/extDebug/commit/6bb01c7bdef17dfbc92c37c10a60ab0dc61b6dbb))
+
 # [1.2.0](https://github.com/Iam1337/extDebug/compare/v1.1.0...v1.2.0) (2021-09-27)
 
 
