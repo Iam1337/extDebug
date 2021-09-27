@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/Iam1337/extDebug/compare/v1.3.0...v1.4.0) (2021-09-27)
+
+
+### Features
+
+* **Notifications:** added VR animation type ([ead7502](https://github.com/Iam1337/extDebug/commit/ead7502bd2d8abdc7ccfc944e5935e42d23e3826))
+
 # [1.3.0](https://github.com/Iam1337/extDebug/compare/v1.2.0...v1.3.0) (2021-09-27)
 
 
