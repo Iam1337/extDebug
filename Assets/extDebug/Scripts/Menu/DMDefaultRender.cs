@@ -106,7 +106,7 @@ namespace extDebug.Menu
 			{
 				var item = items[i];
 				var nameLength = item.Name.Length;
-				var valueLength = item.Name.Length;
+				var valueLength = item.Value.Length;
 
 				if (item is DMBranch)
 					nameLength += 3;
