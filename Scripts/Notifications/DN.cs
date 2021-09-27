@@ -36,6 +36,7 @@ namespace extDebug.Notifications
 		static DN()
 		{
 			Hooks.Update += Update;
+			Hooks.OnGUI += OnGUI;
 		}
 
 		public static void Notify(string text, float duration = kDurationDefault) => Notify(null, text, duration);
@@ -111,6 +112,9 @@ namespace extDebug.Notifications
 			}
 
 			_noticesToRemove.Clear();
+
+			// Invoke Update callback
+			(Render as IDNRender_Update)?.Update();
 		}
 
 		private static void Update(DNNotice notice, ref float currentHeight, out bool removeRequired)
@@ -147,6 +151,11 @@ namespace extDebug.Notifications
 
 			currentHeight += height;
 			removeRequired = timeLeft <= 0;
+		}
+		
+		private static void OnGUI()
+		{
+			(Render as IDNRender_OnGUI)?.OnGUI();
 		}
 
 		#endregion

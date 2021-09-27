@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace extDebug.Notifications
 {
-	public class DNDefaultRender : IDNRender
+	public class DNDefaultRender : IDNRender, IDNRender_OnGUI
 	{
 		#region Public Vars
 
@@ -24,42 +24,28 @@ namespace extDebug.Notifications
 
 		#endregion
 
-		#region Public Methods
+		#region IDNRender Methods
 
-		public DNDefaultRender()
-		{
-			Hooks.OnGUI += OnGUI;
-		}
-
-		~DNDefaultRender()
-		{
-			Hooks.OnGUI -= OnGUI;
-		}
-		
-		public void AddNotice(DNNotice notice)
+		void IDNRender.AddNotice(DNNotice notice)
 		{ }
 
-		public void RemoveNotice(DNNotice notice)
+		void IDNRender.RemoveNotice(DNNotice notice)
 		{ }
 
-		public Vector2 CalcSize(string text)
+		Vector2 IDNRender.CalcSize(string text)
 		{
 			return _currentSkin == null
 				? Vector2.zero
 				: _currentSkin.label.CalcSize(new GUIContent(text)) + new Vector2(10, 10);
 		}
 
-		#endregion
-
-		#region Private Methods
-
-		private void OnGUI()
+		void IDNRender_OnGUI.OnGUI()
 		{
 			_currentSkin = GUI.skin;
 
 			foreach (var notice in DN.Notices)
 			{
-				notice.Size = CalcSize(notice.Text);
+				notice.Size = ((IDNRender)this).CalcSize(notice.Text);
 
 				var rect = new Rect(notice.Position, notice.Size);
 				//if (rect.Contains(Event.current.mousePosition))
@@ -76,6 +62,10 @@ namespace extDebug.Notifications
 				GUI.Label(rect, new GUIContent(notice.Text));
 			}
 		}
+
+		#endregion
+
+		#region Private Methods
 
 		#endregion
 	}
