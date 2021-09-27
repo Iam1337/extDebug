@@ -1,5 +1,4 @@
 ﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
-#if EXTDEBUG_UGUI
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,9 +7,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 
-#if EXTDEBUG_TEXTMESHPRO
 using TextMeshPro = TMPro.TextMeshProUGUI;
-#endif
 
 namespace extDebug.Menu
 {
@@ -26,9 +23,7 @@ namespace extDebug.Menu
 		
 		private Text _menuUGUIText;
 		
-#if EXTDEBUG_TEXTMESHPRO
 		private TextMeshPro _menuMeshProText;
-#endif
 
 		#endregion
 
@@ -94,11 +89,9 @@ namespace extDebug.Menu
 			_builder.Remove(_builder.Length - Environment.NewLine.Length, Environment.NewLine.Length);
 			
 			// set value in text components
-#if EXTDEBUG_TEXTMESHPRO
 			if (_menuMeshProText != null)
 				_menuMeshProText.text = _builder.ToString();
 			else
-#endif
 				_menuUGUIText.text = _builder.ToString();
 		}
 
@@ -139,5 +132,3 @@ namespace extDebug.Menu
 		#endregion
 	}
 }
-
-#endif
