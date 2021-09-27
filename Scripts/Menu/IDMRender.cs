@@ -8,7 +8,26 @@ namespace extDebug.Menu
 	{
 		#region Methods
 
+		// Debug Menu Hooks
 		void Repaint(DMBranch branch, IReadOnlyList<DMItem> items);
+		
+		#endregion
+	}
+
+	public interface IDMRender_OnGUI
+	{
+		#region Methods
+
+		void OnGUI();
+
+		#endregion
+	}
+
+	public interface IDMRender_Update
+	{
+		#region Methods
+
+		void Update();
 
 		#endregion
 	}

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
-	internal class DMDefaultRender : IDMRender
+	internal class DMDefaultRender : IDMRender, IDMRender_OnGUI
 	{
 		#region Private Vars
 
@@ -18,19 +18,9 @@ namespace extDebug.Menu
 
 		#endregion
 
-		#region Public Methods
-
-		public DMDefaultRender()
-		{
-			Hooks.OnGUI += OnGUI;
-		}
-
-		~DMDefaultRender()
-		{
-			Hooks.OnGUI -= OnGUI;
-		}
-
-		public void Repaint(DMBranch branch, IReadOnlyList<DMItem> items)
+		#region IDMRender Methods
+		
+		void IDMRender.Repaint(DMBranch branch, IReadOnlyList<DMItem> items)
 		{
 			const string kSuffix = " ";
 			const string kPrefix = " ";
@@ -45,6 +35,7 @@ namespace extDebug.Menu
 			var lineEmpty = new string(kHorizontalChar, lineLength);
 
 			// header
+			_builder.Clear();
 			_builder.AppendFormat($"{kPrefix}<color=#{ColorUtility.ToHtmlStringRGB(branch.NameColor)}>{{0,{-fullLength}}}</color>{kSuffix}{Environment.NewLine}", branch.Name);
 			_builder.AppendLine(lineEmpty);
 
@@ -82,11 +73,7 @@ namespace extDebug.Menu
 			_text = _builder.ToString();
 		}
 
-        #endregion
-
-        #region Private Methods
-
-        private void OnGUI()
+		void IDMRender_OnGUI.OnGUI()
 		{
 			if (!DM.IsVisible)
 				return;
@@ -104,11 +91,13 @@ namespace extDebug.Menu
 
 			GUI.Label(rect, _text);
 		}
+		
+        #endregion
 
-		private void CalculateLengths(DMBranch branch, IReadOnlyList<DMItem> items, int space, out int fullLength, out int maxNameLength, out int maxValueLength)
+        #region Private Methods
+
+        private void CalculateLengths(DMBranch branch, IReadOnlyList<DMItem> items, int space, out int fullLength, out int maxNameLength, out int maxValueLength)
 		{
-			_builder.Clear();
-
 			maxNameLength = 0;
 			maxValueLength = 0;
 			fullLength = branch.Name.Length;
