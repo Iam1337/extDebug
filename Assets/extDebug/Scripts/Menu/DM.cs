@@ -71,7 +71,7 @@ namespace extDebug.Menu
 		private const float kRepeatDelay = 0.75f;
 
 		private const float kRepeatInterval = 0.1f;
-
+		
 		private static DMBranch _currentBranch;
 
 		private static DMBranch _previousBranch => _branchesStack.Count > 0 ? _branchesStack.Peek() : null;
@@ -89,6 +89,7 @@ namespace extDebug.Menu
 		static DM()
 		{
 			Hooks.Update += Update;
+			Hooks.OnGUI += OnGUI;
 		}
 
 		public static void Open() => Open(Root);
@@ -253,21 +254,34 @@ namespace extDebug.Menu
 			}
 
 			// Render
-			if (IsVisible && Render != null && _currentBranch != null && _currentBranch.CanRepaint())
+			if (Render != null)
 			{
-				var items = _currentBranch.GetItems();
+				// Cool! Looks like shit
+				// Invoke Update callback
+				(Render as IDMRender_Update)?.Update();
 
-				foreach (var item in items)
+				if (IsVisible && _currentBranch != null && _currentBranch.CanRepaint())
 				{
-					item.SendEvent(EventArgs.Repaint);
+					var items = _currentBranch.GetItems();
+
+					foreach (var item in items)
+					{
+						item.SendEvent(EventArgs.Repaint);
+					}
+
+					Render.Repaint(_currentBranch, items);
+
+					_currentBranch.CompleteRepaint();
 				}
-
-				Render.Repaint(_currentBranch, items);
-
-				_currentBranch.CompleteRepaint();
 			}
 		}
 
+		private static void OnGUI()
+		{
+			// Invoke OnGUI callback
+			(Render as IDMRender_OnGUI)?.OnGUI();
+		}
+		
 		#endregion
 	}
 }
