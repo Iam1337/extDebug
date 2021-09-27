@@ -24,6 +24,6 @@ namespace extDebug
 
 		static Hooks() => UnityEngine.Object.DontDestroyOnLoad(new GameObject("extDebug Hooks", typeof(HooksBehaviour)));
 
-        #endregion
+		#endregion
 	}
 }

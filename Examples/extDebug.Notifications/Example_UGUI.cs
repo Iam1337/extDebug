@@ -30,8 +30,7 @@ namespace extDebug.Examples.Notifications
 		private void Start()
 		{
 			DN.Render = new DNUGUIRender(NotifyCanvas, NotifyPrefab);
-			//DM.Render = new DMUGUIRender(NotifyCanvas, NotifyPrefab);
-			
+
 			DM.Add("Simple Notice", action => DN.Notify("Simple notification"), order: 0);
 			
 			DM.Add("Show Long Notice", action => DN.Notify(_longContext, "Long Notice Example", 15f), order: 10);

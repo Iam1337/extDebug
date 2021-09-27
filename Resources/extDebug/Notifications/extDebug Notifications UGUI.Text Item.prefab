@@ -92,9 +92,10 @@ GameObject:
   - component: {fileID: 1763411915928636253}
   - component: {fileID: 1763411915928636240}
   - component: {fileID: 1763411915928636243}
+  - component: {fileID: 5913086800711110863}
   - component: {fileID: 724420846467639584}
   m_Layer: 5
-  m_Name: extDebug Notifications UGUI
+  m_Name: extDebug Notifications UGUI.Text Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,6 +199,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!225 &5913086800711110863
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763411915928636255}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &724420846467639584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abed5df4b94e4213afa8bc39d5cadf03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Transform: {fileID: 1763411915928636252}
-  Label_Text: {fileID: 1763411915754868505}
-  Label_TextMeshPro: {fileID: 0}
+  _rectTransform: {fileID: 1763411915928636252}
+  _canvasGroup: {fileID: 5913086800711110863}
+  _label_Text: {fileID: 1763411915754868505}
+  _label_TextMeshPro: {fileID: 0}

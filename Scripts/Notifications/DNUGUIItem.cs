@@ -3,6 +3,7 @@
 using System;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 using TextMeshPro = TMPro.TextMeshProUGUI;
@@ -13,28 +14,55 @@ namespace extDebug.Notifications
 	{
 		#region Public Vars
 
-		public RectTransform Transform;
+		public string Text
+		{
+			get => _label_TextMeshPro != null ? _label_TextMeshPro.text : _label_Text.text;
+			set
+			{
+				if (_label_TextMeshPro != null)
+					_label_TextMeshPro.text = value;
+				else
+					_label_Text.text = value;
+			}
+		}
 
-		public Text Label_Text;
+		public Vector2 Position
+		{
+			get => _rectTransform.anchoredPosition;
+			set => _rectTransform.anchoredPosition = value;
+		}
 
-		public TextMeshPro Label_TextMeshPro;
+		public Vector2 Size => _rectTransform.sizeDelta;
+
+		public float Width =>  _label_TextMeshPro != null ? _label_TextMeshPro.GetPreferredValues().x : _label_Text.preferredWidth;
+
+		public float Alpha
+		{
+			get => _canvasGroup.alpha;
+			set => _canvasGroup.alpha = value;
+		}
 
 		[NonSerialized]
 		public Vector2 Velocity;
 		
 		#endregion
 
-		#region Public Methods
+		#region Private Vars
 
-		public void SetText(string text)
-		{
-			if (Label_TextMeshPro != null)
-				Label_TextMeshPro.text = text;
-			else
-				Label_Text.text = text;
-		}
+		[FormerlySerializedAs("Transform")] 
+		[SerializeField]
+		private RectTransform _rectTransform;
 
-		public float GetWidth() => Label_TextMeshPro != null ? Label_TextMeshPro.GetPreferredValues().x : Label_Text.preferredWidth;
+		[SerializeField]
+		private CanvasGroup _canvasGroup;
+		
+		[FormerlySerializedAs("Label_Text")] 
+		[SerializeField]
+		private Text _label_Text;
+
+		[FormerlySerializedAs("Label_TextMeshPro")] 
+		[SerializeField]
+		private TextMeshPro _label_TextMeshPro;
 
 		#endregion
 	}
