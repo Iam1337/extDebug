@@ -21,17 +21,17 @@ namespace extDebug.Menu
 
 		private GameObject _menuObject;
 		
-		private Text _menuUGUIText;
+		private Text _label_Text;
 		
-		private TextMeshPro _menuMeshProText;
+		private TextMeshPro _label_TextMeshPro;
 
 		#endregion
 
 		#region Constructor
 
-		public DMUGUIRender(GameObject menuObject, Text menuText) : this(menuObject) => _menuUGUIText = menuText;
+		public DMUGUIRender(GameObject menuObject, Text menuLabel) : this(menuObject) => _label_Text = menuLabel;
 
-		public DMUGUIRender(GameObject menuObject, TextMeshPro menuText) : this(menuObject) => _menuMeshProText = menuText;
+		public DMUGUIRender(GameObject menuObject, TextMeshPro menuLabel) : this(menuObject) => _label_TextMeshPro = menuLabel;
 
 		#endregion
 
@@ -89,10 +89,10 @@ namespace extDebug.Menu
 			_builder.Remove(_builder.Length - Environment.NewLine.Length, Environment.NewLine.Length);
 			
 			// set value in text components
-			if (_menuMeshProText != null)
-				_menuMeshProText.text = _builder.ToString();
+			if (_label_TextMeshPro != null)
+				_label_TextMeshPro.text = _builder.ToString();
 			else
-				_menuUGUIText.text = _builder.ToString();
+				_label_Text.text = _builder.ToString();
 		}
 
 		void IDMRender_Update.Update()
