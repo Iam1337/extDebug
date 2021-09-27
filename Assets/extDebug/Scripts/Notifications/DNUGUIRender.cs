@@ -36,27 +36,25 @@ namespace extDebug.Notifications
 
 		void IDNRender.SetupNotice(DNNotice notice, float currentHeight)
 		{
-			var noticeInstance = Object.Instantiate(_noticePrefab, _noticeCanvas.transform);
-			noticeInstance.SetText(notice.Text);
-
-			var size = noticeInstance.GetWidth();
-			noticeInstance.Transform.anchoredPosition = new Vector2(size, -ItemsOffset.y - currentHeight - (noticeInstance.Transform.sizeDelta.y + 4));
-			notice.Data = noticeInstance;
+			var noticeData = Object.Instantiate(_noticePrefab, _noticeCanvas.transform);
+			noticeData.Text = notice.Text;
+			noticeData.Position = new Vector2(noticeData.Width, -ItemsOffset.y - currentHeight - (noticeData.Size.y + 4));
+			notice.Data = noticeData;
 		}
 
 		void IDNRender.RemoveNotice(DNNotice notice)
 		{
-			if (notice.Data is DNUGUIItem noticeInstance)
-				Object.Destroy(noticeInstance.gameObject);
+			if (notice.Data is DNUGUIItem noticeData)
+				Object.Destroy(noticeData.gameObject);
 		}
 
 		void IDNRender.Repaint(DNNotice notice, float timeLeft, ref float currentHeight)
 		{
-			if (!(notice.Data is DNUGUIItem noticeInstance))
+			if (!(notice.Data is DNUGUIItem noticeData))
 				return;
 			
-			var size = noticeInstance.Transform.sizeDelta;
-			var position = noticeInstance.Transform.anchoredPosition;
+			var size = noticeData.Size;
+			var position = noticeData.Position;
 
 			var width = size.x;
 			var height = size.y + ItemSpace;
@@ -70,24 +68,24 @@ namespace extDebug.Notifications
 
 			// Calculate new positions
 			var speed = Time.unscaledDeltaTime * 15;
-			position.x += noticeInstance.Velocity.x * speed;
-			position.y += noticeInstance.Velocity.y * speed;
+			position.x += noticeData.Velocity.x * speed;
+			position.y += noticeData.Velocity.y * speed;
 
 			// Calculate speed
 			var distance = targetX - position.x;
-			noticeInstance.Velocity.x += distance * speed * 1;
-			if (Mathf.Abs(distance) < 2 && Mathf.Abs(noticeInstance.Velocity.x) < 0.1) noticeInstance.Velocity.x = 0;
+			noticeData.Velocity.x += distance * speed * 1;
+			if (Mathf.Abs(distance) < 2 && Mathf.Abs(noticeData.Velocity.x) < 0.1) noticeData.Velocity.x = 0;
 
 			distance = targetY - position.y;
-			noticeInstance.Velocity.y += distance * speed * 1;
-			if (Mathf.Abs(distance) < 2 && Mathf.Abs(noticeInstance.Velocity.y) < 0.1) noticeInstance.Velocity.y = 0;
+			noticeData.Velocity.y += distance * speed * 1;
+			if (Mathf.Abs(distance) < 2 && Mathf.Abs(noticeData.Velocity.y) < 0.1) noticeData.Velocity.y = 0;
 
 			var friction = 0.95f - Time.unscaledDeltaTime * 8;
-			noticeInstance.Velocity.x *= friction;
-			noticeInstance.Velocity.y *= friction;
+			noticeData.Velocity.x *= friction;
+			noticeData.Velocity.y *= friction;
 			
-			noticeInstance.Transform.anchoredPosition = position;
-			noticeInstance.SetText(notice.Text);
+			noticeData.Position = position;
+			noticeData.Text = notice.Text;
 
 			currentHeight -= height;
 		}
