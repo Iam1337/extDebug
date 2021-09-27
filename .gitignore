@@ -16,6 +16,10 @@
 /Assets/AssetStoreTools*
 AssetBundles/
 
+# TextMeshPro Essentials
+Assets/TextMesh Pro.meta
+Assets/TextMesh Pro/
+
 # Visual Studio
 
 ExportedObj/
@@ -47,6 +51,7 @@ Assembly-CSharp.csproj
 .vscode/
 .vs/
 .idea/
+.vsconfig
 
 # OS generated
 
@@ -59,5 +64,3 @@ Icon?
 ehthumbs.db
 Thumbs.db
 Thumbs.db.meta
-
-.vsconfig
