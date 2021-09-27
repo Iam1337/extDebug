@@ -28,4 +28,22 @@ namespace extDebug.Notifications
 
 		#endregion
 	}
+
+	public interface IDNRender_OnGUI
+	{
+		#region Methods
+
+		void OnGUI();
+
+		#endregion
+	}
+	
+	public interface IDNRender_Update
+	{
+		#region Methods
+
+		void Update();
+
+		#endregion
+	}
 }
