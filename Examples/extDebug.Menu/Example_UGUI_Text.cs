@@ -1,6 +1,7 @@
 /* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
 using UnityEngine;
+using UnityEngine.UI;
 
 using System;
 
@@ -8,7 +9,7 @@ using extDebug.Menu;
 
 namespace extDebug.Examples.Menu
 {
-	public class Example : MonoBehaviour
+	public class Example_UGUI_Text : MonoBehaviour
 	{
 		#region Internal Types
 
@@ -26,6 +27,14 @@ namespace extDebug.Examples.Menu
 			Two = 1 << 1,
 			Three = 1 << 2,
 		}
+
+		#endregion
+
+		#region Public Vars
+
+		public GameObject MenuObject;
+
+		public Text MenuText;
 
 		#endregion
 		
@@ -67,6 +76,9 @@ namespace extDebug.Examples.Menu
 		{
 			string GetName(Component component) => $"{component.name} ({component.GetType().Name})";
 			void ExampleAction(DMAction action) => Debug.Log(action.Data);
+			
+			// Initialize UGUI render
+			DM.Render = new DMUGUIRender(MenuObject, MenuText);
 
 			// Simple Menus
 			DM.Add("Simple Menus/Action", action => Debug.Log("Hello/Action"), order: 0);

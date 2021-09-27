@@ -4,11 +4,12 @@ using UnityEngine;
 
 using System;
 
+using TMPro;
 using extDebug.Menu;
 
 namespace extDebug.Examples.Menu
 {
-	public class Example : MonoBehaviour
+	public class Example_UGUI_TextMeshPro : MonoBehaviour
 	{
 		#region Internal Types
 
@@ -26,6 +27,14 @@ namespace extDebug.Examples.Menu
 			Two = 1 << 1,
 			Three = 1 << 2,
 		}
+
+		#endregion
+
+		#region Public Vars
+
+		public GameObject MenuObject;
+
+		public TextMeshProUGUI MenuText;
 
 		#endregion
 		
@@ -67,6 +76,9 @@ namespace extDebug.Examples.Menu
 		{
 			string GetName(Component component) => $"{component.name} ({component.GetType().Name})";
 			void ExampleAction(DMAction action) => Debug.Log(action.Data);
+			
+			// Initialize TextMeshPro render
+			DM.Render = new DMUGUIRender(MenuObject, MenuText);
 
 			// Simple Menus
 			DM.Add("Simple Menus/Action", action => Debug.Log("Hello/Action"), order: 0);
