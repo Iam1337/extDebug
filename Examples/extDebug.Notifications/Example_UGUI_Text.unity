@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d6a838ec7d04548b0717ba8601949b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NotifyCanvas: {fileID: 4877944059161026770}
+  NotifyAnchor: {fileID: 2113010579360732719}
   NotifyPrefab: {fileID: 724420846467639584, guid: 8993a1ecaabbf38418a89758613de467, type: 3}
 --- !u!1 &1453127490
 GameObject:
@@ -308,8 +308,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3d350475624959499a0eca079519c17, type: 3}
---- !u!223 &4877944059161026770 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 6837339077276432124, guid: d3d350475624959499a0eca079519c17, type: 3}
+--- !u!224 &2113010579360732719 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6837339077276432126, guid: d3d350475624959499a0eca079519c17, type: 3}
   m_PrefabInstance: {fileID: 2113010579360732718}
   m_PrefabAsset: {fileID: 0}

@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace extDebug.Notifications
 {
+	public enum DNUGUIAnimation
+	{
+		Default,
+		VR
+	}
+	
 	public class DNUGUIRender : IDNRender
 	{
 		#region Public Vars
@@ -16,18 +22,23 @@ namespace extDebug.Notifications
 
 		#region Private Vars
 
-		private readonly Canvas _noticeCanvas;
+		private readonly RectTransform _noticeAnchor;
 		
 		private readonly DNUGUIItem _noticePrefab;
 
+		private readonly DNUGUIAnimation _animation;
+
+		private Vector2 _previousSize;
+		
 		#endregion
 
 		#region Public Methods
 
-		public DNUGUIRender(Canvas noticeCanvas, DNUGUIItem noticePrefab)
+		public DNUGUIRender(RectTransform noticeAnchor, DNUGUIItem noticePrefab, DNUGUIAnimation animation = DNUGUIAnimation.Default)
 		{
-			_noticeCanvas = noticeCanvas;
+			_noticeAnchor = noticeAnchor;
 			_noticePrefab = noticePrefab;
+			_animation = animation;
 		}
 
 		#endregion
@@ -36,9 +47,20 @@ namespace extDebug.Notifications
 
 		void IDNRender.SetupNotice(DNNotice notice, float currentHeight)
 		{
-			var noticeData = Object.Instantiate(_noticePrefab, _noticeCanvas.transform);
+			var noticeData = Object.Instantiate(_noticePrefab, _noticeAnchor);
 			noticeData.Text = notice.Text;
-			noticeData.Position = new Vector2(noticeData.Width, -ItemsOffset.y - currentHeight - (noticeData.Size.y + 4));
+			
+			if (_animation == DNUGUIAnimation.Default)
+			{
+				noticeData.Position = new Vector2(noticeData.Width, -ItemsOffset.y - currentHeight - (_previousSize.y + ItemSpace));
+				noticeData.Alpha = 1f;
+			}
+			else if (_animation == DNUGUIAnimation.VR)
+			{
+				noticeData.Position = new Vector2(-noticeData.Width * 2,  currentHeight + _previousSize.y + ItemSpace);
+				noticeData.Alpha = 0f;
+			}
+			
 			notice.Data = noticeData;
 		}
 
@@ -52,19 +74,39 @@ namespace extDebug.Notifications
 		{
 			if (!(notice.Data is DNUGUIItem noticeData))
 				return;
-			
+
 			var size = noticeData.Size;
 			var position = noticeData.Position;
 
+			_previousSize = size;
+			
 			var width = size.x;
 			var height = size.y + ItemSpace;
 
-			var targetX = - ItemsOffset.x;
-			var targetY = height - currentHeight - ItemsOffset.y;
+			var targetX = 0f;
+			var targetY = 0f;
 
+			targetX = _animation == DNUGUIAnimation.Default ? -ItemsOffset.x : 0;
+			targetY = _animation == DNUGUIAnimation.Default ? height - currentHeight - ItemsOffset.y : height + currentHeight;
+
+			Debug.Log("T " + targetY);
+			
 			// Calculate targets
 			if (timeLeft < 0.2f) targetX += width * 2;
 			else if (timeLeft < 0.7f) targetX -= 50;
+
+			if (_animation == DNUGUIAnimation.VR)
+			{
+				if (timeLeft > 0.2f)
+				{
+					noticeData.Alpha += Time.unscaledDeltaTime * 4.5f;
+				}
+				else
+				{
+					noticeData.Alpha -= Time.unscaledDeltaTime * 4.5f;
+				}
+				
+			}
 
 			// Calculate new positions
 			var speed = Time.unscaledDeltaTime * 15;
@@ -83,10 +125,10 @@ namespace extDebug.Notifications
 			var friction = 0.95f - Time.unscaledDeltaTime * 8;
 			noticeData.Velocity.x *= friction;
 			noticeData.Velocity.y *= friction;
-			
+
 			noticeData.Position = position;
 			noticeData.Text = notice.Text;
-
+			
 			currentHeight -= height;
 		}
 
