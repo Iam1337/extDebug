@@ -139,7 +139,7 @@ namespace extDebug.Menu
 			_flashNameTime = Time.unscaledTime;
 			_flashNameColor = color;
 
-			_parent?.RequestRepaint();
+			_parent?.RequestRepaint(kFlashDuration);
 
 			if (DM.IsVisible == false && notify)
 				DM.Notify(this);
@@ -150,7 +150,7 @@ namespace extDebug.Menu
 			_flashValueTime = Time.unscaledTime;
 			_flashValueColor = color;
 			
-			_parent?.RequestRepaint();
+			_parent?.RequestRepaint(kFlashDuration);
 
 			if (DM.IsVisible == false && notify)
 				DM.Notify(this, null, ValueColor);
