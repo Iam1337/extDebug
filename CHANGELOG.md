@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Iam1337/extDebug/compare/v1.4.0...v1.4.1) (2021-09-28)
+
+
+### Bug Fixes
+
+* **Menu:** empty menu fix ([b69e287](https://github.com/Iam1337/extDebug/commit/b69e28754d1d05ef43ea773e45471118429638ed))
+
 # [1.4.0](https://github.com/Iam1337/extDebug/compare/v1.3.0...v1.4.0) (2021-09-27)
 
 
