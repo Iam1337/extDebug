@@ -90,6 +90,8 @@ namespace extDebug.Menu
 		{
 			Hooks.Update += Update;
 			Hooks.OnGUI += OnGUI;
+
+			_currentBranch = Root;
 		}
 
 		public static void Open() => Open(Root);
