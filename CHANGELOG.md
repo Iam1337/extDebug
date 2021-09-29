@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/Iam1337/extDebug/compare/v1.4.1...v1.4.2) (2021-09-29)
+
+
+### Bug Fixes
+
+* **Menu:** another menu fix ([6e2960f](https://github.com/Iam1337/extDebug/commit/6e2960f544d91c8ad2cb698aa61f65d32c315ea0))
+
 ## [1.4.1](https://github.com/Iam1337/extDebug/compare/v1.4.0...v1.4.1) (2021-09-28)
 
 
