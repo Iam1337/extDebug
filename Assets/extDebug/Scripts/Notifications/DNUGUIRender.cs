@@ -4,12 +4,14 @@ using UnityEngine;
 
 namespace extDebug.Notifications
 {
+	// TODO: Rename
 	public enum DNUGUIAnimation
 	{
 		Default,
 		VR
 	}
 	
+	// TODO: Move to extDebug.UGUI repo
 	public class DNUGUIRender : IDNRender
 	{
 		#region Public Vars
@@ -89,8 +91,6 @@ namespace extDebug.Notifications
 			targetX = _animation == DNUGUIAnimation.Default ? -ItemsOffset.x : 0;
 			targetY = _animation == DNUGUIAnimation.Default ? height - currentHeight - ItemsOffset.y : height + currentHeight;
 
-			Debug.Log("T " + targetY);
-			
 			// Calculate targets
 			if (timeLeft < 0.2f) targetX += width * 2;
 			else if (timeLeft < 0.7f) targetX -= 50;
