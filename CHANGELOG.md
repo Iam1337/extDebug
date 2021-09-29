@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/Iam1337/extDebug/compare/v1.4.2...v1.4.3) (2021-09-29)
+
+
+### Bug Fixes
+
+* **Notifications:** remove debug log in UGUI render ([e826f0a](https://github.com/Iam1337/extDebug/commit/e826f0a3aa971e8f32c85a2ebd392a0e71b47acf))
+
 ## [1.4.2](https://github.com/Iam1337/extDebug/compare/v1.4.1...v1.4.2) (2021-09-29)
 
 
