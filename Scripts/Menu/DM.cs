@@ -90,8 +90,6 @@ namespace extDebug.Menu
 		{
 			Hooks.Update += Update;
 			Hooks.OnGUI += OnGUI;
-
-			_currentBranch = Root;
 		}
 
 		public static void Open() => Open(Root);
@@ -233,6 +231,11 @@ namespace extDebug.Menu
 			if (eventKey == EventKey.ToggleMenu)
 			{
 				IsVisible = !IsVisible;
+
+				if (_currentBranch == null && IsVisible)
+				{
+					Open(Root);
+				}
 			}
 
 			_currentBranch?.SendEvent(new EventArgs
