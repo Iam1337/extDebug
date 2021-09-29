@@ -4,6 +4,8 @@ Created by [iam1337](https://github.com/iam1337) and [hww](https://github.com/hw
 
 ![](https://img.shields.io/badge/unity-2021.1%20or%20later-green.svg)
 [![⚙ Build and Release](https://github.com/Iam1337/extDebug/actions/workflows/ci.yml/badge.svg)](https://github.com/Iam1337/extDebug/actions/workflows/ci.yml)
+[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/iam1337/extDebug?include_prereleases)](https://github.com/iam1337/extDebug/releases)
+[![](https://img.shields.io/github/license/iam1337/extDebug.svg)](https://github.com/Iam1337/extDebug/blob/master/LICENSE)
 
 ### What Is extDebug?
 
