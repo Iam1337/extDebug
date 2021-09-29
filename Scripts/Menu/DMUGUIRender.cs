@@ -11,6 +11,7 @@ using TextMeshPro = TMPro.TextMeshProUGUI;
 
 namespace extDebug.Menu
 {
+	// TODO: Move to extDebug.UGUI repo
 	public class DMUGUIRender : IDMRender, IDMRender_Update
 	{
 		#region Private Vars
