@@ -4,7 +4,7 @@ Created by [iam1337](https://github.com/iam1337) and [hww](https://github.com/hw
 
 ![](https://img.shields.io/badge/unity-2021.1%20or%20later-green.svg)
 [![⚙ Build and Release](https://github.com/Iam1337/extDebug/actions/workflows/ci.yml/badge.svg)](https://github.com/Iam1337/extDebug/actions/workflows/ci.yml)
-[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/iam1337/extDebug?include_prereleases)](https://github.com/iam1337/extDebug/releases)
+[![openupm](https://img.shields.io/npm/v/com.iam1337.extdebug?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.iam1337.extdebug/)
 [![](https://img.shields.io/github/license/iam1337/extDebug.svg)](https://github.com/Iam1337/extDebug/blob/master/LICENSE)
 
 ### What Is extDebug?
@@ -30,6 +30,29 @@ TODO: Description
 **Old school**
 
 Just copy the [Assets/extDebug](Assets/extDebug) folder into your Assets directory within your Unity project, or [download latest extDebug.unitypackage](https://github.com/iam1337/extDebug/releases).
+
+**OpenUPM**
+
+Via [openupm-cli](https://github.com/openupm/openupm-cli):<br>
+```
+openupm add com.iam1337.extdebug
+```
+
+Or if you don't have it, add the scoped registry to manifest.json with the desired dependency semantic version:
+```
+"scopedRegistries": [
+	{
+		"name": "package.openupm.com",
+		"url": "https://package.openupm.com",
+		"scopes": [
+			"com.iam1337.extdebug",
+		]
+	}
+],
+"dependencies": {
+	"com.iam1337.extdebug": "1.4.0"
+}
+```
 
 **Package Manager**
 
