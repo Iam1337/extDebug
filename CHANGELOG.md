@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/Iam1337/extDebug/compare/v1.4.3...v1.5.0) (2021-09-30)
+
+
+### Features
+
+* **extDebug:** UGUI components and resources moved in another repo: extDebug.UGUI ([f5fee87](https://github.com/Iam1337/extDebug/commit/f5fee87a6ba18c38e050238c611c394374f84f2f))
+
 ## [1.4.3](https://github.com/Iam1337/extDebug/compare/v1.4.2...v1.4.3) (2021-09-29)
 
 
