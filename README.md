@@ -13,6 +13,7 @@ Created by [iam1337](https://github.com/iam1337) and [hww](https://github.com/hw
 - [extDebug.Menu](#extdebugmenu---debug-menu)
 - [extDebug.Notifications](#extdebugnotifications---debug-notifications)
 - [Author Contacts](#author-contacts)
+- [Extensions](#extensions)
 
 ## Introduction
 
@@ -199,6 +200,13 @@ DN.Kill(_context);
 ### Rendering
 
 To change the default IMGUI render, you need to create a class inherited from the [IDNRender](https://github.com/Iam1337/extDebug/blob/main/Assets/extDebug/Scripts/Notifications/IDNRender.cs) interface, and set its instance to `DN.Render`.
+
+## Extensions
+
+List of useful repositories to help make extDebug easier to use:
+
+- [extDebug.UGUI](https://github.com/Iam1337/extDebug.UGUI) - Extension to support Unity UI and TextMeshPro in extDebug
+
 
 ## Author Contacts:
 \> [telegram.me/iam1337](http://telegram.me/iam1337) <br>
