@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/Iam1337/extDebug/compare/v1.5.0...v1.5.1) (2021-09-30)
+
+
+### Bug Fixes
+
+* **extDebug:** removed unused package dependencies ([b8776aa](https://github.com/Iam1337/extDebug/commit/b8776aab6d4a50dadbda0169141997ca4966b3a7))
+
 # [1.5.0](https://github.com/Iam1337/extDebug/compare/v1.4.3...v1.5.0) (2021-09-30)
 
 
