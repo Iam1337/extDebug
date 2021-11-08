@@ -34,7 +34,7 @@ TODO: Description
 
 **And much more**
 
-## Installation:
+## Installation
 **Old school**
 
 Just copy the [Assets/extDebug](Assets/extDebug) folder into your Assets directory within your Unity project, or [download latest extDebug.unitypackage](https://github.com/iam1337/extDebug/releases).
@@ -208,7 +208,7 @@ List of useful repositories to help make extDebug easier to use:
 - [extDebug.UGUI](https://github.com/Iam1337/extDebug.UGUI) - Extension to support Unity UI and TextMeshPro in extDebug
 
 
-## Author Contacts:
+## Author Contacts
 \> [telegram.me/iam1337](http://telegram.me/iam1337) <br>
 \> [ext@iron-wall.org](mailto:ext@iron-wall.org)
 
