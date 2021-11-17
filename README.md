@@ -12,8 +12,8 @@ Created by [iam1337](https://github.com/iam1337) and [hww](https://github.com/hw
 - [Installation](#installation)
 - [extDebug.Menu](#extdebugmenu---debug-menu)
 - [extDebug.Notifications](#extdebugnotifications---debug-notifications)
-- [Author Contacts](#author-contacts)
 - [Extensions](#extensions)
+- [Author Contacts](#author-contacts)
 
 ## Introduction
 
