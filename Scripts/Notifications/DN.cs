@@ -41,7 +41,7 @@ namespace extDebug.Notifications
 
 		public static void Notify(string text, float duration = kDurationDefault) => Notify(null, text, duration);
 
-		public static void Notify(object context, string text, float duration = kDurationDefault)
+		public static void Notify(object context, string text, float duration = kDurationDefault, Action<object> leftCallback = null)
 		{
 			if (context != null && _noticesContext.TryGetValue(context, out var notice))
 			{
@@ -60,6 +60,7 @@ namespace extDebug.Notifications
 			notice.StartTime = Time.unscaledTime;
 			notice.Duration = duration;
 			notice.Context = context;
+			notice.LeftCallback = leftCallback;
 
 			_notices.Add(notice);
 
@@ -71,13 +72,16 @@ namespace extDebug.Notifications
 			Render.SetupNotice(notice, _currentHeight);
 		}
 
-		public static void Kill(object context)
+		public static void Kill(object context, bool ignoreCallback = false)
 		{
 			if (!_noticesContext.TryGetValue(context, out var notice))
 				return;
 
 			notice.StartTime = Time.unscaledTime;
 			notice.Duration = 0.75f;
+
+			if (ignoreCallback)
+				notice.LeftCallback = null;
 		}
 
 		#endregion
@@ -105,9 +109,16 @@ namespace extDebug.Notifications
 			foreach (var notice in _noticesToRemove)
 			{
 				_notices.Remove(notice);
-				
+
 				if (notice.Context != null)
+				{
+					if (notice.LeftCallback != null)
+						notice.LeftCallback.Invoke(notice.Context);
+					
 					_noticesContext.Remove(notice.Context);
+					
+					notice.LeftCallback = null;
+				}
 
 				Render.RemoveNotice(notice);
 

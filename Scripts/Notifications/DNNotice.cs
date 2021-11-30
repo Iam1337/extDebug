@@ -1,6 +1,6 @@
 ﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
-using UnityEngine;
+using System;
 
 namespace extDebug.Notifications
 {
@@ -17,6 +17,8 @@ namespace extDebug.Notifications
 	    public object Context;
 
 	    public object Data;
+
+	    public Action<object> LeftCallback;
 
 	    #endregion
     }
