@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/Iam1337/extDebug/compare/v1.5.1...v1.6.0) (2021-11-30)
+
+
+### Features
+
+* **Notification:** added callback to context notifications ([e125b89](https://github.com/Iam1337/extDebug/commit/e125b89b87c8aa4e7104c5a09294b67adc445e63))
+
 ## [1.5.1](https://github.com/Iam1337/extDebug/compare/v1.5.0...v1.5.1) (2021-09-30)
 
 
