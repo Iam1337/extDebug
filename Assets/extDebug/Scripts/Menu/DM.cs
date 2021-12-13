@@ -52,33 +52,29 @@ namespace extDebug.Menu
 		};
 
 		// Container
-		public static DMBranch Root => _rootContainer.Root;
+		public readonly static DMContainer RootContainer = new DMContainer("Debug Menu");
+		
+		public static DMBranch Root => RootContainer.Root;
 
-		public static bool IsVisible => _rootContainer.IsVisible;
+		public static bool IsVisible => RootContainer.IsVisible;
 		
 		public static IDMInput Input
 		{
-			get => _rootContainer.Input;
-			set => _rootContainer.Input = value;
+			get => RootContainer.Input;
+			set => RootContainer.Input = value;
 		}
 
 		public static IDMRender Render
 		{
-			get => _rootContainer.Render;
-			set => _rootContainer.Render = value;
+			get => RootContainer.Render;
+			set => RootContainer.Render = value;
 		}
 
 		// Notice
 		public static IDMNotice Notice = new DMDefaultNotice();
 
 		#endregion
-
-		#region Private Vars
-
-		private static DMContainer _rootContainer = new DMContainer("Debug Menu");
 		
-		#endregion
-
 		#region Public Methods
 
 		static DM()
@@ -87,11 +83,11 @@ namespace extDebug.Menu
 			Hooks.OnGUI += OnGUI;
 		}
 
-		public static void Open() => _rootContainer.Open();
+		public static void Open() => RootContainer.Open();
 
-		public static void Open(DMBranch branch) => _rootContainer.Open(branch);
+		public static void Open(DMBranch branch) => RootContainer.Open(branch);
 
-		public static void Back() => _rootContainer.Back();
+		public static void Back() => RootContainer.Back();
 
 		public static void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null) => Notice?.Notify(item, nameColor, valueColor);
 
@@ -167,12 +163,12 @@ namespace extDebug.Menu
 		
 		private static void Update()
 		{
-			_rootContainer.Update();
+			RootContainer.Update();
 		}
 
 		private static void OnGUI()
 		{
-			_rootContainer.OnGUI();
+			RootContainer.OnGUI();
 		}
 		
 		#endregion
