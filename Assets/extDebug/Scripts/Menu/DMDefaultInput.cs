@@ -25,6 +25,8 @@ namespace extDebug.Menu
 					return EventKey.Left;
 				if (Input.GetKey(KeyCode.D))
 					return EventKey.Right;
+				if (Input.GetKey(KeyCode.E))
+					return EventKey.Back;
 				if (Input.GetKey(KeyCode.R))
 					return EventKey.Reset;
 			}

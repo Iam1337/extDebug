@@ -161,6 +161,7 @@ TODO: Screenshots
 - `W`, `S` - Moving through the menu
 - `A`, `D` - Change value, invoke action, open/close branch
 - `R` - Reset value to default
+- `E` - Close current branch branch
 
 **When the menu is closed:**
 - `Shift+A`, `Shift+D` - Change value, invoke action if menu is closed
