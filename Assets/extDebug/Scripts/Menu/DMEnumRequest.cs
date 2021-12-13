@@ -16,7 +16,7 @@ namespace extDebug.Menu
 
 		#region Protected Methods
 
-		protected override DMItem BuildItem(DMBranch parent, TObject @object, string name, Func<TEnum> getter, Action<TEnum> setter, int order) => DM.Add(parent, name, getter, setter, order);
+		protected override DMItem BuildItem(DMBranch parent, TObject @object, string name, Func<TEnum> getter, Action<TEnum> setter, int order) => parent.Container.Add(parent, name, getter, setter, order);
 
 		#endregion
 	}

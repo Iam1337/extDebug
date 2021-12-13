@@ -47,14 +47,14 @@ namespace extDebug.Menu
 				var type = typeof(T);
 				if (type.IsDefined(typeof(FlagsAttribute), false))
 				{
-					_flagBranch = DM.Add(null, GetPathName(path), getter.Invoke().ToString());
+					_flagBranch = Container.Add(null, GetPathName(path), getter.Invoke().ToString());
 					
 					var values = (T[])Enum.GetValues(type);
 					for (var i = 0; i < values.Length; i++)
 					{
 						var value = values[i];
 
-						DM.Add(_flagBranch, value.ToString(), () =>
+						Container.Add(_flagBranch, value.ToString(), () =>
 						{
 							var intGetter = (int)(object)getter.Invoke();
 							var intValue = (int)(object)value;
@@ -69,11 +69,11 @@ namespace extDebug.Menu
 						}, i);
 					}
 
-					DM.Add(_flagBranch, "Back", a => a.Container.Back(), string.Empty, int.MaxValue);
+					Container.Add(_flagBranch, "Back", BackAction, string.Empty, int.MaxValue);
 				}
 			}
 		}
-
+		
 		#endregion
 
 		#region Protected Methods
@@ -113,6 +113,15 @@ namespace extDebug.Menu
 		protected override T ValueIncrement(T value, bool isShift) => NextEnum(value);
 
 		protected override T ValueDecrement(T value, bool isShift) => PrevEnum(value);
+
+		#endregion
+
+		#region Private Methods
+		
+		private void BackAction(DMAction action)
+		{
+			Container.Back();
+		}
 
 		#endregion
 	}

@@ -16,7 +16,7 @@ namespace extDebug.Menu
 
 		#region Protected Methods
 
-		protected override DMItem BuildItem(DMBranch parent, T @object, string name, Func<bool> getter, Action<bool> setter, int order) => DM.Add(parent, name, getter, setter, order);
+		protected override DMItem BuildItem(DMBranch parent, T @object, string name, Func<bool> getter, Action<bool> setter, int order) => parent.Container.Add(parent, name, getter, setter, order);
 
 		#endregion
 	}

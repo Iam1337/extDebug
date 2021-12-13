@@ -29,7 +29,7 @@ namespace extDebug.Menu
 
 		#region Protected Methods
 
-		protected override DMItem BuildItem(DMBranch parent, T @object, string name, int order) => DM.Add(parent, name, _action, GetDescription(@object), order);
+		protected override DMItem BuildItem(DMBranch parent, T @object, string name, int order) => parent.Container.Add(parent, name, _action, GetDescription(@object), order);
 
 		#endregion
 
