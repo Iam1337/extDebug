@@ -48,6 +48,7 @@ namespace extDebug.Menu
 		{
 			// Create Root object.
 			Root = new DMBranch(null, name);
+			Root.Container = this;
 
 			// Setup modules.
 			Input = input;
