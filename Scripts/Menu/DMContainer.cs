@@ -111,7 +111,7 @@ namespace extDebug.Menu
 			{
 				// Cool! Looks like shit
 				// Invoke Update callback
-				(Render as IDMRender_Update)?.Update();
+				(Render as IDMRender_Update)?.Update(IsVisible);
 
 				if (IsVisible && _currentBranch != null && _currentBranch.CanRepaint())
 				{
@@ -132,7 +132,7 @@ namespace extDebug.Menu
 		public void OnGUI()
 		{
 			// Invoke OnGUI callback
-			(Render as IDMRender_OnGUI)?.OnGUI();
+			(Render as IDMRender_OnGUI)?.OnGUI(IsVisible);
 		}
 		
 		public void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null) => DM.Notify(item, nameColor, valueColor);
@@ -213,7 +213,7 @@ namespace extDebug.Menu
 		{
 			if (Input != null)
 			{
-				var eventKey = Input.GetKey(out shift);
+				var eventKey = Input.GetKey(IsVisible, out shift);
 				if (eventKey != _previousKey)
 				{
 					_previousKey = eventKey;

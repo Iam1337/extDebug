@@ -73,9 +73,9 @@ namespace extDebug.Menu
 			_text = _builder.ToString();
 		}
 
-		void IDMRender_OnGUI.OnGUI()
+		void IDMRender_OnGUI.OnGUI(bool isVisible)
 		{
-			if (!DM.IsVisible)
+			if (!isVisible)
 				return;
 
 			var textSize = GUI.skin.label.CalcSize(new GUIContent(_text)) + new Vector2(10, 10);
