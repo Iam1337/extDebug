@@ -6,14 +6,14 @@ namespace extDebug.Menu
 {
 	internal class DMDefaultInput : IDMInput
 	{
-		public EventKey GetKey(out bool shift)
+		public EventKey GetKey(bool isVisible, out bool shift)
 		{
 			shift = false;
 			
 			if (Input.GetKey(KeyCode.Q))
 				return EventKey.ToggleMenu;
 
-			if (DM.IsVisible)
+			if (isVisible)
 			{
 				shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 				
