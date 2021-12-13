@@ -94,15 +94,23 @@ namespace extDebug.Menu
 
 		public object Data
 		{
-			get => _data ?? _parent?._data;
+			get => _data ?? _parent?.Data;
 			set => _data = value;
 		}
 
-		#endregion
+		public DMContainer Container
+		{
+			get => _container ?? _parent?.Container;
+			set => _container = value;
+		}
 
+		#endregion
+		
 		#region Protected Vars
 
 		protected readonly DMBranch _parent;
+
+		protected DMContainer _container;
 
 		protected string _name;
 

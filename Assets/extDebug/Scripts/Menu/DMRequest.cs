@@ -54,6 +54,7 @@ namespace extDebug.Menu
 					var @object = objects[i];
 					var @objectItem = BuildItem(parent, @object, GetName(@object), i);
 					@objectItem.Data = @object;
+					@objectItem.Container = parent.Container;
 
 					branches.Add(@objectItem);
 				}
