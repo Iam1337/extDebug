@@ -1,3 +1,10 @@
+## [1.8.5](https://github.com/Iam1337/extDebug/compare/v1.8.4...v1.8.5) (2021-12-13)
+
+
+### Bug Fixes
+
+* **Menu:** fix renders ([4a37662](https://github.com/Iam1337/extDebug/commit/4a37662d7e2a7e1d6fe6245210b1a0ab28400fd3))
+
 ## [1.8.4](https://github.com/Iam1337/extDebug/compare/v1.8.3...v1.8.4) (2021-12-13)
 
 
