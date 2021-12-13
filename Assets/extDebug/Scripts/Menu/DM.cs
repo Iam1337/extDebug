@@ -3,11 +3,10 @@
 using UnityEngine;
 
 using System;
-using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
-	public static class DM
+	public static class  DM
 	{
 		#region External
 
@@ -52,36 +51,32 @@ namespace extDebug.Menu
 			Description = new Color32(112, 112, 112, 255)
 		};
 
-		// Main
-		public static readonly DMBranch Root = new DMBranch(null, "Debug Menu");
+		// Container
+		public static DMBranch Root => _rootContainer.Root;
 
-		public static IDMInput Input = new DMDefaultInput();
+		public static bool IsVisible => _rootContainer.IsVisible;
+		
+		public static IDMInput Input
+		{
+			get => _rootContainer.Input;
+			set => _rootContainer.Input = value;
+		}
 
-		public static IDMRender Render = new DMDefaultRender();
+		public static IDMRender Render
+		{
+			get => _rootContainer.Render;
+			set => _rootContainer.Render = value;
+		}
 
+		// Notice
 		public static IDMNotice Notice = new DMDefaultNotice();
-
-		// Manage
-		public static bool IsVisible { get; private set; }
 
 		#endregion
 
 		#region Private Vars
 
-		private const float kRepeatDelay = 0.75f;
-
-		private const float kRepeatInterval = 0.1f;
+		private static DMContainer _rootContainer = new DMContainer("Debug Menu");
 		
-		private static DMBranch _currentBranch;
-
-		private static DMBranch _previousBranch => _branchesStack.Count > 0 ? _branchesStack.Peek() : null;
-
-		private static readonly Stack<DMBranch> _branchesStack = new Stack<DMBranch>();
-
-		private static EventKey _previousKey;
-
-		private static float _repeatTime;
-
 		#endregion
 
 		#region Public Methods
@@ -92,42 +87,11 @@ namespace extDebug.Menu
 			Hooks.OnGUI += OnGUI;
 		}
 
-		public static void Open() => Open(Root);
+		public static void Open() => _rootContainer.Open();
 
-		public static void Open(DMBranch branch)
-		{
-			if (branch == null)
-				throw new ArgumentNullException(nameof(branch));
+		public static void Open(DMBranch branch) => _rootContainer.Open(branch);
 
-			if (_currentBranch != null)
-			{
-				_branchesStack.Push(_currentBranch);
-			}
-
-            _currentBranch = branch;
-            _currentBranch.SendEvent(EventArgs.OpenBranch);
-			_currentBranch.RequestRepaint();
-
-            IsVisible = true;
-		}
-
-		public static void Back()
-		{
-			if (_previousBranch != null)
-			{
-				_currentBranch.SendEvent(EventArgs.CloseBranch);
-
-				_currentBranch = _previousBranch;
-				_currentBranch.SendEvent(EventArgs.OpenBranch);
-				_currentBranch.RequestRepaint();
-
-				_branchesStack.Pop();
-			}
-			else
-			{
-				IsVisible = false;
-			}
-		}
+		public static void Back() => _rootContainer.Back();
 
 		public static void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null) => Notice?.Notify(item, nameColor, valueColor);
 
@@ -199,92 +163,16 @@ namespace extDebug.Menu
 		#endregion
 
 		#region Private Methods
-
-		private static EventKey GetKey(out bool shift)
-		{
-			if (Input != null)
-			{
-				var eventKey = Input.GetKey(out shift);
-				if (eventKey != _previousKey)
-				{
-					_previousKey = eventKey;
-					_repeatTime = Time.unscaledTime + kRepeatDelay;
-
-					return eventKey;
-				}
-
-				if (eventKey != EventKey.None && _repeatTime < Time.unscaledTime)
-				{
-					_repeatTime = Time.unscaledTime + kRepeatInterval;
-
-					return eventKey;
-				}
-			}
-
-			shift = false;
-			
-			return EventKey.None;
-		}
-
-		private static void SendKey(EventKey eventKey, bool isShift)
-		{
-			if (eventKey == EventKey.ToggleMenu)
-			{
-				IsVisible = !IsVisible;
-
-				if (_currentBranch == null && IsVisible)
-				{
-					Open(Root);
-				}
-			}
-
-			_currentBranch?.SendEvent(new EventArgs
-			{
-				Tag = EventTag.Input,
-				Key = eventKey,
-				IsShift = isShift
-			});
-		}
+		
 		
 		private static void Update()
 		{
-			// Input
-			if (Input != null)
-			{
-				var eventKey = GetKey(out var isShift);
-				if (eventKey != EventKey.None)
-				{
-					SendKey(eventKey, isShift);
-				}
-			}
-
-			// Render
-			if (Render != null)
-			{
-				// Cool! Looks like shit
-				// Invoke Update callback
-				(Render as IDMRender_Update)?.Update();
-
-				if (IsVisible && _currentBranch != null && _currentBranch.CanRepaint())
-				{
-					var items = _currentBranch.GetItems();
-
-					foreach (var item in items)
-					{
-						item.SendEvent(EventArgs.Repaint);
-					}
-
-					Render.Repaint(_currentBranch, items);
-
-					_currentBranch.CompleteRepaint();
-				}
-			}
+			_rootContainer.Update();
 		}
 
 		private static void OnGUI()
 		{
-			// Invoke OnGUI callback
-			(Render as IDMRender_OnGUI)?.OnGUI();
+			_rootContainer.OnGUI();
 		}
 		
 		#endregion
