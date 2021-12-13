@@ -134,6 +134,8 @@ namespace extDebug.Menu
 			(Render as IDMRender_OnGUI)?.OnGUI();
 		}
 		
+		public void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null) => DM.Notify(item, nameColor, valueColor);
+		
 		// Branch
 		public DMBranch Add(string path, string description = "", int order = 0) => Add(Root, path, description, order);
 

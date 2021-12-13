@@ -76,7 +76,7 @@ namespace extDebug.Menu
 				}
 				else if (eventArgs.Key == EventKey.Back)
 				{
-					DM.Back();
+					Container.Back();
 				}	
 			}
         }

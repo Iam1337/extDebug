@@ -149,8 +149,8 @@ namespace extDebug.Menu
 
 			_parent?.RequestRepaint(kFlashDuration);
 
-			if (DM.IsVisible == false && notify)
-				DM.Notify(this);
+			if (Container.IsVisible == false && notify)
+				Container.Notify(this);
 		}
 
 		public void FlashValue(Color color, bool notify)
@@ -160,8 +160,8 @@ namespace extDebug.Menu
 			
 			_parent?.RequestRepaint(kFlashDuration);
 
-			if (DM.IsVisible == false && notify)
-				DM.Notify(this, null, ValueColor);
+			if (Container.IsVisible == false && notify)
+				Container.Notify(this, null, ValueColor);
 		}
 
 		public override string ToString() => $"{_name,-16}  {_value,-16}";
