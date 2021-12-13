@@ -251,8 +251,8 @@ namespace extDebug.Menu
 					var currentItem = Current;
 					if (currentItem is DMBranch)
 					{
-						if (DM.IsVisible)
-							DM.Back();
+						if (Container.IsVisible)
+							Container.Back();
 					}
 					else
 					{
@@ -264,8 +264,8 @@ namespace extDebug.Menu
 					var currentItem = Current;
 					if (currentItem is DMBranch currentBranch)
 					{
-						if (DM.IsVisible)
-							DM.Open(currentBranch);
+						if (Container.IsVisible)
+							Container.Open(currentBranch);
 					}
 					else
 					{
@@ -286,7 +286,7 @@ namespace extDebug.Menu
 				}
 				else if (eventArgs.Key == EventKey.Back)
 				{
-					DM.Back();
+					Container.Back();
 				}
 			}
 		}

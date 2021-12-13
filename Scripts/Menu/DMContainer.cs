@@ -67,6 +67,7 @@ namespace extDebug.Menu
 			}
 
             _currentBranch = branch;
+            _currentBranch.Container = this;
             _currentBranch.SendEvent(EventArgs.OpenBranch);
 			_currentBranch.RequestRepaint();
 

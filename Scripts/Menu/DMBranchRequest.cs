@@ -72,13 +72,19 @@ namespace extDebug.Menu
 			void OnOpenCallback(DMBranch branch)
 			{
 				foreach (var item in _items)
+				{
 					item.Data = branch.Data;
+					item.Container = branch.Container;
+				}
 			}
 
 			void OnCloseCallback(DMBranch branch)
 			{
 				foreach (var item in _items)
+				{
 					item.Data = null;
+					item.Container = null;
+				}
 			}
 
 			var branch = DM.Add(parent, name, GetDescription(@object), order);

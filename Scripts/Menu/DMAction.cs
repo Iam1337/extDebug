@@ -31,7 +31,7 @@ namespace extDebug.Menu
 
 			if (eventArgs.Key == EventKey.Left)
 			{
-				DM.Back();
+				Container.Back();
 			}
 			else if (eventArgs.Key == EventKey.Right && _action != null)
 			{

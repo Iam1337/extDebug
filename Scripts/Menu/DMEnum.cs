@@ -69,7 +69,7 @@ namespace extDebug.Menu
 						}, i);
 					}
 
-					DM.Add(_flagBranch, "Back", _ => DM.Back(), string.Empty, int.MaxValue);
+					DM.Add(_flagBranch, "Back", a => a.Container.Back(), string.Empty, int.MaxValue);
 				}
 			}
 		}
@@ -82,13 +82,13 @@ namespace extDebug.Menu
 		{
 			if (_flagBranch != null && eventArgs.Tag == EventTag.Input && eventArgs.Key == EventKey.Left)
 			{
-				if (DM.IsVisible)
-					DM.Back();
+				if (Container.IsVisible)
+					Container.Back();
 			}
 			else if (_flagBranch != null && eventArgs.Tag == EventTag.Input && eventArgs.Key == EventKey.Right)
 			{
-				if (DM.IsVisible)
-					DM.Open(_flagBranch);
+				if (Container.IsVisible)
+					Container.Open(_flagBranch);
 			}
 			else
 			{
