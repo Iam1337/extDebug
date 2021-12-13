@@ -105,7 +105,7 @@ namespace extDebug.Menu
 	        }
 	        else
 	        {
-		        FlashValue(DM.Colors.ActionSuccess, false);
+		        FlashValue(DM.Colors.ActionFailed, false);
 	        }
         }
 
