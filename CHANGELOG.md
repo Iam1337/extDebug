@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/Iam1337/extDebug/compare/v1.7.0...v1.7.1) (2021-12-13)
+
+
+### Bug Fixes
+
+* **Menu:** added back key in default input ([28d8f5f](https://github.com/Iam1337/extDebug/commit/28d8f5f942552a0732f1326dcd0308c6876a4ebd))
+
 # [1.7.0](https://github.com/Iam1337/extDebug/compare/v1.6.0...v1.7.0) (2021-12-13)
 
 
