@@ -91,6 +91,48 @@ namespace extDebug.Menu
 			}
 		}
 
+		// Shared
+		public void Update()
+		{
+			// Input
+			if (Input != null)
+			{
+				var eventKey = GetKey(Time.unscaledTime, out var isShift);
+				if (eventKey != EventKey.None)
+				{
+					SendKey(eventKey, isShift);
+				}
+			}
+
+			// Render
+			if (Render != null)
+			{
+				// Cool! Looks like shit
+				// Invoke Update callback
+				(Render as IDMRender_Update)?.Update();
+
+				if (IsVisible && _currentBranch != null && _currentBranch.CanRepaint())
+				{
+					var items = _currentBranch.GetItems();
+
+					foreach (var item in items)
+					{
+						item.SendEvent(EventArgs.Repaint);
+					}
+
+					Render.Repaint(_currentBranch, items);
+
+					_currentBranch.CompleteRepaint();
+				}
+			}
+		}
+		
+		public void OnGUI()
+		{
+			// Invoke OnGUI callback
+			(Render as IDMRender_OnGUI)?.OnGUI();
+		}
+		
 		// Branch
 		public DMBranch Add(string path, string description = "", int order = 0) => Add(Root, path, description, order);
 
@@ -156,52 +198,6 @@ namespace extDebug.Menu
 
 		public DMFloat Add(DMBranch parent, string path, Func<float> getter, Action<float> setter = null, int order = 0) => new DMFloat(parent, path, getter, setter, order);
 		
-		#endregion
-
-		#region Internal Methods
-
-		// Shared
-		internal void Update()
-		{
-			// Input
-			if (Input != null)
-			{
-				var eventKey = GetKey(Time.unscaledTime, out var isShift);
-				if (eventKey != EventKey.None)
-				{
-					SendKey(eventKey, isShift);
-				}
-			}
-
-			// Render
-			if (Render != null)
-			{
-				// Cool! Looks like shit
-				// Invoke Update callback
-				(Render as IDMRender_Update)?.Update();
-
-				if (IsVisible && _currentBranch != null && _currentBranch.CanRepaint())
-				{
-					var items = _currentBranch.GetItems();
-
-					foreach (var item in items)
-					{
-						item.SendEvent(EventArgs.Repaint);
-					}
-
-					Render.Repaint(_currentBranch, items);
-
-					_currentBranch.CompleteRepaint();
-				}
-			}
-		}
-		
-		internal void OnGUI()
-		{
-			// Invoke OnGUI callback
-			(Render as IDMRender_OnGUI)?.OnGUI();
-		}
-
 		#endregion
 		
 		#region Private Methods
