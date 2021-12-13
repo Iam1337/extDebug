@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/Iam1337/extDebug/compare/v1.8.0...v1.8.1) (2021-12-13)
+
+
+### Bug Fixes
+
+* **Menu:** container public methods fix ([c889fe8](https://github.com/Iam1337/extDebug/commit/c889fe8aecb4232f0e6ecb55aabcddc865571aeb))
+
 # [1.8.0](https://github.com/Iam1337/extDebug/compare/v1.7.2...v1.8.0) (2021-12-13)
 
 
