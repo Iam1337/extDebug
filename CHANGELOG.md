@@ -1,3 +1,10 @@
+## [1.8.6](https://github.com/Iam1337/extDebug/compare/v1.8.5...v1.8.6) (2021-12-13)
+
+
+### Bug Fixes
+
+* **Menu:** input fix ([bc87768](https://github.com/Iam1337/extDebug/commit/bc877689d4f730833e5d7c5758a0c47c81f924e3))
+
 ## [1.8.5](https://github.com/Iam1337/extDebug/compare/v1.8.4...v1.8.5) (2021-12-13)
 
 
