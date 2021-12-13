@@ -1,3 +1,11 @@
+## [1.8.3](https://github.com/Iam1337/extDebug/compare/v1.8.2...v1.8.3) (2021-12-13)
+
+
+### Bug Fixes
+
+* **Menu:** fix container context in items ([f57ea7a](https://github.com/Iam1337/extDebug/commit/f57ea7a072a01f774e20be8000d14aedd76f2c23))
+* **Menu:** fix container context in items ([62a39fc](https://github.com/Iam1337/extDebug/commit/62a39fc3853214905efe2348ce6e16d8c3513cd4))
+
 ## [1.8.2](https://github.com/Iam1337/extDebug/compare/v1.8.1...v1.8.2) (2021-12-13)
 
 
