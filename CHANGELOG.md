@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/Iam1337/extDebug/compare/v1.7.1...v1.7.2) (2021-12-13)
+
+
+### Bug Fixes
+
+* **Menu:** action failed fix ([aedd2cd](https://github.com/Iam1337/extDebug/commit/aedd2cdf87a0fcd873d26d90e319a31c4d3e74e0))
+
 ## [1.7.1](https://github.com/Iam1337/extDebug/compare/v1.7.0...v1.7.1) (2021-12-13)
 
 
