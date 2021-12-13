@@ -52,7 +52,7 @@ namespace extDebug.Menu
 	{
 		#region Methods
 
-		EventKey GetKey(out bool shift);
+		EventKey GetKey(bool isVisible, out bool shift);
 
 		#endregion
 	}

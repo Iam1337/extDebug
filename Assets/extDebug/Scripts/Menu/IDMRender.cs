@@ -18,7 +18,7 @@ namespace extDebug.Menu
 	{
 		#region Methods
 
-		void OnGUI();
+		void OnGUI(bool isVisible);
 
 		#endregion
 	}
@@ -27,7 +27,7 @@ namespace extDebug.Menu
 	{
 		#region Methods
 
-		void Update();
+		void Update(bool isVisible);
 
 		#endregion
 	}
