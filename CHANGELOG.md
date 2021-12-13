@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/Iam1337/extDebug/compare/v1.8.1...v1.8.2) (2021-12-13)
+
+
+### Bug Fixes
+
+* **Menu:** added public container field ([8bebb29](https://github.com/Iam1337/extDebug/commit/8bebb29337a20b0234b5cc1181a83c28998ae253))
+
 ## [1.8.1](https://github.com/Iam1337/extDebug/compare/v1.8.0...v1.8.1) (2021-12-13)
 
 
