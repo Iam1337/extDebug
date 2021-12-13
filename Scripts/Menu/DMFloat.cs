@@ -39,10 +39,12 @@ namespace extDebug.Menu
 			SetPrecision(2);
 		}
 
-		public void SetPrecision(int value)
+		public DMFloat SetPrecision(int value)
 		{
 			_precision = Mathf.Clamp(value, 0, _formats.Length - 1);
 			_floatPointScale = (int)Mathf.Pow(10, _precision);
+
+			return this;
 		}
 
 		#endregion

@@ -37,7 +37,7 @@ namespace extDebug.Menu
 			{
 				_action.Invoke(this);
 
-				FlashName(DM.Colors.ActionFlash, true);
+				FlashName(DM.Colors.ActionSuccess, true);
 			}
 		}
 

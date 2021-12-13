@@ -12,7 +12,11 @@ namespace extDebug.Menu
 
         private readonly Action<T> _setter;
 
+        private readonly string _path;
+        
         private T _defaultValue;
+
+        private IDMStorage _storage;
 
         #endregion
 
@@ -22,12 +26,25 @@ namespace extDebug.Menu
         {
 	        _getter = getter;
 	        _setter = setter;
+	        _path = path;
 
 	        _defaultValue = getter.Invoke();
         }
 
-        #endregion
+        public void SetStorage(IDMStorage storage)
+        {
+	        _storage = storage ?? throw new NullReferenceException(nameof(storage));
 
+	        if (_setter == null)
+		        return;
+
+	        var value = _storage.Load(_path, typeof(T));
+	        if (value != null)
+		        _setter.Invoke((T)value);
+        }
+
+        #endregion
+        
         #region Protected Methods
 
         protected override void OnEvent(EventArgs eventArgs)
@@ -45,26 +62,17 @@ namespace extDebug.Menu
 				{
 					var value = ValueDecrement(_getter.Invoke(), eventArgs.IsShift);
 
-					_setter.Invoke(value);
-					_value = ValueToString(value);
-
-					FlashValue(DM.Colors.ActionFlash, true);
+					ChangeValue(value, false);
 				}
 				else if (eventArgs.Key == EventKey.Right && _setter != null)
 				{
 					var value = ValueIncrement(_getter.Invoke(), eventArgs.IsShift);
-
-					_setter.Invoke(value);
-					_value = ValueToString(value);
-				
-					FlashValue(DM.Colors.ActionFlash, true);
+					
+					ChangeValue(value, false);
 				}
 				else if (eventArgs.Key == EventKey.Reset && _setter != null)
 				{
-					_setter.Invoke(_defaultValue);
-					_value = ValueToString(_defaultValue);
-
-					FlashValue(DM.Colors.ActionFlash, true);
+					ChangeValue(_defaultValue, true);
 				}
 				else if (eventArgs.Key == EventKey.Back)
 				{
@@ -78,6 +86,28 @@ namespace extDebug.Menu
         protected abstract T ValueIncrement(T value, bool isShift);
 
         protected abstract T ValueDecrement(T value, bool isShift);
+
+        #endregion
+
+        #region Private Methods
+
+        private void ChangeValue(T value, bool isReset)
+        {
+	        // Change value.
+	        _setter.Invoke(value);
+	        _value = ValueToString(value);
+	        
+	        // Save value.
+	        if (_storage == null ||
+		        _storage != null && _storage.Save(_path,value))
+	        {
+		        FlashValue(DM.Colors.ActionSuccess, true);
+	        }
+	        else
+	        {
+		        FlashValue(DM.Colors.ActionSuccess, false);
+	        }
+        }
 
         #endregion
     }

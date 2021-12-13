@@ -23,8 +23,8 @@ namespace extDebug.Menu
 			public Color ToggleEnabled;
 
 			public Color Action;
-			public Color ActionFlash;
-			public Color ActionDisabled;
+			public Color ActionSuccess;
+			public Color ActionFailed;
 
 			public Color Description;
 		}
@@ -46,8 +46,8 @@ namespace extDebug.Menu
 			ToggleEnabled = new Color32(255, 255, 0, 255),
 
 			Action = new Color32(238, 238, 238, 255),
-			ActionFlash = new Color32(90, 177, 144, 255),
-			ActionDisabled = new Color32(112, 112, 112, 255),
+			ActionSuccess = new Color32(90, 177, 144, 255),
+			ActionFailed = new Color32(238, 112, 112, 255),
 
 			Description = new Color32(112, 112, 112, 255)
 		};

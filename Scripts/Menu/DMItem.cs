@@ -170,7 +170,7 @@ namespace extDebug.Menu
 			_name = name;
 			_value = value;
 			_order = order;
-			_parent = parent?.Get(directory, true);// ?? DM.Root?.Get(directory, true);
+			_parent = parent?.Get(directory, true);
 			_parent?.Insert(this);
 		}
 
