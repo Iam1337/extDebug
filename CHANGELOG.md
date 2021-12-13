@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/Iam1337/extDebug/compare/v1.7.2...v1.8.0) (2021-12-13)
+
+
+### Features
+
+* **Menu:** added first iteration of container system ([79b23a3](https://github.com/Iam1337/extDebug/commit/79b23a3c0b49cc362d9c92c34c794acdab4dbf0b))
+
 ## [1.7.2](https://github.com/Iam1337/extDebug/compare/v1.7.1...v1.7.2) (2021-12-13)
 
 
