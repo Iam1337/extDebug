@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/Iam1337/extDebug/compare/v1.8.6...v1.9.0) (2021-12-21)
+
+
+### Features
+
+* **Menu:** added Repaint and Close methods in DMContainer ([0696a86](https://github.com/Iam1337/extDebug/commit/0696a8657c1ea6dcfa06bd4342be43996a8255dc))
+
 ## [1.8.6](https://github.com/Iam1337/extDebug/compare/v1.8.5...v1.8.6) (2021-12-13)
 
 
