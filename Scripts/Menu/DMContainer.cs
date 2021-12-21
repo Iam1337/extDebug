@@ -74,15 +74,34 @@ namespace extDebug.Menu
 
             IsVisible = true;
 		}
-		
+
+		public void Close()
+		{
+			while (_previousBranch != null)
+			{
+				_currentBranch.SendEvent(EventArgs.CloseBranch);
+				_currentBranch = _previousBranch;
+				
+				_branchesStack.Pop();
+			}
+
+			_currentBranch.RequestRepaint();
+			
+			IsVisible = false;
+		}
+
+		public void Repaint()
+		{
+			_currentBranch.RequestRepaint();
+		}
+
 		public void Back()
 		{
 			if (_previousBranch != null)
 			{
 				_currentBranch.SendEvent(EventArgs.CloseBranch);
-
 				_currentBranch = _previousBranch;
-				_currentBranch.SendEvent(EventArgs.OpenBranch);
+				//_currentBranch.SendEvent(EventArgs.OpenBranch); // INFO: Is required?
 				_currentBranch.RequestRepaint();
 
 				_branchesStack.Pop();
