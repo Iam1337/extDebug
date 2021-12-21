@@ -33,8 +33,6 @@ namespace extDebug.Menu
 		
 		public static EventArgs Repaint => new EventArgs { Tag = EventTag.Repaint };
 		
-		public static EventArgs Input => new EventArgs { Tag = EventTag.Input };
-
 		#endregion
 		
 		#region Public Vars
