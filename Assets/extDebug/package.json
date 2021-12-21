@@ -1,7 +1,7 @@
 {
   "name": "com.iam1337.extdebug",
   "displayName": "extDebug",
-  "version": "1.8.6",
+  "version": "1.9.0",
   "unity": "2021.1",
   "description": "extDebug is a debug tools for Unity.",
   "license": "MIT",
