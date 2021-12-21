@@ -25,7 +25,7 @@ extDebug are tools for easy development and testing of games on Unity. Supported
 Allows you to add a debug menu in game, with many different functions.
 - **Debug Notifications**<br>
 Allows you to show a debug notification in game.
-- **Analytics Heatmaps**<br>
+- **Analytics Heatmaps** (Work in progress)<br>
 TODO: Description
 
 **And also:**
@@ -82,6 +82,9 @@ It is easy to use, lightweight library initially forked from [hww/varp_debug_men
 - Dynamic generation
 
 ### Examples:
+![extDebug Menu Root](Documentation/Images/extDebug-Menu-Root.png)
+![extDebug Menu Sub](Documentation/Images/extDebug-Menu-Sub.png)
+
 **Values**<br>
 ```C#
 byte _uint8;
@@ -106,7 +109,6 @@ DM.Add("Values/Int64", () => _int64, v => _int64 = v);
 DM.Add("Values/Float", () => _float, v => _float = v);
 DM.Add("Values/Bool", () => _bool, v => _bool = v);
 ```
-TODO: Screenshots
 
 **Enums and Flags**<br>
 ```C#
@@ -132,14 +134,12 @@ ExampleFlags _flags;
 DM.Add("Values/Enum", () => _enum, v => _enum = v);
 DM.Add("Values/Flags", () => _flags, v => _flags = v);
 ```
-TODO: Screenshots
 
 **Actions**<br>
 ```C#
 DM.Add("Debug/Action", action => Debug.Log("Hello World"));
 DM.Add("Debug/Action 2", action => Debug.Log("Hello World"), "Action description"); // Action with description
 ```
-TODO: Screenshots
 
 **Branches**<br>
 ```C#
@@ -150,7 +150,6 @@ DM.Add("Example/Branch 2", "Branch description");
 var branch = DM.Add("Example/Branch 3");
 DM.Add(branch, "Action", action => Debug.Log("Hello World"));
 ```
-TODO: Screenshots
 
 ### Keyboard Shortcuts:
 
