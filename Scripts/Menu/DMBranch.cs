@@ -77,46 +77,42 @@ namespace extDebug.Menu
 			_items.Remove(item);
 		}
 
+        public void Clear()
+        {
+            _currentItem = 0;
+			_items.Clear();
+        }
+
 		// Container
 		public DMBranch Add(string path, string description = "", int order = 0) => Container.Add(this, path, description, order);
 
-		public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) =>
-			Container.Add(this, path, action, description, order);
+		public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) => Container.Add(this, path, action, description, order);
 
-		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) =>
-			Container.Add(this, path, getter, setter, order);
+		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
 
-		public DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0) where T : struct, Enum =>
-			Container.Add(this, path, getter, setter, order);
+		public DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0) where T : struct, Enum => Container.Add(this, path, getter, setter, order);
 
-		public DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, int order = 0) =>
-			Container.Add(this, path, getter, setter, order);
+		public DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
 
-		public DMUInt16 Add(string path, Func<ushort> getter, Action<ushort> setter = null, int order = 0) =>
-			Container.Add(this, path, getter, setter, order);
+		public DMUInt16 Add(string path, Func<ushort> getter, Action<ushort> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
 
-		public DMUInt32 Add(string path, Func<uint> getter, Action<uint> setter = null, int order = 0) =>
-			Container.Add(this, path, getter, setter, order);
+		public DMUInt32 Add(string path, Func<uint> getter, Action<uint> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
 
-		public DMUInt64 Add(string path, Func<ulong> getter, Action<ulong> setter = null, int order = 0) =>
-			Container.Add(this, path, getter, setter, order);
+		public DMUInt64 Add(string path, Func<ulong> getter, Action<ulong> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
 
-		public DMInt8 Add(string path, Func<sbyte> getter, Action<sbyte> setter = null, int order = 0) =>
-			Container.Add(this, path, getter, setter, order);
+		public DMInt8 Add(string path, Func<sbyte> getter, Action<sbyte> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
 
-		public DMInt16 Add(string path, Func<short> getter, Action<short> setter = null, int order = 0) =>
-			Container.Add(this, path, getter, setter, order);
+		public DMInt16 Add(string path, Func<short> getter, Action<short> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
 
-		public DMInt32 Add(string path, Func<int> getter, Action<int> setter = null, int order = 0) =>
-			Container.Add(this, path, getter, setter, order);
+		public DMInt32 Add(string path, Func<int> getter, Action<int> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
 
-		public DMInt64 Add(string path, Func<long> getter, Action<long> setter = null, int order = 0) =>
-			Container.Add(this, path, getter, setter, order);
+		public DMInt64 Add(string path, Func<long> getter, Action<long> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
 
-		public DMFloat Add(string path, Func<float> getter, Action<float> setter = null, int order = 0) =>
-			Container.Add(this, path, getter, setter, order);
+		public DMFloat Add(string path, Func<float> getter, Action<float> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
 
-		// Repaint
+        public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0) => Container.Add(this, path, getter, buildCallback, nameCallback, description, order);
+
+        // Repaint
 		public void RequestRepaint() => _canRepaint = true;
 
 		public void RequestRepaint(float duration) => _canRepaintUntil = Time.unscaledTime + duration;
