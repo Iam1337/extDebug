@@ -47,7 +47,7 @@ namespace extDebug.Menu
 		// Float
         public DMFloat Add(string path, Func<float> getter, Action<float> setter = null, int order = 0);
 
-		// Dynamic
+        // Dynamic
         DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0);
 
         #endregion
