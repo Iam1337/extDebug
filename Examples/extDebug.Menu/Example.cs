@@ -116,6 +116,12 @@ namespace extDebug.Examples.Menu
 			DM.Add("Storage Values/Enum", () => _enumStorage, v => _enumStorage = v, order: 11).SetStorage(storage);
 			DM.Add("Storage Values/Flags", () => _flagsStorage, v => _flagsStorage = v, order: 12).SetStorage(storage);
 
+			// Dynamic
+            DM.Add("Dynamic Transforms", FindObjectsOfType<Transform>, (branch, transform) =>
+            {
+                branch.Add("Name", a => { Debug.Log(transform); });
+            });
+
             DM.Open();
 		}
 
