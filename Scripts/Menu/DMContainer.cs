@@ -159,7 +159,12 @@ namespace extDebug.Menu
 		// Branch
 		public DMBranch Add(string path, string description = "", int order = 0) => Add(Root, path, description, order);
 
-		public DMBranch Add(DMBranch parent, string path, string description = "", int order = 0) => parent == null ? new DMBranch(null, path, description, order) : Root.Get(path) ?? new DMBranch(parent, path, description, order);
+        public DMBranch Add(DMBranch parent, string path, string description = "", int order = 0) => parent == null ? new DMBranch(null, path, description, order) : Root.Get(path) ?? new DMBranch(parent, path, description, order);
+
+		// String
+        public DMString Add(string path, Func<string> getter, int order = 0) => Add(Root, path, getter, order);
+
+		public DMString Add(DMBranch parent, string path, Func<string> getter, int order = 0) => new DMString(parent, path, getter, order);
 
 		// Action
 		public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) => Add(Root, path, action, description, order);

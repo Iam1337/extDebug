@@ -93,9 +93,14 @@ namespace extDebug.Menu
 		public static void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null) => Notice?.Notify(item, nameColor, valueColor);
 
 		// Branch
-		public static DMBranch Add(string path, string description = "", int order = 0) => Container.Add(path, description, order);
+		public static DMBranch Add(string path, string description = "", int order = 0) => Container.Add(Root, path, description, order);
 
 		public static DMBranch Add(DMBranch parent, string path, string description = "", int order = 0) => Container.Add(parent, path, description, order);
+
+        // String
+        public static DMString Add(string path, Func<string> getter, int order = 0) => Container.Add(Root, path, getter, order);
+
+        public static DMString Add(DMBranch parent, string path, Func<string> getter, int order = 0) => Container.Add(parent, path, getter, order);
 
 		// Action
 		public static DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) => Container.Add(Root, path, action, description, order);
