@@ -1,3 +1,15 @@
+# [1.11.0](https://github.com/Iam1337/extDebug/compare/v1.10.0...v1.11.0) (2021-12-29)
+
+
+### Bug Fixes
+
+* **Menu:** updated DM backend ([359373f](https://github.com/Iam1337/extDebug/commit/359373fbc0607a9df0ed8e1c149951e5be4d9ad7))
+
+
+### Features
+
+* **Menu:** added string value ([683d05e](https://github.com/Iam1337/extDebug/commit/683d05e99d4b42b645d4e5d19279a1770fbeba9b))
+
 # [1.10.0](https://github.com/Iam1337/extDebug/compare/v1.9.0...v1.10.0) (2021-12-29)
 
 
