@@ -84,23 +84,26 @@ namespace extDebug.Examples.Menu
 		#region Unity Methods
 
 		private void Start()
-		{
+        {
+            string GetStringValue() => "Example String";
+
             var storage = new DMPlayerStorage();
 			
 			// Simple Menus
 			DM.Add("Simple Menus/Action", action => Debug.Log("Hello/Action"), order: 0);
-			DM.Add("Simple Menus/UInt8", () => _uint8, v => _uint8 = v, order: 1);
-			DM.Add("Simple Menus/UInt16", () => _uint16, v => _uint16 = v, order: 2);
-			DM.Add("Simple Menus/UInt32", () => _uint32, v => _uint32 = v, order: 3);
-			DM.Add("Simple Menus/UInt64", () => _uint64, v => _uint64 = v, order: 4);
-			DM.Add("Simple Menus/Int8", () => _int8, v => _int8 = v, order: 5);
-			DM.Add("Simple Menus/Int16", () => _int16, v => _int16 = v, order: 6);
-			DM.Add("Simple Menus/Int32", () => _int32, v => _int32 = v, order: 7);
-			DM.Add("Simple Menus/Int64", () => _int64, v => _int64 = v, order: 8);
-			DM.Add("Simple Menus/Float", () => _float, v => _float = v, order: 9).SetPrecision(2);
-			DM.Add("Simple Menus/Bool", () => _bool, v => _bool = v, order: 10);
-			DM.Add("Simple Menus/Enum", () => _enum, v => _enum = v, order: 11);
-			DM.Add("Simple Menus/Flags", () => _flags, v => _flags = v, order: 12);
+            DM.Add("Simple Menus/String", GetStringValue, order: 1);
+			DM.Add("Simple Menus/UInt8", () => _uint8, v => _uint8 = v, order: 2);
+			DM.Add("Simple Menus/UInt16", () => _uint16, v => _uint16 = v, order: 3);
+			DM.Add("Simple Menus/UInt32", () => _uint32, v => _uint32 = v, order: 4);
+			DM.Add("Simple Menus/UInt64", () => _uint64, v => _uint64 = v, order: 5);
+			DM.Add("Simple Menus/Int8", () => _int8, v => _int8 = v, order: 6);
+			DM.Add("Simple Menus/Int16", () => _int16, v => _int16 = v, order: 7);
+			DM.Add("Simple Menus/Int32", () => _int32, v => _int32 = v, order: 8);
+			DM.Add("Simple Menus/Int64", () => _int64, v => _int64 = v, order: 9);
+			DM.Add("Simple Menus/Float", () => _float, v => _float = v, order: 10).SetPrecision(2);
+			DM.Add("Simple Menus/Bool", () => _bool, v => _bool = v, order: 11);
+			DM.Add("Simple Menus/Enum", () => _enum, v => _enum = v, order: 12);
+			DM.Add("Simple Menus/Flags", () => _flags, v => _flags = v, order: 13);
 			
 			// Storage
 			DM.Add("Storage Values/UInt8", () => _uint8Storage, v => _uint8Storage = v, order: 1).SetStorage(storage);
