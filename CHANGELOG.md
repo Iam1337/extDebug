@@ -1,3 +1,13 @@
+# [1.10.0](https://github.com/Iam1337/extDebug/compare/v1.9.0...v1.10.0) (2021-12-29)
+
+
+### Features
+
+* **Examples:** added dynamic example ([8ec897b](https://github.com/Iam1337/extDebug/commit/8ec897b1e9cef76c01b3a617099981f3d0826361))
+* **Menu:** added dynamic system ([454214d](https://github.com/Iam1337/extDebug/commit/454214d667b4c521250e2565d200474d9c56d163))
+* **Menu:** added IDMContainer interface ([f2d93f4](https://github.com/Iam1337/extDebug/commit/f2d93f4c5859d55dce5056b83b88bfa03e6c26c3))
+* **Menu:** removed request system ([5c1d08c](https://github.com/Iam1337/extDebug/commit/5c1d08c9201b3c55cc17dc9aaf3362b8288b4bcb))
+
 # [1.9.0](https://github.com/Iam1337/extDebug/compare/v1.8.6...v1.9.0) (2021-12-21)
 
 
