@@ -45,11 +45,7 @@ namespace extDebug.Menu
 
 		private readonly List<DMItem> _items = new List<DMItem>();
 
-		private readonly List<DMRequest> _requests = new List<DMRequest>();
-
-		private readonly List<DMItem> _requestsItems = new List<DMItem>();
-
-		private int _currentItem;
+        private int _currentItem;
 
 		private bool _canRepaint;
 
@@ -68,50 +64,7 @@ namespace extDebug.Menu
 			_valueColor = DM.Colors.Description;
 		}
 
-		// Requests
-		public DMBranchRequest<T> Add<T>(Func<IList<T>> request, Func<T, string> name = null, Func<T, string> description = null)
-		{
-			var item = new DMBranchRequest<T>(request, name, description);
-			_requests.Add(item);
-			return item;
-		}
-
-		public DMActionRequest<T> Add<T>(Func<IList<T>> request, Action<DMAction> action = null, Func<T, string> name = null, Func<T, string> description = null)
-		{
-			var item = new DMActionRequest<T>(request, action, name, description);
-			_requests.Add(item);
-			return item;
-		}
-
-		public DMBoolRequest<T> Add<T>(Func<IList<T>> request, Func<bool> getter, Action<bool> setter = null, Func<T, string> name = null)
-		{
-			var item = new DMBoolRequest<T>(request, getter, setter, name);
-			_requests.Add(item);
-			return item;
-		}
-
-		public DMEnumRequest<TEnum, TObject> Add<TEnum, TObject>(Func<IList<TObject>> request, Func<TEnum> getter, Action<TEnum> setter = null, Func<TObject, string> name = null) where TEnum : struct, Enum
-		{
-			var item = new DMEnumRequest<TEnum, TObject>(request, getter, setter, name);
-			_requests.Add(item);
-			return item;
-		}
-
-		public DMInt32Request<T> Add<T>(Func<IList<T>> request, Func<Int32> getter, Action<Int32> setter = null, Func<T, string> name = null)
-		{
-			var item = new DMInt32Request<T>(request, getter, setter, name);
-			_requests.Add(item);
-			return item;
-		}
-
-		public DMFloatRequest<T> Add<T>(Func<IList<T>> request, Func<float> getter, Action<float> setter = null, Func<T, string> name = null)
-		{
-			var item = new DMFloatRequest<T>(request, getter, setter, name);
-			_requests.Add(item);
-			return item;
-		}
-
-		// Manage
+        // Manage
 		public void Insert(DMItem item)
 		{
 			_items.Add(item);
@@ -200,31 +153,11 @@ namespace extDebug.Menu
 		{
 			if (eventArgs.Tag == EventTag.OpenBranch)
 			{
-				// Requests
-				if (_requestsItems.Count == 0)
-				{
-					foreach (var request in _requests)
-					{
-						_requestsItems.AddRange(request.BuildItems(this));
-					}
-				}
-
-				OnOpen?.Invoke(this);
+                OnOpen?.Invoke(this);
 			}
 			else if (eventArgs.Tag == EventTag.CloseBranch)
 			{
-				// Requests
-				if (_requestsItems.Count != 0)
-				{
-					foreach (var item in _requestsItems)
-					{
-						Remove(item);
-					}
-
-					_requestsItems.Clear();
-				}
-
-				OnClose?.Invoke(this);
+                OnClose?.Invoke(this);
 			}
 			else if (eventArgs.Tag == EventTag.Input)
 			{
