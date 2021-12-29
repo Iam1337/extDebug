@@ -85,10 +85,7 @@ namespace extDebug.Examples.Menu
 
 		private void Start()
 		{
-			string GetName(Component component) => $"{component.name} ({component.GetType().Name})";
-			void ExampleAction(DMAction action) => Debug.Log(action.Data);
-
-			var storage = new DMPlayerStorage();
+            var storage = new DMPlayerStorage();
 			
 			// Simple Menus
 			DM.Add("Simple Menus/Action", action => Debug.Log("Hello/Action"), order: 0);
@@ -118,17 +115,8 @@ namespace extDebug.Examples.Menu
 			DM.Add("Storage Values/Bool", () => _boolStorage, v => _boolStorage = v, order: 10).SetStorage(storage);
 			DM.Add("Storage Values/Enum", () => _enumStorage, v => _enumStorage = v, order: 11).SetStorage(storage);
 			DM.Add("Storage Values/Flags", () => _flagsStorage, v => _flagsStorage = v, order: 12).SetStorage(storage);
-			
-			// Requests Menus
-			// DMBranchRequest
-			var branch = DM.Add("Requests Menus/Branch", order: 0).Add(FindObjectsOfType<Component>, GetName);
-			branch.Add("Debug.Log", action => { Debug.Log(action.Data); });
-			branch.Add("Object.Destroy", action => { Destroy((Component)action.Data); });
 
-			// DMActionRequest
-			DM.Add("Requests Menus/Actions", order: 1).Add(FindObjectsOfType<Component>, ExampleAction);
-
-			DM.Open();
+            DM.Open();
 		}
 
 		#endregion
