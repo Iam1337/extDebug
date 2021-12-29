@@ -85,8 +85,10 @@ namespace extDebug.Menu
 
 		// Container
 		public DMBranch Add(string path, string description = "", int order = 0) => Container.Add(this, path, description, order);
+        
+        public DMString Add(string path, Func<string> getter, int order = 0) => Container.Add(this, path, getter, order);
 
-		public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) => Container.Add(this, path, action, description, order);
+        public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) => Container.Add(this, path, action, description, order);
 
 		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
 
@@ -160,8 +162,7 @@ namespace extDebug.Menu
 				var newBranch = item as DMBranch;
 				if (newBranch == null)
 				{
-					// TODO: Exception.
-					return null;
+                    return null;
 				}
 
 				branch = newBranch;
