@@ -31,6 +31,8 @@ namespace extDebug.Examples.Menu
 		
 		#region Private Vars
 
+        private string _string;
+
 		private byte _uint8;
 
 		private UInt16 _uint16;
@@ -85,13 +87,11 @@ namespace extDebug.Examples.Menu
 
 		private void Start()
         {
-            string GetStringValue() => "Example String";
-
             var storage = new DMPlayerStorage();
 			
 			// Simple Menus
 			DM.Add("Simple Menus/Action", action => Debug.Log("Hello/Action"), order: 0);
-            DM.Add("Simple Menus/String", GetStringValue, order: 1);
+            DM.Add("Values/String", () => _string);
 			DM.Add("Simple Menus/UInt8", () => _uint8, v => _uint8 = v, order: 2);
 			DM.Add("Simple Menus/UInt16", () => _uint16, v => _uint16 = v, order: 3);
 			DM.Add("Simple Menus/UInt32", () => _uint32, v => _uint32 = v, order: 4);
