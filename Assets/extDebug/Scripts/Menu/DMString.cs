@@ -8,7 +8,7 @@ namespace extDebug.Menu
 	{
 		#region Public Methods
 
-		public DMString(DMBranch parent, string path, Func<string> getter, Action<string> setter = null, int order = 0) : base(parent, path, getter, setter, order)
+		public DMString(DMBranch parent, string path, Func<string> getter, int order = 0) : base(parent, path, getter, null, order)
 		{ }
 
 		#endregion
@@ -17,9 +17,9 @@ namespace extDebug.Menu
 
 		protected override string ValueToString(string value) => value;
 
-		protected override string ValueIncrement(string value, bool isShift) => throw new NotImplementedException(nameof(ValueIncrement));
+		protected override string ValueIncrement(string value, bool isShift) => value;
 
-		protected override string ValueDecrement(string value, bool isShift) => throw new NotImplementedException(nameof(ValueDecrement));
+		protected override string ValueDecrement(string value, bool isShift) => value;
 
 		#endregion
 	}
