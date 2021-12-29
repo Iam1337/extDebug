@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
-	public class DMContainer
+	public class DMContainer : IDMContainer
 	{
 		#region Public Vars
 		

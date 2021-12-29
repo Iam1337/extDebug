@@ -101,7 +101,7 @@ namespace extDebug.Menu
 		public DMContainer Container
 		{
 			get => _container ?? _parent?.Container;
-			set => _container = value;
+			internal set => _container = value;
 		}
 
 		#endregion
