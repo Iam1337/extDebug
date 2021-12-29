@@ -3,6 +3,7 @@
 using UnityEngine;
 
 using System;
+using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
@@ -156,11 +157,16 @@ namespace extDebug.Menu
 
 		public static DMFloat Add(DMBranch parent, string path, Func<float> getter, Action<float> setter = null, int order = 0) => new DMFloat(parent, path, getter, setter, order);
 
+        // Dynamic
+        public static DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0) => Add(Root, path, getter, buildCallback, nameCallback, description, order);
+
+        public static DMBranch Add<T>(DMBranch parent, string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0) => Container.Add(parent, path, getter, buildCallback, nameCallback, description, order);
+        
 		#endregion
 
 		#region Private Methods
-		
-		
+
+
 		private static void Update()
 		{
 			Container.Update();

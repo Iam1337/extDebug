@@ -220,9 +220,43 @@ namespace extDebug.Menu
 		public DMFloat Add(string path, Func<float> getter, Action<float> setter = null, int order = 0) => Add(Root, path, getter, setter, order);
 
 		public DMFloat Add(DMBranch parent, string path, Func<float> getter, Action<float> setter = null, int order = 0) => new DMFloat(parent, path, getter, setter, order);
-		
+
+		// Dynamic
+        public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0) => Add(Root, path, getter, buildCallback, nameCallback, description, order);
+
+        public DMBranch Add<T>(DMBranch parent, string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0)
+        {
+            if (getter == null)
+                throw new NullReferenceException(nameof(getter));
+
+            var dynamicBranch = Add(parent, path, description, order);
+            dynamicBranch.OnOpen += dBranch =>
+            {
+                dBranch.Clear();
+
+                var index = 0;
+                var objects = getter.Invoke();
+
+                foreach (var obj in objects)
+                {
+                    var name = nameCallback != null ? nameCallback.Invoke(obj) : obj.ToString();
+                    var objectTemp = obj;
+                    var objectBranch = dBranch.Add(name, string.Empty, index++);
+
+                    objectBranch.Data = objectTemp;
+                    objectBranch.OnOpen += oBranch =>
+                    {
+						oBranch.Clear();
+                        buildCallback?.Invoke(oBranch, objectTemp);
+                    };
+                }
+            };
+
+            return dynamicBranch;
+        }
+
 		#endregion
-		
+
 		#region Private Methods
 
 		private DMContainer()
