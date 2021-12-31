@@ -31,7 +31,7 @@ namespace extDebug.Examples.Menu
 		
 		#region Private Vars
 
-        private string _string = string.Empty;
+        private string _string = "Hello, World!";
 
 		private byte _uint8;
 
@@ -92,7 +92,7 @@ namespace extDebug.Examples.Menu
 		#region Unity Methods
 
 		private void Start()
-		{
+        {
             var storage = new DMPlayerStorage();
 
 			// Simple Menus
