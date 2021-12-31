@@ -87,6 +87,7 @@ It is easy to use, lightweight library initially forked from [hww/varp_debug_men
 
 **Values**<br>
 ```C#
+string _string;
 byte _uint8;
 UInt16 _uint16; // ushort
 UInt32 _uint32; // uint
@@ -98,6 +99,7 @@ Int64 _int64; // long
 float _float;
 bool _bool;
 
+DM.Add("Values/String", () => _string);
 DM.Add("Values/UInt8", () => _uint8, v => _uint8 = v);
 DM.Add("Values/UInt16", () => _uint16, v => _uint16 = v);
 DM.Add("Values/UInt32", () => _uint32, v => _uint32 = v);

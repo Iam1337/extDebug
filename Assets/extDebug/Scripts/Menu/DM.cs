@@ -53,7 +53,7 @@ namespace extDebug.Menu
 		};
 
 		// Container
-		public readonly static DMContainer Container = new DMContainer("Debug Menu");
+		public static readonly DMContainer Container = new DMContainer("Debug Menu");
 		
 		public static DMBranch Root => Container.Root;
 

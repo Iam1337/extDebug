@@ -196,8 +196,7 @@ namespace extDebug.Menu
 				var newBranch = item as DMBranch;
 				if (newBranch == null)
 				{
-					// TODO: Exception.
-					return null;
+                    return null;
 				}
 
 				branch = newBranch;
