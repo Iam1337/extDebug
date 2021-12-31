@@ -74,7 +74,5 @@ namespace extDebug.Menu
 		}
 
 		#endregion
-
-		
-	}
+    }
 }

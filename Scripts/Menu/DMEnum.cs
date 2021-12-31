@@ -46,15 +46,16 @@ namespace extDebug.Menu
 			{
 				var type = typeof(T);
 				if (type.IsDefined(typeof(FlagsAttribute), false))
-				{
-					_flagBranch = Container.Add(null, GetPathName(path), getter.Invoke().ToString());
+                {
+                    _flagBranch = new DMBranch(null, GetPathName(path));
+                    _flagBranch.Container = Container;
 					
 					var values = (T[])Enum.GetValues(type);
 					for (var i = 0; i < values.Length; i++)
 					{
 						var value = values[i];
 
-						Container.Add(_flagBranch, value.ToString(), () =>
+                        _flagBranch.Add(value.ToString(), () =>
 						{
 							var intGetter = (int)(object)getter.Invoke();
 							var intValue = (int)(object)value;
@@ -69,7 +70,7 @@ namespace extDebug.Menu
 						}, i);
 					}
 
-					Container.Add(_flagBranch, "Back", BackAction, string.Empty, int.MaxValue);
+                    _flagBranch.Add("Back", BackAction, string.Empty, int.MaxValue);
 				}
 			}
 		}
@@ -80,21 +81,30 @@ namespace extDebug.Menu
 
 		protected override void OnEvent(EventArgs eventArgs)
 		{
-			if (_flagBranch != null && eventArgs.Tag == EventTag.Input && eventArgs.Key == EventKey.Left)
-			{
-				if (Container.IsVisible)
-					Container.Back();
-			}
-			else if (_flagBranch != null && eventArgs.Tag == EventTag.Input && eventArgs.Key == EventKey.Right)
-			{
-				if (Container.IsVisible)
-					Container.Open(_flagBranch);
-			}
-			else
-			{
-				base.OnEvent(eventArgs);
-			}
-		}
+            if (eventArgs.Tag == EventTag.Input)
+            {
+                if (_flagBranch != null)
+                {
+                    if (eventArgs.Key == EventKey.Left)
+                    {
+                        if (Container.IsVisible)
+                            Container.Back();
+
+						return;
+                    }
+
+                    if (eventArgs.Key == EventKey.Right)
+                    {
+                        if (Container.IsVisible)
+                            Container.Open(_flagBranch);
+
+                        return;
+                    }
+                }
+            }
+
+            base.OnEvent(eventArgs);
+        }
 
 		protected override string ValueToString(T value)
 		{
