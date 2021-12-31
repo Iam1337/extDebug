@@ -20,7 +20,7 @@ namespace extDebug.Notifications
 		}
 
 		#endregion
-		
+
 		#region Public Vars
 
 		public Vector2 ItemsOffset = new Vector2(10, 10);
@@ -28,13 +28,13 @@ namespace extDebug.Notifications
 		public float ItemSpace = 4;
 
 		#endregion
-		
+
 		#region Private Vars
-		
+
 		private GUISkin _currentSkin;
 
 		private readonly List<DNNotice> _notices = new List<DNNotice>();
-		
+
 		#endregion
 
 		#region IDNRender Methods
@@ -48,7 +48,7 @@ namespace extDebug.Notifications
 			noticeData.Position = new Vector2(Screen.width, Screen.height - ItemsOffset.y - currentHeight - (noticeData.Size.y + ItemSpace));
 
 			notice.Data = noticeData;
-			
+
 			_notices.Add(notice);
 		}
 
@@ -61,13 +61,13 @@ namespace extDebug.Notifications
 		{
 			if (!(notice.Data is NoticeData noticeData))
 				return;
-				
+
 			var width = noticeData.Size.x;
 			var height = noticeData.Size.y + ItemSpace;
 
 			var targetX = Screen.width - width - ItemsOffset.x;
 			var targetY = Screen.height - height - currentHeight - ItemsOffset.y;
-			
+
 			// Calculate targets
 			if (timeLeft < 0.2f) targetX += width * 2;
 			else if (timeLeft < 0.7f) targetX -= 50;
@@ -89,7 +89,7 @@ namespace extDebug.Notifications
 			var friction = 0.95f - Time.unscaledDeltaTime * 8;
 			noticeData.Velocity.x *= friction;
 			noticeData.Velocity.y *= friction;
-			
+
 			noticeData.Size = CalcSize(notice.Text);
 
 			currentHeight += height;
@@ -104,7 +104,7 @@ namespace extDebug.Notifications
 			{
 				if (!(notice.Data is NoticeData noticeData))
 					continue;
-				
+
 				var rect = new Rect(noticeData.Position, noticeData.Size);
 
 				GUI.Box(rect, GUIContent.none);
@@ -119,10 +119,12 @@ namespace extDebug.Notifications
 		#endregion
 
 		#region Private Methods
-		
+
 		private Vector2 CalcSize(string text)
 		{
-			return _currentSkin == null ? Vector2.zero : _currentSkin.label.CalcSize(new GUIContent(text)) + new Vector2(10, 10);
+			return _currentSkin == null
+				? Vector2.zero
+				: _currentSkin.label.CalcSize(new GUIContent(text)) + new Vector2(10, 10);
 		}
 
 		#endregion

@@ -10,7 +10,7 @@ namespace extDebug.Menu
 
 		// Debug Menu Hooks
 		void Repaint(DMBranch branch, IReadOnlyList<DMItem> items);
-		
+
 		#endregion
 	}
 

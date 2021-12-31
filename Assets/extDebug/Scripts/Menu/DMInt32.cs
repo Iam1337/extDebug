@@ -19,7 +19,8 @@ namespace extDebug.Menu
 		#region Public Methods
 
 		public DMInt32(DMBranch parent, string path, Func<Int32> getter, Action<Int32> setter = null, int order = 0) : base(parent, path, getter, setter, order)
-		{ }
+		{
+		}
 
 		#endregion
 

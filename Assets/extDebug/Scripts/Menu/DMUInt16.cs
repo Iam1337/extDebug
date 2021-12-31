@@ -9,7 +9,7 @@ namespace extDebug.Menu
 		#region Public Vars
 
 		public UInt16 Step = 1;
-		
+
 		public UInt16 ShiftStep = 10;
 
 		public string Format = "0";

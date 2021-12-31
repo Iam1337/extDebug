@@ -9,14 +9,14 @@ namespace extDebug.Menu
 		public EventKey GetKey(bool isVisible, out bool shift)
 		{
 			shift = false;
-			
+
 			if (Input.GetKey(KeyCode.Q))
 				return EventKey.ToggleMenu;
 
 			if (isVisible)
 			{
 				shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-				
+
 				if (Input.GetKey(KeyCode.W))
 					return EventKey.Up;
 				if (Input.GetKey(KeyCode.S))

@@ -2,12 +2,12 @@
 
 namespace extDebug
 {
-    internal static class FloatUtils
-    {
-        #region Public Vars
+	internal static class FloatUtils
+	{
+		#region Public Vars
 
-        public static readonly string[] Formats = new[] { "0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8" };
+		public static readonly string[] Formats = new[] { "0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8" };
 
-        #endregion
-    }
+		#endregion
+	}
 }

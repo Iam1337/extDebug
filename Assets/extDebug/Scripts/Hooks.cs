@@ -22,7 +22,8 @@ namespace extDebug
 
 		#region Static Public Methods
 
-		static Hooks() => UnityEngine.Object.DontDestroyOnLoad(new GameObject("extDebug Hooks", typeof(HooksBehaviour)));
+		static Hooks() =>
+			UnityEngine.Object.DontDestroyOnLoad(new GameObject("extDebug Hooks", typeof(HooksBehaviour)));
 
 		#endregion
 	}

@@ -10,25 +10,25 @@ namespace extDebug.Menu
 	public class DMContainer : IDMContainer
 	{
 		#region Public Vars
-		
+
 		public readonly DMBranch Root;
-		
+
 		public IDMInput Input;
 
 		public IDMRender Render;
 
 		public bool IsVisible { get; private set; }
-		
+
 		#endregion
 
 		#region Private Vars
-		
+
 		private const float kRepeatDelay = 0.75f;
 
 		private const float kRepeatInterval = 0.1f;
-		
+
 		private DMBranch _currentBranch;
-		
+
 		private DMBranch _previousBranch => _branchesStack.Count > 0 ? _branchesStack.Peek() : null;
 
 		private readonly Stack<DMBranch> _branchesStack = new Stack<DMBranch>();
@@ -42,8 +42,9 @@ namespace extDebug.Menu
 		#region Public Methods
 
 		public DMContainer(string name) : this(name, new DMDefaultInput(), new DMDefaultRender())
-		{ }
-		
+		{
+		}
+
 		public DMContainer(string name, IDMInput input, IDMRender render)
 		{
 			// Create Root object.
@@ -67,12 +68,12 @@ namespace extDebug.Menu
 				_branchesStack.Push(_currentBranch);
 			}
 
-            _currentBranch = branch;
-            _currentBranch.Container = this;
-            _currentBranch.SendEvent(EventArgs.OpenBranch);
+			_currentBranch = branch;
+			_currentBranch.Container = this;
+			_currentBranch.SendEvent(EventArgs.OpenBranch);
 			_currentBranch.RequestRepaint();
 
-            IsVisible = true;
+			IsVisible = true;
 		}
 
 		public void Close()
@@ -81,12 +82,12 @@ namespace extDebug.Menu
 			{
 				_currentBranch.SendEvent(EventArgs.CloseBranch);
 				_currentBranch = _previousBranch;
-				
+
 				_branchesStack.Pop();
 			}
 
 			_currentBranch.RequestRepaint();
-			
+
 			IsVisible = false;
 		}
 
@@ -147,105 +148,124 @@ namespace extDebug.Menu
 				}
 			}
 		}
-		
+
 		public void OnGUI()
 		{
 			// Invoke OnGUI callback
 			(Render as IDMRender_OnGUI)?.OnGUI(IsVisible);
 		}
-		
-		public void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null) => DM.Notify(item, nameColor, valueColor);
-		
+
+		public void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null) =>
+			DM.Notify(item, nameColor, valueColor);
+
 		// Branch
-		public DMBranch Add(string path, string description = "", int order = 0) => Root.Get(path) ?? new DMBranch(Root, path, description, order);
+		public DMBranch Add(string path, string description = "", int order = 0) =>
+			Root.Get(path) ?? new DMBranch(Root, path, description, order);
 
 		// String
-        public DMString Add(string path, Func<string> getter, int order = 0) => new DMString(Root, path, getter, order);
+		public DMString Add(string path, Func<string> getter, int order = 0) => new DMString(Root, path, getter, order);
 
-        // Action
-		public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) => new DMAction(Root, path, description, action, order);
+		// Action
+		public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) =>
+			new DMAction(Root, path, description, action, order);
 
-        // Bool
-		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) => new DMBool(Root, path, getter, setter, order);
-        
-        // Enums
-        public DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0) where T : struct, Enum => new DMEnum<T>(Root, path, getter, setter, order);
+		// Bool
+		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) =>
+			new DMBool(Root, path, getter, setter, order);
 
-        // UInt8
-		public DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, int order = 0) => new DMUInt8(Root, path, getter, setter, order);
-		
+		// Enums
+		public DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0)
+			where T : struct, Enum => new DMEnum<T>(Root, path, getter, setter, order);
+
+		// UInt8
+		public DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, int order = 0) =>
+			new DMUInt8(Root, path, getter, setter, order);
+
 		// UInt16
-		public DMUInt16 Add(string path, Func<UInt16> getter, Action<UInt16> setter = null, int order = 0) => new DMUInt16(Root, path, getter, setter, order);
-		
+		public DMUInt16 Add(string path, Func<UInt16> getter, Action<UInt16> setter = null, int order = 0) =>
+			new DMUInt16(Root, path, getter, setter, order);
+
 		// UInt32
-		public DMUInt32 Add(string path, Func<UInt32> getter, Action<UInt32> setter = null, int order = 0) => new DMUInt32(Root, path, getter, setter, order);
+		public DMUInt32 Add(string path, Func<UInt32> getter, Action<UInt32> setter = null, int order = 0) =>
+			new DMUInt32(Root, path, getter, setter, order);
 
 		// UInt64
-		public DMUInt64 Add(string path, Func<UInt64> getter, Action<UInt64> setter = null, int order = 0) => new DMUInt64(Root, path, getter, setter, order);
-		
+		public DMUInt64 Add(string path, Func<UInt64> getter, Action<UInt64> setter = null, int order = 0) =>
+			new DMUInt64(Root, path, getter, setter, order);
+
 		// Int8
-		public DMInt8 Add(string path, Func<sbyte> getter, Action<sbyte> setter = null, int order = 0) => new DMInt8(Root, path, getter, setter, order);
-		
+		public DMInt8 Add(string path, Func<sbyte> getter, Action<sbyte> setter = null, int order = 0) =>
+			new DMInt8(Root, path, getter, setter, order);
+
 		// Int16
-		public DMInt16 Add(string path, Func<Int16> getter, Action<Int16> setter = null, int order = 0) => new DMInt16(Root, path, getter, setter, order);
+		public DMInt16 Add(string path, Func<Int16> getter, Action<Int16> setter = null, int order = 0) =>
+			new DMInt16(Root, path, getter, setter, order);
 
 		// Int32
-		public DMInt32 Add(string path, Func<Int32> getter, Action<Int32> setter = null, int order = 0) => new DMInt32(Root, path, getter, setter, order);
+		public DMInt32 Add(string path, Func<Int32> getter, Action<Int32> setter = null, int order = 0) =>
+			new DMInt32(Root, path, getter, setter, order);
 
 		// Int64
-		public DMInt64 Add(string path, Func<Int64> getter, Action<Int64> setter = null, int order = 0) => new DMInt64(Root, path, getter, setter, order);
+		public DMInt64 Add(string path, Func<Int64> getter, Action<Int64> setter = null, int order = 0) =>
+			new DMInt64(Root, path, getter, setter, order);
 
 		// Float
-		public DMFloat Add(string path, Func<float> getter, Action<float> setter = null, int order = 0) => new DMFloat(Root, path, getter, setter, order);
+		public DMFloat Add(string path, Func<float> getter, Action<float> setter = null, int order = 0) =>
+			new DMFloat(Root, path, getter, setter, order);
 
 		// Vector 2
-        public DMVector2 Add(string path, Func<Vector2> getter, Action<Vector2> setter = null, int order = 0) => new DMVector2(Root, path, getter, setter, order);
+		public DMVector2 Add(string path, Func<Vector2> getter, Action<Vector2> setter = null, int order = 0) =>
+			new DMVector2(Root, path, getter, setter, order);
 
 		// Vector 3
-		public DMVector3 Add(string path, Func<Vector3> getter, Action<Vector3> setter = null, int order = 0) => new DMVector3(Root, path, getter, setter, order);
+		public DMVector3 Add(string path, Func<Vector3> getter, Action<Vector3> setter = null, int order = 0) =>
+			new DMVector3(Root, path, getter, setter, order);
 
 		// Vector 4
-		public DMVector4 Add(string path, Func<Vector4> getter, Action<Vector4> setter = null, int order = 0) => new DMVector4(Root, path, getter, setter, order);
+		public DMVector4 Add(string path, Func<Vector4> getter, Action<Vector4> setter = null, int order = 0) =>
+			new DMVector4(Root, path, getter, setter, order);
 
 		// Dynamic
-		public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0)
-        {
-            if (getter == null)
-                throw new NullReferenceException(nameof(getter));
+		public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null,
+			Func<T, string> nameCallback = null, string description = "", int order = 0)
+		{
+			if (getter == null)
+				throw new NullReferenceException(nameof(getter));
 
-            var dynamicBranch = Add( path, description, order);
-            dynamicBranch.OnOpen += dBranch =>
-            {
-                dBranch.Clear();
+			var dynamicBranch = Add(path, description, order);
+			dynamicBranch.OnOpen += dBranch =>
+			{
+				dBranch.Clear();
 
-                var index = 0;
-                var objects = getter.Invoke();
+				var index = 0;
+				var objects = getter.Invoke();
 
-                foreach (var obj in objects)
-                {
-                    var name = nameCallback != null ? nameCallback.Invoke(obj) : obj.ToString();
-                    var objectTemp = obj;
-                    var objectBranch = dBranch.Add(name, string.Empty, index++);
+				foreach (var obj in objects)
+				{
+					var name = nameCallback != null ? nameCallback.Invoke(obj) : obj.ToString();
+					var objectTemp = obj;
+					var objectBranch = dBranch.Add(name, string.Empty, index++);
 
-                    objectBranch.Data = objectTemp;
-                    objectBranch.OnOpen += oBranch =>
-                    {
+					objectBranch.Data = objectTemp;
+					objectBranch.OnOpen += oBranch =>
+					{
 						oBranch.Clear();
-                        buildCallback?.Invoke(oBranch, objectTemp);
-                    };
-                }
-            };
+						buildCallback?.Invoke(oBranch, objectTemp);
+					};
+				}
+			};
 
-            return dynamicBranch;
-        }
+			return dynamicBranch;
+		}
 
 		#endregion
 
 		#region Private Methods
 
 		private DMContainer()
-		{ }
-		
+		{
+		}
+
 		private EventKey GetKey(float currentTime, out bool shift)
 		{
 			if (Input != null)
@@ -268,10 +288,10 @@ namespace extDebug.Menu
 			}
 
 			shift = false;
-			
+
 			return EventKey.None;
 		}
-		
+
 		private void SendKey(EventKey eventKey, bool isShift)
 		{
 			if (eventKey == EventKey.ToggleMenu)

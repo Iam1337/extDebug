@@ -4,8 +4,8 @@ using System;
 
 namespace extDebug.Menu
 {
-    public class DMAction : DMItem
-    {
+	public class DMAction : DMItem
+	{
 		#region Private Vars
 
 		private readonly Action<DMAction> _action;
@@ -13,7 +13,7 @@ namespace extDebug.Menu
 		#endregion
 
 		#region Public Methods
-		
+
 		public DMAction(DMBranch parent, string path, string description = null, Action<DMAction> action = null, int order = 0) : base(parent, path, description, order)
 		{
 			_action = action;

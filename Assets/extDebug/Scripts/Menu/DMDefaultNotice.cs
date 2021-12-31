@@ -9,15 +9,15 @@ using extDebug.Notifications;
 
 namespace extDebug.Menu
 {
-    internal class DMDefaultNotice : IDMNotice
-    {
-	    #region Private Vars
+	internal class DMDefaultNotice : IDMNotice
+	{
+		#region Private Vars
 
-	    private const float kDefaultDuration = 5;
+		private const float kDefaultDuration = 5;
 
-	    private readonly StringBuilder _builder = new StringBuilder();
+		private readonly StringBuilder _builder = new StringBuilder();
 
-	    #endregion
+		#endregion
 
 		#region Public Methods
 
@@ -38,21 +38,21 @@ namespace extDebug.Menu
 				_builder.Append(item.Value);
 				_builder.Append(CloseColorTag(valueColor));
 			}
-			
+
 			// Show notification
 			DN.Notify(item, _builder.ToString(), kDefaultDuration);
 		}
 
 		#endregion
 
-	    #region Private Methods
+		#region Private Methods
 
-	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-	    private string OpenColorTag(Color? color) => color != null ? $"<color=#{ColorUtility.ToHtmlStringRGB(color.Value)}>" : string.Empty;
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private string OpenColorTag(Color? color) => color != null ? $"<color=#{ColorUtility.ToHtmlStringRGB(color.Value)}>" : string.Empty;
 
-	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-	    private string CloseColorTag(Color? color) => color != null ? "</color>" : string.Empty;
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private string CloseColorTag(Color? color) => color != null ? "</color>" : string.Empty;
 
-	    #endregion
+		#endregion
 	}
 }
