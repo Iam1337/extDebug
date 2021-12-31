@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace extDebug.Menu
 {
@@ -46,9 +47,17 @@ namespace extDebug.Menu
 
 		// Float
         public DMFloat Add(string path, Func<float> getter, Action<float> setter = null, int order = 0);
+        // Vector 2
+        public DMVector2 Add(string path, Func<Vector2> getter, Action<Vector2> setter = null, int order = 0);
 
-		// Dynamic
-        DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0);
+        // Vector 3
+        public DMVector3 Add(string path, Func<Vector3> getter, Action<Vector3> setter = null, int order = 0);
+
+        // Vector 4
+        public DMVector4 Add(string path, Func<Vector4> getter, Action<Vector4> setter = null, int order = 0);
+
+        // Dynamic
+        public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0);
 
         #endregion
     }
