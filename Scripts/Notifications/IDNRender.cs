@@ -1,7 +1,5 @@
 ﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
 
-using UnityEngine;
-
 namespace extDebug.Notifications
 {
 	public interface IDNRender
@@ -25,7 +23,7 @@ namespace extDebug.Notifications
 
 		#endregion
 	}
-	
+
 	public interface IDNRender_Update
 	{
 		#region Methods

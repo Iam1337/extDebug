@@ -4,22 +4,22 @@ using System;
 
 namespace extDebug.Notifications
 {
-    public class DNNotice
-    {
-        #region Public Vars
+	public class DNNotice
+	{
+		#region Public Vars
 
-	    public float StartTime;
+		public float StartTime;
 
-	    public float Duration;
+		public float Duration;
 
-	    public string Text;
+		public string Text;
 
-	    public object Context;
+		public object Context;
 
-	    public object Data;
+		public object Data;
 
-	    public Action<object> LeftCallback;
+		public Action<object> LeftCallback;
 
-	    #endregion
-    }
+		#endregion
+	}
 }

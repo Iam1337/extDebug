@@ -9,7 +9,7 @@ namespace extDebug.Menu
 		#region Public Vars
 
 		public sbyte Step = 1;
-		
+
 		public sbyte ShiftStep = 10;
 
 		public string Format = "0";
@@ -27,9 +27,11 @@ namespace extDebug.Menu
 
 		protected override string ValueToString(sbyte value) => value.ToString(Format);
 
-		protected override sbyte ValueIncrement(sbyte value, bool isShift) => (sbyte)(value + (isShift ? ShiftStep : Step));
+		protected override sbyte ValueIncrement(sbyte value, bool isShift) =>
+			(sbyte)(value + (isShift ? ShiftStep : Step));
 
-		protected override sbyte ValueDecrement(sbyte value, bool isShift) => (sbyte)(value - (isShift ? ShiftStep : Step));
+		protected override sbyte ValueDecrement(sbyte value, bool isShift) =>
+			(sbyte)(value - (isShift ? ShiftStep : Step));
 
 		#endregion
 	}

@@ -4,11 +4,11 @@ using System;
 
 namespace extDebug.Menu
 {
-    public class DMEnum<T> : DMValue<T> where T : struct, Enum
-    {
-        #region Static Private Methods
+	public class DMEnum<T> : DMValue<T> where T : struct, Enum
+	{
+		#region Static Private Methods
 
-        private static T NextEnum(T value)
+		private static T NextEnum(T value)
 		{
 			var length = Enum.GetValues(typeof(T)).Length;
 			var index = Convert.ToInt64(value) + 1;
@@ -16,7 +16,7 @@ namespace extDebug.Menu
 			if (index >= length)
 				index = 0;
 
-			return (T) Enum.ToObject(typeof(T), index);
+			return (T)Enum.ToObject(typeof(T), index);
 		}
 
 		private static T PrevEnum(T value)
@@ -27,7 +27,7 @@ namespace extDebug.Menu
 			if (index < 0)
 				index = length - 1;
 
-			return (T) Enum.ToObject(typeof(T), index);
+			return (T)Enum.ToObject(typeof(T), index);
 		}
 
 		#endregion
@@ -46,16 +46,16 @@ namespace extDebug.Menu
 			{
 				var type = typeof(T);
 				if (type.IsDefined(typeof(FlagsAttribute), false))
-                {
-                    _flagBranch = new DMBranch(null, GetPathName(path));
-                    _flagBranch.Container = Container;
-					
+				{
+					_flagBranch = new DMBranch(null, GetPathName(path));
+					_flagBranch.Container = Container;
+
 					var values = (T[])Enum.GetValues(type);
 					for (var i = 0; i < values.Length; i++)
 					{
 						var value = values[i];
 
-                        _flagBranch.Add(value.ToString(), () =>
+						_flagBranch.Add(value.ToString(), () =>
 						{
 							var intGetter = (int)(object)getter.Invoke();
 							var intValue = (int)(object)value;
@@ -70,41 +70,41 @@ namespace extDebug.Menu
 						}, i);
 					}
 
-                    _flagBranch.Add("Back", BackAction, string.Empty, int.MaxValue);
+					_flagBranch.Add("Back", BackAction, string.Empty, int.MaxValue);
 				}
 			}
 		}
-		
+
 		#endregion
 
 		#region Protected Methods
 
 		protected override void OnEvent(EventArgs eventArgs)
 		{
-            if (eventArgs.Tag == EventTag.Input)
-            {
-                if (_flagBranch != null)
-                {
-                    if (eventArgs.Key == EventKey.Left)
-                    {
-                        if (Container.IsVisible)
-                            Container.Back();
+			if (eventArgs.Tag == EventTag.Input)
+			{
+				if (_flagBranch != null)
+				{
+					if (eventArgs.Key == EventKey.Left)
+					{
+						if (Container.IsVisible)
+							Container.Back();
 
 						return;
-                    }
+					}
 
-                    if (eventArgs.Key == EventKey.Right)
-                    {
-                        if (Container.IsVisible)
-                            Container.Open(_flagBranch);
+					if (eventArgs.Key == EventKey.Right)
+					{
+						if (Container.IsVisible)
+							Container.Open(_flagBranch);
 
-                        return;
-                    }
-                }
-            }
+						return;
+					}
+				}
+			}
 
-            base.OnEvent(eventArgs);
-        }
+			base.OnEvent(eventArgs);
+		}
 
 		protected override string ValueToString(T value)
 		{
@@ -127,7 +127,7 @@ namespace extDebug.Menu
 		#endregion
 
 		#region Private Methods
-		
+
 		private void BackAction(DMAction action)
 		{
 			Container.Back();

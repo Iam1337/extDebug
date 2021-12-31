@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace extDebug.Menu
 {
-    public interface IDMNotice
-    {
-	    #region Methods
+	public interface IDMNotice
+	{
+		#region Methods
 
-	    void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null);
+		void Notify(DMItem item, Color? nameColor = null, Color? valueColor = null);
 
-	    #endregion
-    }
+		#endregion
+	}
 }

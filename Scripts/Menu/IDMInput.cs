@@ -4,23 +4,23 @@ namespace extDebug.Menu
 {
 	public enum EventTag
 	{
-		None, // -
-		OpenBranch, // Menu open
-		CloseBranch, // Menu closed
-		Repaint, // Repaint item
-		Input // Process input
+		None,			// -
+		OpenBranch,		// Menu open
+		CloseBranch,	// Menu closed
+		Repaint,		// Repaint item
+		Input			// Process input
 	}
 
 	public enum EventKey
 	{
-		None, // -
+		None,		// -
 		ToggleMenu, // Key menu toggled
-		Up,    // Key up
-		Down,  // Key down
-		Left,  // Key left
-		Right, // Key right
-		Back,  // Key back
-		Reset  // Key reset value
+		Up,			// Key up
+		Down,		// Key down
+		Left,		// Key left
+		Right,		// Key right
+		Back,		// Key back
+		Reset		// Key reset value
 	}
 
 	public class EventArgs
@@ -28,21 +28,21 @@ namespace extDebug.Menu
 		#region Static Public Methods
 
 		public static EventArgs OpenBranch => new EventArgs { Tag = EventTag.OpenBranch };
-		
+
 		public static EventArgs CloseBranch => new EventArgs { Tag = EventTag.CloseBranch };
-		
+
 		public static EventArgs Repaint => new EventArgs { Tag = EventTag.Repaint };
-		
+
 		#endregion
-		
+
 		#region Public Vars
 
 		public EventTag Tag;
-		
+
 		public EventKey Key;
-		
+
 		public bool IsShift;
-		
+
 		#endregion
 	}
 

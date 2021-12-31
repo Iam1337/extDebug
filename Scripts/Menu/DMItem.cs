@@ -7,8 +7,8 @@ using System.Runtime.CompilerServices;
 
 namespace extDebug.Menu
 {
-    public abstract class DMItem
-    {
+	public abstract class DMItem
+	{
 		#region External
 
 		private const float kFlashDuration = 0.3f;
@@ -34,7 +34,8 @@ namespace extDebug.Menu
 		#region Static Private Methods
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static float _flashMap(float flashTime) => Mathf.Clamp01((Time.unscaledTime - flashTime) / kFlashDuration);
+		private static float _flashMap(float flashTime) =>
+			Mathf.Clamp01((Time.unscaledTime - flashTime) / kFlashDuration);
 
 		#endregion
 
@@ -105,7 +106,7 @@ namespace extDebug.Menu
 		}
 
 		#endregion
-		
+
 		#region Protected Vars
 
 		protected readonly DMBranch _parent;
@@ -157,7 +158,7 @@ namespace extDebug.Menu
 		{
 			_flashValueTime = Time.unscaledTime;
 			_flashValueColor = color;
-			
+
 			_parent?.RequestRepaint(kFlashDuration);
 
 			if (Container.IsVisible == false && notify)
@@ -185,5 +186,5 @@ namespace extDebug.Menu
 		protected abstract void OnEvent(EventArgs eventArgs);
 
 		#endregion
-    }
+	}
 }

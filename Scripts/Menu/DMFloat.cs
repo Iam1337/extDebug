@@ -8,7 +8,7 @@ namespace extDebug.Menu
 {
 	public class DMFloat : DMValue<float>
 	{
-        #region Public Vars
+		#region Public Vars
 
 		public string Format;
 
@@ -45,7 +45,7 @@ namespace extDebug.Menu
 
 		#region Private Methods
 
-		protected override string ValueToString(float value) => value.ToString(string.IsNullOrEmpty(Format) ? FloatUtils.Formats[_precision] : Format );
+		protected override string ValueToString(float value) => value.ToString(string.IsNullOrEmpty(Format) ? FloatUtils.Formats[_precision] : Format);
 
 		protected override float ValueIncrement(float value, bool isShift) => (Mathf.Floor(value * _floatPointScale + 0.1f) + (isShift ? ShiftStep : Step)) / _floatPointScale;
 

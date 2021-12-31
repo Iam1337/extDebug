@@ -19,7 +19,7 @@ namespace extDebug.Menu
 		#endregion
 
 		#region IDMRender Methods
-		
+
 		void IDMRender.Repaint(DMBranch branch, IReadOnlyList<DMItem> items)
 		{
 			const string kSuffix = " ";
@@ -91,12 +91,12 @@ namespace extDebug.Menu
 
 			GUI.Label(rect, _text);
 		}
-		
-        #endregion
 
-        #region Private Methods
+		#endregion
 
-        private void CalculateLengths(DMBranch branch, IReadOnlyList<DMItem> items, int space, out int fullLength, out int maxNameLength, out int maxValueLength)
+		#region Private Methods
+
+		private void CalculateLengths(DMBranch branch, IReadOnlyList<DMItem> items, int space, out int fullLength, out int maxNameLength, out int maxValueLength)
 		{
 			maxNameLength = 0;
 			maxValueLength = 0;

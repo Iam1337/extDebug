@@ -5,18 +5,17 @@ using UnityEngine;
 namespace extDebug
 {
 	internal sealed class HooksBehaviour : MonoBehaviour
-    {
-	    #region Unity Methods
+	{
+		#region Unity Methods
 
-	    private void Update() => Hooks.Update?.Invoke();
+		private void Update() => Hooks.Update?.Invoke();
 
-	    private void LateUpdate() => Hooks.LateUpdate?.Invoke();
+		private void LateUpdate() => Hooks.LateUpdate?.Invoke();
 
-	    private void FixedUpdate() => Hooks.FixedUpdate?.Invoke();
+		private void FixedUpdate() => Hooks.FixedUpdate?.Invoke();
 
-	    private void OnGUI() => Hooks.OnGUI?.Invoke();
+		private void OnGUI() => Hooks.OnGUI?.Invoke();
 
-	    #endregion
-    }
+		#endregion
+	}
 }
- 

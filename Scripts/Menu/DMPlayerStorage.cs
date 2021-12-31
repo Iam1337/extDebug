@@ -9,7 +9,7 @@ namespace extDebug.Menu
 	public class DMPlayerStorage : IDMStorage
 	{
 		#region IDMStorage Methods
-		
+
 		bool IDMStorage.Save(string key, object value)
 		{
 			if (string.IsNullOrEmpty(key) || value == null)
@@ -20,7 +20,7 @@ namespace extDebug.Menu
 				return false;
 
 			PlayerPrefs.SetString(key, Convert.ToString(value));
-			
+
 			return true;
 		}
 
@@ -28,17 +28,17 @@ namespace extDebug.Menu
 		{
 			if (string.IsNullOrEmpty(key) || valueType == null)
 				return null;
-			
+
 			if (PlayerPrefs.HasKey(key))
 			{
 				var stringValue = PlayerPrefs.GetString(key);
 
 				if (valueType == typeof(string))
 					return stringValue;
-				
+
 				if (valueType == typeof(sbyte))
 					return Convert.ToSByte(stringValue);
-				
+
 				if (valueType == typeof(Int16))
 					return Convert.ToInt16(stringValue);
 
@@ -69,10 +69,10 @@ namespace extDebug.Menu
 				if (valueType == typeof(bool))
 					return Convert.ToBoolean(stringValue);
 			}
-			
+
 			return null;
 		}
 
 		#endregion
-    }
+	}
 }
