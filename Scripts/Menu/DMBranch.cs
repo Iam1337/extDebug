@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
-	public class DMBranch : DMItem, IDMContainer
+	public class DMBranch : DMItem, IDMBranch
 	{
 		#region Public Methods
 
@@ -87,7 +87,8 @@ namespace extDebug.Menu
 		public DMBranch Add(string path, string description = "", int order = 0) =>
 			Get(path) ?? new DMBranch(this, path, description, order);
 
-		public DMString Add(string path, Func<string> getter, int order = 0) => new DMString(this, path, getter, order);
+		public DMString Add(string path, Func<string> getter, int order = 0) => 
+			new DMString(this, path, getter, order);
 
 		public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) =>
 			new DMAction(this, path, description, action, order);
@@ -95,8 +96,8 @@ namespace extDebug.Menu
 		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) =>
 			new DMBool(this, path, getter, setter, order);
 
-		public DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0)
-			where T : struct, Enum => new DMEnum<T>(this, path, getter, setter, order);
+		public DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0) where T : struct, Enum => 
+			new DMEnum<T>(this, path, getter, setter, order);
 
 		public DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, int order = 0) =>
 			new DMUInt8(this, path, getter, setter, order);
@@ -134,8 +135,7 @@ namespace extDebug.Menu
 		public DMVector4 Add(string path, Func<Vector4> getter, Action<Vector4> setter = null, int order = 0) =>
 			new DMVector4(this, path, getter, setter, order);
 
-		public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null,
-			Func<T, string> nameCallback = null, string description = "", int order = 0)
+		public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0)
 		{
 			if (getter == null)
 				throw new NullReferenceException(nameof(getter));

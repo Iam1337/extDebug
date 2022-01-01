@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
-	public interface IDMContainer
+	public interface IDMBranch
 	{
 		#region Methods
 
