@@ -109,8 +109,8 @@ namespace extDebug.Menu
 			Container.Add(path, getter, setter, order);
 
 		// Enum
-		public static DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0)
-			where T : struct, Enum => Container.Add(path, getter, setter, order);
+		public static DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0) where T : struct, Enum =>
+			Container.Add(path, getter, setter, order);
 
 		// UInt8
 		public static DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, int order = 0) =>
