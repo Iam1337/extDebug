@@ -63,6 +63,10 @@ namespace extDebug.Examples.Menu
 
 		private Color _color;
 
+		private Vector2Int _vector2Int;
+
+		private Vector3Int _vector3Int;
+
 		private ExampleEnums _enum;
 
 		private ExampleFlags _flags;
@@ -117,8 +121,10 @@ namespace extDebug.Examples.Menu
 			DM.Add("Simple Menus/Vector 2", () => _vector2, v => _vector2 = v, order: 14).SetPrecision(2);
 			DM.Add("Simple Menus/Vector 3", () => _vector3, v => _vector3 = v, order: 15).SetPrecision(2);
 			DM.Add("Simple Menus/Vector 4", () => _vector4, v => _vector4 = v, order: 16).SetPrecision(2);
-			DM.Add("Simple Menus/Quaternion", () => _quaternion, v => _quaternion = v, order: 16).SetPrecision(2);
-			DM.Add("Simple Menus/Color", () => _color, v => _color = v, order: 16).SetPrecision(2);
+			DM.Add("Simple Menus/Quaternion", () => _quaternion, v => _quaternion = v, order: 17).SetPrecision(2);
+			DM.Add("Simple Menus/Color", () => _color, v => _color = v, order: 18).SetPrecision(2);
+			DM.Add("Simple Menus/Vector 2 Int", () => _vector2Int, v => _vector2Int = v, order: 19);
+			DM.Add("Simple Menus/Vector 3 Int", () => _vector3Int, v => _vector3Int = v, order: 20);
 
 			// Storage
 			DM.Add("Storage Values/UInt8", () => _uint8Storage, v => _uint8Storage = v, order: 1).SetStorage(storage);

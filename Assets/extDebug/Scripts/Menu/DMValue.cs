@@ -6,11 +6,15 @@ namespace extDebug.Menu
 {
 	public abstract class DMValue<T> : DMItem
 	{
+		#region Protected Methods
+
+		protected readonly Func<T> _getter;
+
+		protected readonly Action<T> _setter;
+
+		#endregion
+
 		#region Private Vars
-
-		private readonly Func<T> _getter;
-
-		private readonly Action<T> _setter;
 
 		private readonly string _path;
 

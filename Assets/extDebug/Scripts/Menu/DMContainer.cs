@@ -233,6 +233,14 @@ namespace extDebug.Menu
 		public DMColor Add(string path, Func<Color> getter, Action<Color> setter = null, int order = 0) =>
 			Root.Add(path, getter, setter, order);
 
+		// Vector 2 Int
+		public DMVector2Int Add(string path, Func<Vector2Int> getter, Action<Vector2Int> setter = null, int order = 0) =>
+			Root.Add(path, getter, setter, order);
+
+		// Vector 3 Int
+		public DMVector3Int Add(string path, Func<Vector3Int> getter, Action<Vector3Int> setter = null, int order = 0) =>
+			Root.Add(path, getter, setter, order);
+
 		// Dynamic
 		public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0) =>
 			Root.Add(path, getter, buildCallback, nameCallback, description, order);
