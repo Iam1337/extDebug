@@ -141,7 +141,7 @@ namespace extDebug.Menu
 					{
 						item.SendEvent(EventArgs.Repaint);
 					}
-
+					
 					Render.Repaint(_currentBranch, items);
 
 					_currentBranch.CompleteRepaint();

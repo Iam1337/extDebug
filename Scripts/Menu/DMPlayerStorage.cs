@@ -14,11 +14,7 @@ namespace extDebug.Menu
 		{
 			if (string.IsNullOrEmpty(key) || value == null)
 				return false;
-
-			var valueType = value.GetType();
-			if (valueType.IsEnum)
-				return false;
-
+			
 			PlayerPrefs.SetString(key, Convert.ToString(value));
 
 			return true;
@@ -68,6 +64,9 @@ namespace extDebug.Menu
 
 				if (valueType == typeof(bool))
 					return Convert.ToBoolean(stringValue);
+
+				if (valueType.IsEnum && Enum.TryParse(valueType, stringValue, out var enumValue))
+					return enumValue;
 			}
 
 			return null;
