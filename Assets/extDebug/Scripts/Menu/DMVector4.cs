@@ -6,7 +6,7 @@ using System;
 
 namespace extDebug.Menu
 {
-	public class DMVector4 : DMVector<Vector4>
+	public class DMVector4 : DMUnityFloatStruct<Vector4>
 	{
 		#region Public Methods
 
@@ -17,9 +17,9 @@ namespace extDebug.Menu
 
 		#region Protected Methods
 
-		protected override float VectorFieldGetter(Vector4 vector, int fieldIndex) => vector[fieldIndex];
+		protected override float StructFieldGetter(Vector4 vector, int fieldIndex) => vector[fieldIndex];
 
-		protected override void VectorFieldSetter(ref Vector4 vector, int fieldIndex, float value) => vector[fieldIndex] = value;
+		protected override void StructFieldSetter(ref Vector4 vector, int fieldIndex, float value) => vector[fieldIndex] = value;
 
 		#endregion
 	}

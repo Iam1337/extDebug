@@ -41,8 +41,7 @@ namespace extDebug.Notifications
 
 		public static void Notify(string text, float duration = kDurationDefault) => Notify(null, text, duration);
 
-		public static void Notify(object context, string text, float duration = kDurationDefault,
-			Action<object> leftCallback = null)
+		public static void Notify(object context, string text, float duration = kDurationDefault, Action<object> leftCallback = null)
 		{
 			if (context != null && _noticesContext.TryGetValue(context, out var notice))
 			{
@@ -100,7 +99,7 @@ namespace extDebug.Notifications
 				if (notice.Duration < 0) _timeLeft = 1;
 				else _timeLeft = notice.StartTime - (Time.unscaledTime - notice.Duration);
 
-				Render?.Repaint(notice, _timeLeft, ref _currentHeight);
+				Render.Repaint(notice, _timeLeft, ref _currentHeight);
 
 				if (_timeLeft <= 0)
 					_noticesToRemove.Add(notice);

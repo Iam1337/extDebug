@@ -154,6 +154,14 @@ namespace extDebug.Menu
 		public static DMVector4 Add(string path, Func<Vector4> getter, Action<Vector4> setter = null, int order = 0) =>
 			Container.Add(path, getter, setter, order);
 
+		// Quaternion
+		public static DMQuaternion Add(string path, Func<Quaternion> getter, Action<Quaternion> setter = null, int order = 0) =>
+			Container.Add(path, getter, setter, order);
+
+		// Color
+		public static DMColor Add(string path, Func<Color> getter, Action<Color> setter = null, int order = 0) =>
+			Container.Add(path, getter, setter, order);
+
 		// Dynamic
 		public static DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0) =>
 			Container.Add(path, getter, buildCallback, nameCallback, description, order);

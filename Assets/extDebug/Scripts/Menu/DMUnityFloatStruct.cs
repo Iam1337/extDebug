@@ -6,7 +6,7 @@ using System;
 
 namespace extDebug.Menu
 {
-	public abstract class DMVector<T> : DMValue<T> where T : struct, IFormattable
+	public abstract class DMUnityFloatStruct<TStruct> : DMValue<TStruct> where TStruct : struct, IFormattable
 	{
 		#region Public Vars
 
@@ -45,11 +45,12 @@ namespace extDebug.Menu
 
 		#region Protected Methods
 
-		protected DMVector(DMBranch parent, string path, Func<T> getter, Action<T> setter = null, int order = 0) : base(parent, path, getter, setter, order)
+		protected DMUnityFloatStruct(DMBranch parent, string path, Func<TStruct> getter, Action<TStruct> setter = null, int order = 0) : base(parent, path, getter, setter, order)
 		{
 			if (setter != null)
 			{
-				var count = VectorUtils.GetFieldsCount(typeof(T));
+				var names = StructUtils.GetFieldsNames(typeof(TStruct));
+				var count = StructUtils.GetFieldsCount(typeof(TStruct));
 
 				_fields = new DMFloat[count];
 				_fieldsBranch = new DMBranch(null, GetPathName(path));
@@ -58,11 +59,11 @@ namespace extDebug.Menu
 				for (var i = 0; i < count; i++)
 				{
 					var fieldIndex = i;
-					_fields[i] = _fieldsBranch.Add(VectorUtils.Fields[i],
-						() => VectorFieldGetter(getter.Invoke(), fieldIndex), v =>
+					_fields[i] = _fieldsBranch.Add(names[i],
+						() => StructFieldGetter(getter.Invoke(), fieldIndex), v =>
 						{
 							var vector = getter.Invoke();
-							VectorFieldSetter(ref vector, fieldIndex, v);
+							StructFieldSetter(ref vector, fieldIndex, v);
 							setter.Invoke(vector);
 						}, i);
 				}
@@ -100,33 +101,33 @@ namespace extDebug.Menu
 			base.OnEvent(eventArgs);
 		}
 
-		protected sealed override string ValueToString(T value) => value.ToString(string.IsNullOrEmpty(Format) ? FloatUtils.Formats[_precision] : Format, null);
+		protected sealed override string ValueToString(TStruct value) => value.ToString(string.IsNullOrEmpty(Format) ? FloatUtils.Formats[_precision] : Format, null);
 
-		protected sealed override T ValueIncrement(T value, bool isShift)
+		protected sealed override TStruct ValueIncrement(TStruct value, bool isShift)
 		{
-			var count = VectorUtils.GetFieldsCount(typeof(T));
+			var count = StructUtils.GetFieldsCount(typeof(TStruct));
 			for (var i = 0; i < count; i++)
 			{
-				VectorFieldSetter(ref value, i, (Mathf.Floor(VectorFieldGetter(value, i) * _floatPointScale + 0.1f) + Step) / _floatPointScale);
+				StructFieldSetter(ref value, i, (Mathf.Floor(StructFieldGetter(value, i) * _floatPointScale + 0.1f) + Step) / _floatPointScale);
 			}
 
 			return value;
 		}
 
-		protected sealed override T ValueDecrement(T value, bool isShift)
+		protected sealed override TStruct ValueDecrement(TStruct value, bool isShift)
 		{
-			var count = VectorUtils.GetFieldsCount(typeof(T));
+			var count = StructUtils.GetFieldsCount(typeof(TStruct));
 			for (var i = 0; i < count; i++)
 			{
-				VectorFieldSetter(ref value, i, (Mathf.Floor(VectorFieldGetter(value, i) * _floatPointScale + 0.1f) - Step) / _floatPointScale);
+				StructFieldSetter(ref value, i, (Mathf.Floor(StructFieldGetter(value, i) * _floatPointScale + 0.1f) - Step) / _floatPointScale);
 			}
 
 			return value;
 		}
 
-		protected abstract float VectorFieldGetter(T vector, int fieldIndex);
+		protected abstract float StructFieldGetter(TStruct vector, int fieldIndex);
 
-		protected abstract void VectorFieldSetter(ref T vector, int fieldIndex, float value);
+		protected abstract void StructFieldSetter(ref TStruct vector, int fieldIndex, float value);
 
 		#endregion
 
