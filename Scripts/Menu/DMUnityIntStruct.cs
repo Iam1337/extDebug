@@ -6,13 +6,13 @@ using System;
 
 namespace extDebug.Menu
 {
-	public abstract class DMUnityFloatStruct<TStruct> : DMValue<TStruct> where TStruct : struct, IFormattable
+	public abstract class DMUnityIntStruct<TStruct> : DMValue<TStruct> where TStruct : struct, IFormattable
 	{
 		#region Public Vars
 
-		public string Format;
-
 		public int Step = 1;
+
+		public string Format;
 
 		#endregion
 
@@ -20,28 +20,13 @@ namespace extDebug.Menu
 
 		private readonly DMBranch _fieldsBranch;
 
-		private readonly DMFloat[] _fields;
+		private readonly DMInt32[] _fields;
 
 		private DMBranch _presetsBranch;
 
-		private int _precision;
-
-		private int _floatPointScale;
-
 		#endregion
 
-		#region Public Vars
-
-		public void SetPrecision(int value)
-		{
-			_precision = Mathf.Clamp(value, 0, FloatUtils.Formats.Length - 1);
-			_floatPointScale = (int)Mathf.Pow(10, _precision);
-
-			for (var i = 0; i < _fields.Length; i++)
-			{
-				_fields[i].SetPrecision(value);
-			}
-		}
+		#region Public Methods
 
 		public void AddPreset(string name, TStruct value)
 		{
@@ -65,14 +50,14 @@ namespace extDebug.Menu
 
 		#region Protected Methods
 
-		protected DMUnityFloatStruct(DMBranch parent, string path, Func<TStruct> getter, Action<TStruct> setter = null, int order = 0) : base(parent, path, getter, setter, order)
+		protected DMUnityIntStruct(DMBranch parent, string path, Func<TStruct> getter, Action<TStruct> setter = null, int order = 0) : base(parent, path, getter, setter, order)
 		{
 			if (setter != null)
 			{
 				var names = StructUtils.GetFieldsNames(typeof(TStruct));
 				var count = StructUtils.GetFieldsCount(typeof(TStruct));
 
-				_fields = new DMFloat[count];
+				_fields = new DMInt32[count];
 				_fieldsBranch = new DMBranch(null, GetPathName(path));
 				_fieldsBranch.Container = Container;
 
@@ -90,8 +75,6 @@ namespace extDebug.Menu
 
 				_fieldsBranch.Add("Back", BackAction, string.Empty, int.MaxValue);
 			}
-
-			SetPrecision(2);
 		}
 
 		protected override void OnEvent(EventArgs eventArgs)
@@ -121,14 +104,14 @@ namespace extDebug.Menu
 			base.OnEvent(eventArgs);
 		}
 
-		protected sealed override string ValueToString(TStruct value) => value.ToString(string.IsNullOrEmpty(Format) ? FloatUtils.Formats[_precision] : Format, null);
+		protected sealed override string ValueToString(TStruct value) => value.ToString(Format, null);
 
 		protected sealed override TStruct ValueIncrement(TStruct value, bool isShift)
 		{
 			var count = StructUtils.GetFieldsCount(typeof(TStruct));
 			for (var i = 0; i < count; i++)
 			{
-				StructFieldSetter(ref value, i, (Mathf.Floor(StructFieldGetter(value, i) * _floatPointScale + 0.1f) + Step) / _floatPointScale);
+				StructFieldSetter(ref value, i, StructFieldGetter(value, i)  + Step);
 			}
 
 			return value;
@@ -139,15 +122,15 @@ namespace extDebug.Menu
 			var count = StructUtils.GetFieldsCount(typeof(TStruct));
 			for (var i = 0; i < count; i++)
 			{
-				StructFieldSetter(ref value, i, (Mathf.Floor(StructFieldGetter(value, i) * _floatPointScale + 0.1f) - Step) / _floatPointScale);
+				StructFieldSetter(ref value, i, StructFieldGetter(value, i) - Step);
 			}
 
 			return value;
 		}
 
-		protected abstract float StructFieldGetter(TStruct vector, int fieldIndex);
+		protected abstract int StructFieldGetter(TStruct vector, int fieldIndex);
 
-		protected abstract void StructFieldSetter(ref TStruct vector, int fieldIndex, float value);
+		protected abstract void StructFieldSetter(ref TStruct vector, int fieldIndex, int value);
 
 		#endregion
 
