@@ -22,7 +22,7 @@ namespace extDebug.Menu
 
 		#region Public Methods
 
-		protected DMValue(DMBranch parent, string path, Func<T> getter, Action<T> setter = null, int order = 0) : base(parent, path, string.Empty, order)
+		protected DMValue(DMBranch parent, string path, Func<T> getter, Action<T> setter = null, int order = 0) : base(parent, path, string.Empty, string.Empty, order)
 		{
 			_getter = getter;
 			_setter = setter;
@@ -53,8 +53,8 @@ namespace extDebug.Menu
 			{
 				var value = _getter.Invoke();
 
-				_valueColor = _defaultValue.Equals(value) ? DM.Colors.Value : DM.Colors.ValueFlash;
-				_value = ValueToString(value);
+				_valueField.Color = _defaultValue.Equals(value) ? DM.Colors.Value : DM.Colors.ValueFlash;
+				_valueField.Value = ValueToString(value);
 			}
 			else if (eventArgs.Tag == EventTag.Input)
 			{
@@ -95,7 +95,7 @@ namespace extDebug.Menu
 		{
 			// Change value.
 			_setter.Invoke(value);
-			_value = ValueToString(value);
+			_valueField.Value = ValueToString(value);
 
 			// Save value.
 			if (_storage == null ||
