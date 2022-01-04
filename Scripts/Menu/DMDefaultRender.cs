@@ -52,7 +52,17 @@ namespace extDebug.Menu
 				order = item.Order;
 
 				var name = item.Name;
+				var nameColor = item.NameColor;
 				var value = item.Value;
+				var valueColor = item.ValueColor;
+				var description = item.Description;
+				var descriptionColor = item.DescriptionColor;
+
+				if (string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(description))
+				{
+					value = description;
+					valueColor = descriptionColor;
+				}
 
 				if (item is DMBranch)
 					name += "...";
@@ -60,12 +70,12 @@ namespace extDebug.Menu
 				if (string.IsNullOrEmpty(value))
 				{
 					// only name
-					_builder.AppendFormat($"{prefix}<color=#{ColorUtility.ToHtmlStringRGB(item.NameColor)}>{{0,-{fullLength}}}</color>{kSuffix}{Environment.NewLine}", name);
+					_builder.AppendFormat($"{prefix}<color=#{ColorUtility.ToHtmlStringRGB(nameColor)}>{{0,-{fullLength}}}</color>{kSuffix}{Environment.NewLine}", name);
 				}
 				else
 				{
 					// with value
-					_builder.AppendFormat($"{prefix}<color=#{ColorUtility.ToHtmlStringRGB(item.NameColor)}>{{0,-{maxNameLength}}}</color>{kSpace}<color=#{ColorUtility.ToHtmlStringRGB(item.ValueColor)}>{{1,-{maxValueLength}}}</color>{kSuffix}{Environment.NewLine}", name, value);
+					_builder.AppendFormat($"{prefix}<color=#{ColorUtility.ToHtmlStringRGB(nameColor)}>{{0,-{maxNameLength}}}</color>{kSpace}<color=#{ColorUtility.ToHtmlStringRGB(valueColor)}>{{1,-{maxValueLength}}}</color>{kSuffix}{Environment.NewLine}", name, value);
 				}
 			}
 

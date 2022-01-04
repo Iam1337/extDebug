@@ -19,14 +19,11 @@ namespace extDebug.Menu
 			public Color Value;
 			public Color ValueFlash;
 
-			public Color ToggleDisabled;
-			public Color ToggleEnabled;
+			public Color Description;
 
 			public Color Action;
 			public Color ActionSuccess;
 			public Color ActionFailed;
-
-			public Color Description;
 		}
 
 		#endregion
@@ -42,14 +39,11 @@ namespace extDebug.Menu
 			Value = new Color32(201, 227, 219, 255),
 			ValueFlash = new Color32(255, 255, 0, 255),
 
-			ToggleDisabled = new Color32(201, 227, 219, 255),
-			ToggleEnabled = new Color32(255, 255, 0, 255),
+			Description = new Color32(112, 112, 112, 255),
 
 			Action = new Color32(238, 238, 238, 255),
 			ActionSuccess = new Color32(90, 177, 144, 255),
 			ActionFailed = new Color32(238, 112, 112, 255),
-
-			Description = new Color32(112, 112, 112, 255)
 		};
 
 		// Container

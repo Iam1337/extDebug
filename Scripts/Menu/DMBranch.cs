@@ -59,10 +59,8 @@ namespace extDebug.Menu
 
 		#region Public Methods
 
-		public DMBranch(DMBranch parent, string path, string description = "", int order = 0) : base(parent, path, description, order)
-		{
-			_valueColor = DM.Colors.Description;
-		}
+		public DMBranch(DMBranch parent, string path, string description = "", int order = 0) : base(parent, path, string.Empty, description, order)
+		{ }
 
 		// Manage
 		public void Insert(DMItem item)
@@ -171,6 +169,9 @@ namespace extDebug.Menu
 
 		public void RequestRepaint(float duration) => _canRepaintUntil = Time.unscaledTime + duration;
 
+		// Other
+		public override string ToString() => $"Branch: {_nameField.Value}, Desc: {_descriptionField.Value}";
+
 		#endregion
 
 		#region Internal Methods
@@ -185,18 +186,17 @@ namespace extDebug.Menu
 			_canRepaint = true;
 		}
 
-		internal DMBranch Get(string path, bool create = false) => Get(string.IsNullOrEmpty(path) ? null : path.Split('/'), create);
-
-		internal DMBranch Get(string[] path, bool create = false)
+		internal DMBranch Get(string path, bool create = false)
 		{
-			if (path == null)
+			if (string.IsNullOrEmpty(path))
 				return this;
 
+			var segments = path.Split('/');
 			var branch = this;
 
-			for (var i = 0; i < path.Length; i++)
+			for (var i = 0; i < segments.Length; i++)
 			{
-				var name = path[i];
+				var name = segments[i];
 
 				var item = branch._items.Find(item => item.Name == name);
 				if (item == null)
@@ -307,7 +307,8 @@ namespace extDebug.Menu
 				}
 				else if (eventArgs.Key == EventKey.Back)
 				{
-					Container.Back();
+					if (Container.IsVisible)
+						Container.Back();
 				}
 			}
 		}

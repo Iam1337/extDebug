@@ -14,10 +14,9 @@ namespace extDebug.Menu
 
 		#region Public Methods
 
-		public DMAction(DMBranch parent, string path, string description = null, Action<DMAction> action = null, int order = 0) : base(parent, path, description, order)
+		public DMAction(DMBranch parent, string path, string description = null, Action<DMAction> action = null, int order = 0) : base(parent, path, string.Empty, description, order)
 		{
 			_action = action;
-			_valueColor = DM.Colors.Description;
 		}
 
 		#endregion
