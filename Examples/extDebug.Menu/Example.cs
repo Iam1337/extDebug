@@ -59,6 +59,10 @@ namespace extDebug.Examples.Menu
 
 		private Vector4 _vector4;
 
+		private Quaternion _quaternion;
+
+		private Color _color;
+
 		private ExampleEnums _enum;
 
 		private ExampleFlags _flags;
@@ -96,7 +100,7 @@ namespace extDebug.Examples.Menu
 			var storage = new DMPlayerStorage();
 
 			// Simple Menus
-			DM.Add("Simple Menus/Action", action => Debug.Log("Hello/Action"), "Simple Action", order: 0);
+			DM.Add("Simple Menus/Action", action => Debug.Log("Hello, Action!"), "Simple Action", order: 0);
 			DM.Add("Simple Menus/String", () => _string, order: 1);
 			DM.Add("Simple Menus/UInt8", () => _uint8, v => _uint8 = v, order: 2);
 			DM.Add("Simple Menus/UInt16", () => _uint16, v => _uint16 = v, order: 3);
@@ -110,9 +114,11 @@ namespace extDebug.Examples.Menu
 			DM.Add("Simple Menus/Bool", () => _bool, v => _bool = v, order: 11);
 			DM.Add("Simple Menus/Enum", () => _enum, v => _enum = v, order: 12);
 			DM.Add("Simple Menus/Flags", () => _flags, v => _flags = v, order: 13);
-			DM.Add("Simple Menus/Vector 2", () => _vector2, v => _vector2 = v, order: 14);
-			DM.Add("Simple Menus/Vector 3", () => _vector3, v => _vector3 = v, order: 15);
-			DM.Add("Simple Menus/Vector 4", () => _vector4, v => _vector4 = v, order: 16);
+			DM.Add("Simple Menus/Vector 2", () => _vector2, v => _vector2 = v, order: 14).SetPrecision(2);
+			DM.Add("Simple Menus/Vector 3", () => _vector3, v => _vector3 = v, order: 15).SetPrecision(2);
+			DM.Add("Simple Menus/Vector 4", () => _vector4, v => _vector4 = v, order: 16).SetPrecision(2);
+			DM.Add("Simple Menus/Quaternion", () => _quaternion, v => _quaternion = v, order: 16).SetPrecision(2);
+			DM.Add("Simple Menus/Color", () => _color, v => _color = v, order: 16).SetPrecision(2);
 
 			// Storage
 			DM.Add("Storage Values/UInt8", () => _uint8Storage, v => _uint8Storage = v, order: 1).SetStorage(storage);

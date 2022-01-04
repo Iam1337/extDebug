@@ -6,15 +6,25 @@ using System;
 
 namespace extDebug
 {
-	internal static class VectorUtils
+	internal static class StructUtils
 	{
 		#region Public Vars
 
-		public static readonly string[] Fields = new[] { "X", "Y", "Z", "W" };
+		public static readonly string[] VectorFields = new[] { "X", "Y", "Z", "W" };
+
+		public static readonly string[] ColorsFields = new[] { "Red", "Green", "Blue", "Alpha" };
 
 		#endregion
 
 		#region Public Methods
+
+		public static string[] GetFieldsNames(Type type)
+		{
+			if (type == typeof(Color))
+				return ColorsFields;
+
+			return VectorFields;
+		}
 
 		public static int GetFieldsCount(Type type)
 		{
@@ -24,7 +34,9 @@ namespace extDebug
 			if (type == typeof(Vector2) ||
 			    type == typeof(Vector2Int))
 				return 2;
-			if (type == typeof(Vector4))
+			if (type == typeof(Vector4) ||
+			    type == typeof(Quaternion) ||
+			    type == typeof(Color))
 				return 4;
 
 			return 0;

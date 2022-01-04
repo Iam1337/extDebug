@@ -42,8 +42,7 @@ namespace extDebug.Menu
 		#region Public Methods
 
 		public DMContainer(string name) : this(name, new DMDefaultInput(), new DMDefaultRender())
-		{
-		}
+		{ }
 
 		public DMContainer(string name, IDMInput input, IDMRender render)
 		{
@@ -224,6 +223,12 @@ namespace extDebug.Menu
 
 		// Vector 4
 		public DMVector4 Add(string path, Func<Vector4> getter, Action<Vector4> setter = null, int order = 0) =>
+			Root.Add(path, getter, setter, order);
+
+		public DMQuaternion Add(string path, Func<Quaternion> getter, Action<Quaternion> setter = null, int order = 0) =>
+			Root.Add(path, getter, setter, order);
+
+		public DMColor Add(string path, Func<Color> getter, Action<Color> setter = null, int order = 0) =>
 			Root.Add(path, getter, setter, order);
 
 		// Dynamic

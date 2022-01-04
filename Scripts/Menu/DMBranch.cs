@@ -133,6 +133,12 @@ namespace extDebug.Menu
 		public DMVector4 Add(string path, Func<Vector4> getter, Action<Vector4> setter = null, int order = 0) =>
 			new DMVector4(this, path, getter, setter, order);
 
+		public DMQuaternion Add(string path, Func<Quaternion> getter, Action<Quaternion> setter = null, int order = 0) =>
+			new DMQuaternion(this, path, getter, setter, order);
+
+		public DMColor Add(string path, Func<Color> getter, Action<Color> setter = null, int order = 0) =>
+			new DMColor(this, path, getter, setter, order);
+
 		public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0)
 		{
 			if (getter == null)
