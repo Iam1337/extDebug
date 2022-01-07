@@ -1,3 +1,10 @@
+## [1.12.3](https://github.com/Iam1337/extDebug/compare/v1.12.2...v1.12.3) (2022-01-07)
+
+
+### Bug Fixes
+
+* **package:** added examples in package.json ([7734f63](https://github.com/Iam1337/extDebug/commit/7734f639c000d932ea5820f863bfd1db49621aa1))
+
 ## [1.12.2](https://github.com/Iam1337/extDebug/compare/v1.12.1...v1.12.2) (2022-01-07)
 
 ## [1.12.1](https://github.com/Iam1337/extDebug/compare/v1.12.0...v1.12.1) (2022-01-07)
