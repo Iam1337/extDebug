@@ -10,12 +10,6 @@ namespace extDebug.Menu
 	{
 		#region Public Vars
 
-		private static readonly string[] _formats = new []{ "0", "0.0", "0.00", "0.000", "0.0000", "0.00000", "0.000000", "0.0000000", "0.00000000" };
-
-		#endregion
-
-		#region Public Vars
-
 		public string Format;
 
 		public int Step = 1;
@@ -41,7 +35,7 @@ namespace extDebug.Menu
 
 		public DMFloat SetPrecision(int value)
 		{
-			_precision = Mathf.Clamp(value, 0, _formats.Length - 1);
+			_precision = Mathf.Clamp(value, 0, FloatUtils.Formats.Length - 1);
 			_floatPointScale = (int)Mathf.Pow(10, _precision);
 
 			return this;
@@ -51,7 +45,7 @@ namespace extDebug.Menu
 
 		#region Private Methods
 
-		protected override string ValueToString(float value) => value.ToString(string.IsNullOrEmpty(Format) ? _formats[_precision] : Format );
+		protected override string ValueToString(float value) => value.ToString(string.IsNullOrEmpty(Format) ? FloatUtils.Formats[_precision] : Format);
 
 		protected override float ValueIncrement(float value, bool isShift) => (Mathf.Floor(value * _floatPointScale + 0.1f) + (isShift ? ShiftStep : Step)) / _floatPointScale;
 

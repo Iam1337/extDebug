@@ -4,11 +4,73 @@ using UnityEngine;
 
 using System;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 
 namespace extDebug.Menu
 {
-    public abstract class DMItem
-    {
+	public abstract class DMItem
+	{
+		#region Internal
+
+		protected class Field<T>
+		{
+			#region Private Static Methods
+
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			private static float _flashMap(float flashTime) => Mathf.Clamp01((Time.unscaledTime - flashTime) / kFlashDuration);
+
+			#endregion
+
+			#region Public Vars
+
+			public T Value;
+
+			public Color Color
+			{
+				get => Color.Lerp(_flashColor, _color, _flashMap(_flashTime));
+				set => _color = value;
+			}
+
+			#endregion
+
+			#region Private Vars
+
+			private Color _color;
+
+			private Color _flashColor;
+
+			private float _flashTime;
+
+			#endregion
+
+			#region Public Methods
+
+			public Field(T value, Color color)
+			{
+				Value = value;
+				_color = color;
+			}
+
+			public void Flash(Color color)
+			{
+				_flashTime = Time.unscaledTime;
+				_flashColor = color;
+			}
+
+			public override string ToString() => Value.ToString();
+
+			#endregion
+
+			#region Private Methods
+
+			private Field()
+			{ }
+
+			#endregion
+		}
+
+		#endregion
+
 		#region External
 
 		private const float kFlashDuration = 0.3f;
@@ -31,13 +93,6 @@ namespace extDebug.Menu
 
 		#endregion
 
-		#region Static Private Methods
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static float _flashMap(float flashTime) => Mathf.Clamp01((Time.unscaledTime - flashTime) / kFlashDuration);
-
-		#endregion
-
 		#region Public Vars
 
 		public int Order
@@ -52,40 +107,60 @@ namespace extDebug.Menu
 
 		public string Name
 		{
-			get => _name;
+			get => _nameField.Value;
 			set
 			{
-				_name = value;
+				_nameField.Value = value;
 				_parent?.Resort();
 			}
 		}
 
 		public Color NameColor
 		{
-			get => Color.Lerp(_flashNameColor, _nameColor, _flashMap(_flashNameTime));
+			get => _nameField.Color;
 			set
 			{
-				_nameColor = value;
+				_nameField.Color = value;
 				_parent?.RequestRepaint();
 			}
 		}
 
 		public string Value
 		{
-			get => _value;
+			get => _valueField.Value;
 			set
 			{
-				_value = value;
+				_valueField.Value = value;
 				_parent?.RequestRepaint();
 			}
 		}
 
 		public Color ValueColor
 		{
-			get => Color.Lerp(_flashValueColor, _valueColor, _flashMap(_flashValueTime));
+			get => _valueField.Color;
 			set
 			{
-				_valueColor = value;
+				_valueField.Color = value;
+				_parent?.RequestRepaint();
+			}
+		}
+
+		public string Description
+		{
+			get => _descriptionField.Value;
+			set
+			{
+				_descriptionField.Value = value;
+				_parent?.RequestRepaint();
+			}
+		}
+
+		public Color DescriptionColor
+		{
+			get => _descriptionField.Color;
+			set
+			{
+				_descriptionField.Color = value;
 				_parent?.RequestRepaint();
 			}
 		}
@@ -105,34 +180,24 @@ namespace extDebug.Menu
 		}
 
 		#endregion
-		
-		#region Protected Vars
 
-		protected readonly DMBranch _parent;
+		#region Protected Vars
 
 		protected DMContainer _container;
 
-		protected string _name;
+		protected readonly DMBranch _parent;
 
-		protected Color _nameColor = DM.Colors.Name;
+		protected readonly Field<string> _nameField;
 
-		protected string _value;
+		protected readonly Field<string> _valueField;
 
-		protected Color _valueColor = DM.Colors.Value;
+		protected readonly Field<string> _descriptionField;
 
 		protected int _order;
 
 		#endregion
 
 		#region Private Vars
-
-		private float _flashNameTime = 0;
-
-		private Color _flashNameColor = DM.Colors.NameFlash;
-
-		private float _flashValueTime = 0;
-
-		private Color _flashValueColor = DM.Colors.ValueFlash;
 
 		private object _data;
 
@@ -144,9 +209,7 @@ namespace extDebug.Menu
 
 		public void FlashName(Color color, bool notify)
 		{
-			_flashNameTime = Time.unscaledTime;
-			_flashNameColor = color;
-
+			_nameField.Flash(color);
 			_parent?.RequestRepaint(kFlashDuration);
 
 			if (Container.IsVisible == false && notify)
@@ -155,29 +218,30 @@ namespace extDebug.Menu
 
 		public void FlashValue(Color color, bool notify)
 		{
-			_flashValueTime = Time.unscaledTime;
-			_flashValueColor = color;
-			
+			_valueField.Flash(color);
 			_parent?.RequestRepaint(kFlashDuration);
 
 			if (Container.IsVisible == false && notify)
 				Container.Notify(this, null, ValueColor);
 		}
 
-		public override string ToString() => $"{_name,-16}  {_value,-16}";
+		public override string ToString() => $"Item: {_nameField.Value}, Value: {_valueField.Value}, Desc: {_descriptionField.Value}";
 
 		#endregion
 
 		#region Protected Methods
 
-		protected DMItem(DMBranch parent, string path, string value = "", int order = 0)
+		protected DMItem(DMBranch parent, string path, string value, string description, int order)
 		{
 			var directory = GetPathDirectory(path);
 			var name = GetPathName(path);
 
-			_name = name;
-			_value = value;
-			_order = order;
+			_nameField = new Field<string>(name, DM.Colors.Name);
+            _valueField = new Field<string>(value, DM.Colors.Value);
+            _descriptionField = new Field<string>(description, DM.Colors.Description);
+
+            _order = order;
+
 			_parent = parent?.Get(directory, true);
 			_parent?.Insert(this);
 		}
@@ -185,5 +249,5 @@ namespace extDebug.Menu
 		protected abstract void OnEvent(EventArgs eventArgs);
 
 		#endregion
-    }
+	}
 }

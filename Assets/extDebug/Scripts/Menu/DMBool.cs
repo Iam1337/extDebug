@@ -5,7 +5,7 @@ using System;
 namespace extDebug.Menu
 {
 	public class DMBool : DMValue<bool>
-    {
+	{
 		#region Public Methods
 
 		public DMBool(DMBranch parent, string path, Func<bool> getter, Action<bool> setter = null, int order = 0) : base(parent, path, getter, setter, order)

@@ -18,7 +18,7 @@ namespace extDebug.Examples.Menu
 			Two,
 			Three
 		}
-		
+
 		[Flags]
 		private enum ExampleFlags
 		{
@@ -28,10 +28,10 @@ namespace extDebug.Examples.Menu
 		}
 
 		#endregion
-		
+
 		#region Private Vars
 
-        private string _string;
+		private string _string = "Hello, World!";
 
 		private byte _uint8;
 
@@ -53,10 +53,24 @@ namespace extDebug.Examples.Menu
 
 		private bool _bool;
 
+		private Vector2 _vector2;
+
+		private Vector3 _vector3;
+
+		private Vector4 _vector4;
+
+		private Quaternion _quaternion;
+
+		private Color _color;
+
+		private Vector2Int _vector2Int;
+
+		private Vector3Int _vector3Int;
+
 		private ExampleEnums _enum;
 
 		private ExampleFlags _flags;
-		
+
 		private byte _uint8Storage;
 
 		private UInt16 _uint16Storage;
@@ -86,12 +100,12 @@ namespace extDebug.Examples.Menu
 		#region Unity Methods
 
 		private void Start()
-        {
-            var storage = new DMPlayerStorage();
-			
+		{
+			var storage = new DMPlayerStorage();
+
 			// Simple Menus
-			DM.Add("Simple Menus/Action", action => Debug.Log("Hello/Action"), order: 0);
-            DM.Add("Values/String", () => _string);
+			DM.Add("Simple Menus/Action", action => Debug.Log("Hello, Action!"), "Simple Action", order: 0);
+			DM.Add("Simple Menus/String", () => _string, order: 1);
 			DM.Add("Simple Menus/UInt8", () => _uint8, v => _uint8 = v, order: 2);
 			DM.Add("Simple Menus/UInt16", () => _uint16, v => _uint16 = v, order: 3);
 			DM.Add("Simple Menus/UInt32", () => _uint32, v => _uint32 = v, order: 4);
@@ -104,7 +118,14 @@ namespace extDebug.Examples.Menu
 			DM.Add("Simple Menus/Bool", () => _bool, v => _bool = v, order: 11);
 			DM.Add("Simple Menus/Enum", () => _enum, v => _enum = v, order: 12);
 			DM.Add("Simple Menus/Flags", () => _flags, v => _flags = v, order: 13);
-			
+			DM.Add("Simple Menus/Vector 2", () => _vector2, v => _vector2 = v, order: 14).SetPrecision(2);
+			DM.Add("Simple Menus/Vector 3", () => _vector3, v => _vector3 = v, order: 15).SetPrecision(2);
+			DM.Add("Simple Menus/Vector 4", () => _vector4, v => _vector4 = v, order: 16).SetPrecision(2);
+			DM.Add("Simple Menus/Quaternion", () => _quaternion, v => _quaternion = v, order: 17).SetPrecision(2);
+			DM.Add("Simple Menus/Color", () => _color, v => _color = v, order: 18).SetPrecision(2);
+			DM.Add("Simple Menus/Vector 2 Int", () => _vector2Int, v => _vector2Int = v, order: 19);
+			DM.Add("Simple Menus/Vector 3 Int", () => _vector3Int, v => _vector3Int = v, order: 20);
+
 			// Storage
 			DM.Add("Storage Values/UInt8", () => _uint8Storage, v => _uint8Storage = v, order: 1).SetStorage(storage);
 			DM.Add("Storage Values/UInt16", () => _uint16Storage, v => _uint16Storage = v, order: 2).SetStorage(storage);
@@ -120,12 +141,12 @@ namespace extDebug.Examples.Menu
 			DM.Add("Storage Values/Flags", () => _flagsStorage, v => _flagsStorage = v, order: 12).SetStorage(storage);
 
 			// Dynamic
-            DM.Add("Dynamic Transforms", FindObjectsOfType<Transform>, (branch, transform) =>
-            {
-                branch.Add("Name", a => { Debug.Log(transform); });
-            });
+			DM.Add("Dynamic Transforms", FindObjectsOfType<Transform>, (branch, transform) =>
+			{
+				branch.Add("Name", a => { Debug.Log(transform); });
+			});
 
-            DM.Open();
+			DM.Open();
 		}
 
 		#endregion

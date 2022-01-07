@@ -4,14 +4,14 @@ using System;
 
 namespace extDebug.Menu
 {
-    public interface IDMStorage
-    {
-        #region Methods
+	public interface IDMStorage
+	{
+		#region Methods
 
-        bool Save(string key, object value);
+		bool Save(string key, object value);
 
-        object Load(string key, Type valueType);
+		object Load(string key, Type valueType);
 
-        #endregion
-    }
+		#endregion
+	}
 }

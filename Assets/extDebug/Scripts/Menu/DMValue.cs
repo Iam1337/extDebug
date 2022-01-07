@@ -4,57 +4,61 @@ using System;
 
 namespace extDebug.Menu
 {
-    public abstract class DMValue<T> : DMItem
-    {
-        #region Private Vars
+	public abstract class DMValue<T> : DMItem
+	{
+		#region Protected Methods
 
-        private readonly Func<T> _getter;
+		protected readonly Func<T> _getter;
 
-        private readonly Action<T> _setter;
+		protected readonly Action<T> _setter;
 
-        private readonly string _path;
-        
-        private T _defaultValue;
+		#endregion
 
-        private IDMStorage _storage;
+		#region Private Vars
 
-        #endregion
+		private readonly string _path;
 
-        #region Public Methods
+		private T _defaultValue;
 
-        protected DMValue(DMBranch parent, string path, Func<T> getter, Action<T> setter = null, int order = 0) : base(parent, path, string.Empty, order)
-        {
-	        _getter = getter;
-	        _setter = setter;
-	        _path = path;
+		private IDMStorage _storage;
 
-	        _defaultValue = getter.Invoke();
-        }
+		#endregion
 
-        public void SetStorage(IDMStorage storage)
-        {
-	        _storage = storage ?? throw new NullReferenceException(nameof(storage));
+		#region Public Methods
 
-	        if (_setter == null)
-		        return;
+		protected DMValue(DMBranch parent, string path, Func<T> getter, Action<T> setter = null, int order = 0) : base(parent, path, string.Empty, string.Empty, order)
+		{
+			_getter = getter;
+			_setter = setter;
+			_path = path;
 
-	        var value = _storage.Load(_path, typeof(T));
-	        if (value != null)
-		        _setter.Invoke((T)value);
-        }
+			_defaultValue = getter.Invoke();
+		}
 
-        #endregion
-        
-        #region Protected Methods
+		public void SetStorage(IDMStorage storage)
+		{
+			_storage = storage ?? throw new NullReferenceException(nameof(storage));
 
-        protected override void OnEvent(EventArgs eventArgs)
-        {
+			if (_setter == null)
+				return;
+
+			var value = _storage.Load(_path, typeof(T));
+			if (value != null)
+				_setter.Invoke((T)value);
+		}
+
+		#endregion
+
+		#region Protected Methods
+
+		protected override void OnEvent(EventArgs eventArgs)
+		{
 			if (eventArgs.Tag == EventTag.Repaint)
 			{
 				var value = _getter.Invoke();
 
-				_valueColor = _defaultValue.Equals(value) ? DM.Colors.Value : DM.Colors.ValueFlash;
-				_value = ValueToString(value);
+				_valueField.Color = _defaultValue.Equals(value) ? DM.Colors.Value : DM.Colors.ValueFlash;
+				_valueField.Value = ValueToString(value);
 			}
 			else if (eventArgs.Tag == EventTag.Input)
 			{
@@ -67,7 +71,7 @@ namespace extDebug.Menu
 				else if (eventArgs.Key == EventKey.Right && _setter != null)
 				{
 					var value = ValueIncrement(_getter.Invoke(), eventArgs.IsShift);
-					
+
 					ChangeValue(value, false);
 				}
 				else if (eventArgs.Key == EventKey.Reset && _setter != null)
@@ -77,38 +81,38 @@ namespace extDebug.Menu
 				else if (eventArgs.Key == EventKey.Back)
 				{
 					Container.Back();
-				}	
+				}
 			}
-        }
+		}
 
-        protected abstract string ValueToString(T value);
+		protected abstract string ValueToString(T value);
 
-        protected abstract T ValueIncrement(T value, bool isShift);
+		protected abstract T ValueIncrement(T value, bool isShift);
 
-        protected abstract T ValueDecrement(T value, bool isShift);
+		protected abstract T ValueDecrement(T value, bool isShift);
 
-        #endregion
+		#endregion
 
-        #region Private Methods
+		#region Private Methods
 
-        private void ChangeValue(T value, bool isReset)
-        {
-	        // Change value.
-	        _setter.Invoke(value);
-	        _value = ValueToString(value);
-	        
-	        // Save value.
-	        if (_storage == null ||
-		        _storage != null && _storage.Save(_path,value))
-	        {
-		        FlashValue(DM.Colors.ActionSuccess, true);
-	        }
-	        else
-	        {
-		        FlashValue(DM.Colors.ActionFailed, false);
-	        }
-        }
+		private void ChangeValue(T value, bool isReset)
+		{
+			// Change value.
+			_setter.Invoke(value);
+			_valueField.Value = ValueToString(value);
 
-        #endregion
-    }
+			// Save value.
+			if (_storage == null ||
+			    _storage != null && _storage.Save(_path, value))
+			{
+				FlashValue(DM.Colors.ActionSuccess, true);
+			}
+			else
+			{
+				FlashValue(DM.Colors.ActionFailed, false);
+			}
+		}
+
+		#endregion
+	}
 }

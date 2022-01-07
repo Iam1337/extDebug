@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
-	public class DMBranch : DMItem, IDMContainer
+	public class DMBranch : DMItem, IDMBranch
 	{
 		#region Public Methods
 
@@ -24,7 +24,7 @@ namespace extDebug.Menu
 				return _items[_currentItem];
 			}
 		}
-		
+
 		public Action<DMBranch> OnOpen;
 
 		public Action<DMBranch> OnClose;
@@ -45,7 +45,7 @@ namespace extDebug.Menu
 
 		private readonly List<DMItem> _items = new List<DMItem>();
 
-        private int _currentItem;
+		private int _currentItem;
 
 		private bool _canRepaint;
 
@@ -59,12 +59,10 @@ namespace extDebug.Menu
 
 		#region Public Methods
 
-		public DMBranch(DMBranch parent, string path, string description = "", int order = 0) : base(parent, path, description, order)
-		{
-			_valueColor = DM.Colors.Description;
-		}
+		public DMBranch(DMBranch parent, string path, string description = "", int order = 0) : base(parent, path, string.Empty, description, order)
+		{ }
 
-        // Manage
+		// Manage
 		public void Insert(DMItem item)
 		{
 			_items.Add(item);
@@ -77,47 +75,114 @@ namespace extDebug.Menu
 			_items.Remove(item);
 		}
 
-        public void Clear()
-        {
-            _currentItem = 0;
+		public void Clear()
+		{
+			_currentItem = 0;
 			_items.Clear();
-        }
+		}
 
 		// Container
-		public DMBranch Add(string path, string description = "", int order = 0) => Container.Add(this, path, description, order);
-        
-        public DMString Add(string path, Func<string> getter, int order = 0) => Container.Add(this, path, getter, order);
+		public DMBranch Add(string path, string description = "", int order = 0) =>
+			Get(path) ?? new DMBranch(this, path, description, order);
 
-        public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) => Container.Add(this, path, action, description, order);
+		public DMString Add(string path, Func<string> getter, int order = 0) => 
+			new DMString(this, path, getter, order);
 
-		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
+		public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) =>
+			new DMAction(this, path, description, action, order);
 
-		public DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0) where T : struct, Enum => Container.Add(this, path, getter, setter, order);
+		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) =>
+			new DMBool(this, path, getter, setter, order);
 
-		public DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
+		public DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0) where T : struct, Enum => 
+			new DMEnum<T>(this, path, getter, setter, order);
 
-		public DMUInt16 Add(string path, Func<ushort> getter, Action<ushort> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
+		public DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, int order = 0) =>
+			new DMUInt8(this, path, getter, setter, order);
 
-		public DMUInt32 Add(string path, Func<uint> getter, Action<uint> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
+		public DMUInt16 Add(string path, Func<ushort> getter, Action<ushort> setter = null, int order = 0) =>
+			new DMUInt16(this, path, getter, setter, order);
 
-		public DMUInt64 Add(string path, Func<ulong> getter, Action<ulong> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
+		public DMUInt32 Add(string path, Func<uint> getter, Action<uint> setter = null, int order = 0) =>
+			new DMUInt32(this, path, getter, setter, order);
 
-		public DMInt8 Add(string path, Func<sbyte> getter, Action<sbyte> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
+		public DMUInt64 Add(string path, Func<ulong> getter, Action<ulong> setter = null, int order = 0) =>
+			new DMUInt64(this, path, getter, setter, order);
 
-		public DMInt16 Add(string path, Func<short> getter, Action<short> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
+		public DMInt8 Add(string path, Func<sbyte> getter, Action<sbyte> setter = null, int order = 0) =>
+			new DMInt8(this, path, getter, setter, order);
 
-		public DMInt32 Add(string path, Func<int> getter, Action<int> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
+		public DMInt16 Add(string path, Func<short> getter, Action<short> setter = null, int order = 0) =>
+			new DMInt16(this, path, getter, setter, order);
 
-		public DMInt64 Add(string path, Func<long> getter, Action<long> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
+		public DMInt32 Add(string path, Func<int> getter, Action<int> setter = null, int order = 0) =>
+			new DMInt32(this, path, getter, setter, order);
 
-		public DMFloat Add(string path, Func<float> getter, Action<float> setter = null, int order = 0) => Container.Add(this, path, getter, setter, order);
+		public DMInt64 Add(string path, Func<long> getter, Action<long> setter = null, int order = 0) =>
+			new DMInt64(this, path, getter, setter, order);
 
-        public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0) => Container.Add(this, path, getter, buildCallback, nameCallback, description, order);
+		public DMFloat Add(string path, Func<float> getter, Action<float> setter = null, int order = 0) =>
+			new DMFloat(this, path, getter, setter, order);
 
-        // Repaint
+		public DMVector2 Add(string path, Func<Vector2> getter, Action<Vector2> setter = null, int order = 0) =>
+			new DMVector2(this, path, getter, setter, order);
+
+		public DMVector3 Add(string path, Func<Vector3> getter, Action<Vector3> setter = null, int order = 0) =>
+			new DMVector3(this, path, getter, setter, order);
+
+		public DMVector4 Add(string path, Func<Vector4> getter, Action<Vector4> setter = null, int order = 0) =>
+			new DMVector4(this, path, getter, setter, order);
+
+		public DMQuaternion Add(string path, Func<Quaternion> getter, Action<Quaternion> setter = null, int order = 0) =>
+			new DMQuaternion(this, path, getter, setter, order);
+
+		public DMColor Add(string path, Func<Color> getter, Action<Color> setter = null, int order = 0) =>
+			new DMColor(this, path, getter, setter, order);
+
+		public DMVector2Int Add(string path, Func<Vector2Int> getter, Action<Vector2Int> setter = null, int order = 0) =>
+			new DMVector2Int(this, path, getter, setter, order);
+
+		public DMVector3Int Add(string path, Func<Vector3Int> getter, Action<Vector3Int> setter = null, int order = 0) =>
+			new DMVector3Int(this, path, getter, setter, order);
+
+		public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0)
+		{
+			if (getter == null)
+				throw new NullReferenceException(nameof(getter));
+
+			var dynamicBranch = Add(path, description, order);
+			dynamicBranch.OnOpen += dBranch =>
+			{
+				dBranch.Clear();
+
+				var index = 0;
+				var objects = getter.Invoke();
+
+				foreach (var obj in objects)
+				{
+					var name = nameCallback != null ? nameCallback.Invoke(obj) : obj.ToString();
+					var objectTemp = obj;
+					var objectBranch = dBranch.Add(name, string.Empty, index++);
+
+					objectBranch.Data = objectTemp;
+					objectBranch.OnOpen += oBranch =>
+					{
+						oBranch.Clear();
+						buildCallback?.Invoke(oBranch, objectTemp);
+					};
+				}
+			};
+
+			return dynamicBranch;
+		}
+
+		// Repaint
 		public void RequestRepaint() => _canRepaint = true;
 
 		public void RequestRepaint(float duration) => _canRepaintUntil = Time.unscaledTime + duration;
+
+		// Other
+		public override string ToString() => $"Branch: {_nameField.Value}, Desc: {_descriptionField.Value}";
 
 		#endregion
 
@@ -132,19 +197,18 @@ namespace extDebug.Menu
 			_items.Sort(Comparison);
 			_canRepaint = true;
 		}
-		
-		internal DMBranch Get(string path, bool create = false) => Get(string.IsNullOrEmpty(path) ? null : path.Split('/'), create);
 
-		internal DMBranch Get(string[] path, bool create = false)
+		internal DMBranch Get(string path, bool create = false)
 		{
-			if (path == null)
+			if (string.IsNullOrEmpty(path))
 				return this;
 
+			var segments = path.Split('/');
 			var branch = this;
 
-			for (var i = 0; i < path.Length; i++)
+			for (var i = 0; i < segments.Length; i++)
 			{
-				var name = path[i];
+				var name = segments[i];
 
 				var item = branch._items.Find(item => item.Name == name);
 				if (item == null)
@@ -162,12 +226,12 @@ namespace extDebug.Menu
 				var newBranch = item as DMBranch;
 				if (newBranch == null)
 				{
-                    return null;
+					return null;
 				}
 
 				branch = newBranch;
 			}
-			
+
 			return branch;
 		}
 
@@ -189,11 +253,11 @@ namespace extDebug.Menu
 		{
 			if (eventArgs.Tag == EventTag.OpenBranch)
 			{
-                OnOpen?.Invoke(this);
+				OnOpen?.Invoke(this);
 			}
 			else if (eventArgs.Tag == EventTag.CloseBranch)
 			{
-                OnClose?.Invoke(this);
+				OnClose?.Invoke(this);
 			}
 			else if (eventArgs.Tag == EventTag.Input)
 			{
@@ -255,11 +319,12 @@ namespace extDebug.Menu
 				}
 				else if (eventArgs.Key == EventKey.Back)
 				{
-					Container.Back();
+					if (Container.IsVisible)
+						Container.Back();
 				}
 			}
 		}
 
 		#endregion
-    }
+	}
 }

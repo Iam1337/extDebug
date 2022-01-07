@@ -12,7 +12,7 @@ namespace extDebug.Notifications
 		#region Static Public Methods
 
 		public static IDNRender Render = new DNDefaultRender();
-		
+
 		#endregion
 
 		#region Static Private Methods
@@ -68,7 +68,7 @@ namespace extDebug.Notifications
 			{
 				_noticesContext.Add(context, notice);
 			}
-			
+
 			Render.SetupNotice(notice, _currentHeight);
 		}
 
@@ -98,8 +98,8 @@ namespace extDebug.Notifications
 			{
 				if (notice.Duration < 0) _timeLeft = 1;
 				else _timeLeft = notice.StartTime - (Time.unscaledTime - notice.Duration);
-				
-				Render?.Repaint(notice, _timeLeft, ref _currentHeight);
+
+				Render.Repaint(notice, _timeLeft, ref _currentHeight);
 
 				if (_timeLeft <= 0)
 					_noticesToRemove.Add(notice);
@@ -114,9 +114,9 @@ namespace extDebug.Notifications
 				{
 					if (notice.LeftCallback != null)
 						notice.LeftCallback.Invoke(notice.Context);
-					
+
 					_noticesContext.Remove(notice.Context);
-					
+
 					notice.LeftCallback = null;
 				}
 
