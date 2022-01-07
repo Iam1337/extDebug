@@ -1,3 +1,5 @@
+## [1.12.1](https://github.com/Iam1337/extDebug/compare/v1.12.0...v1.12.1) (2022-01-07)
+
 # [1.12.0](https://github.com/Iam1337/extDebug/compare/v1.11.0...v1.12.0) (2022-01-07)
 
 
