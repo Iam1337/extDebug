@@ -1,3 +1,19 @@
+# [1.12.0](https://github.com/Iam1337/extDebug/compare/v1.11.0...v1.12.0) (2022-01-07)
+
+
+### Bug Fixes
+
+* **ci:** update semantic release ([797e0e2](https://github.com/Iam1337/extDebug/commit/797e0e2e17690f22eb94ae1b58ffd6d1939029f3))
+
+
+### Features
+
+* **Menu:** added description field ([ec28881](https://github.com/Iam1337/extDebug/commit/ec288810f524b0615abf1aebee50fa0822ae53ed))
+* **Menu:** added presets ([5d64ef0](https://github.com/Iam1337/extDebug/commit/5d64ef0bcce603c57ccee3b8003d6b55213f3502))
+* **Menu:** added quaternion and color values ([04304aa](https://github.com/Iam1337/extDebug/commit/04304aa51b58560dd0a289ea651a518c087447b9))
+* **Menu:** added vectors ([29c1a71](https://github.com/Iam1337/extDebug/commit/29c1a71d2070277286a0af9276678211a6146cd4))
+* **Menu:** update default imgui render ([473f1af](https://github.com/Iam1337/extDebug/commit/473f1afc6c8aeb354cbbd47c11e740606ff782d9))
+
 # [1.11.0](https://github.com/Iam1337/extDebug/compare/v1.10.0...v1.11.0) (2021-12-29)
 
 
