@@ -98,6 +98,13 @@ Int32 _int32; // int
 Int64 _int64; // long
 float _float;
 bool _bool;
+Vector2 _vector2;
+Vector3 _vector3;
+Vector4 _vector4;
+Quaternion _quaternion;
+Color _color;
+Vector2Int _vector2Int;
+Vector3Int _vector3Int;
 
 DM.Add("Values/String", () => _string);
 DM.Add("Values/UInt8", () => _uint8, v => _uint8 = v);
@@ -110,6 +117,13 @@ DM.Add("Values/Int32", () => _int32, v => _int32 = v);
 DM.Add("Values/Int64", () => _int64, v => _int64 = v);
 DM.Add("Values/Float", () => _float, v => _float = v);
 DM.Add("Values/Bool", () => _bool, v => _bool = v);
+DM.Add("Values/Vector 2", () => _vector2, v => _vector2 = v, order: 14).SetPrecision(2);
+DM.Add("Values/Vector 3", () => _vector3, v => _vector3 = v, order: 15).SetPrecision(2);
+DM.Add("Values/Vector 4", () => _vector4, v => _vector4 = v, order: 16).SetPrecision(2);
+DM.Add("Values/Quaternion", () => _quaternion, v => _quaternion = v, order: 17).SetPrecision(2);
+DM.Add("Values/Color", () => _color, v => _color = v, order: 18).SetPrecision(2);
+DM.Add("Values/Vector 2 Int", () => _vector2Int, v => _vector2Int = v, order: 19);
+DM.Add("Values/Vector 3 Int", () => _vector3Int, v => _vector3Int = v, order: 20);
 ```
 
 **Enums and Flags**<br>
