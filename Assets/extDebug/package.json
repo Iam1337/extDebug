@@ -11,7 +11,18 @@
     "menu"
   ],
   "category": "Debug",
-  "samples": [],
+  "samples": [
+    {
+      "displayName": "Menu Example",
+      "description": "",
+      "path": "Examples~/extDebug.Menu"
+    },
+    {
+      "displayName": "Notifications Example",
+      "description": "",
+      "path": "Examples~/extDebug.Notifications"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/iam1337/extDebug.git#upm"
