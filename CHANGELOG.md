@@ -1,3 +1,10 @@
+## [1.12.4](https://github.com/Iam1337/extDebug/compare/v1.12.3...v1.12.4) (2022-01-17)
+
+
+### Bug Fixes
+
+* **Menu:** fixed repaint bug ([3c6a8ac](https://github.com/Iam1337/extDebug/commit/3c6a8acfdd842902deceb10650db9a5ff7e9fcfd))
+
 ## [1.12.3](https://github.com/Iam1337/extDebug/compare/v1.12.2...v1.12.3) (2022-01-07)
 
 
