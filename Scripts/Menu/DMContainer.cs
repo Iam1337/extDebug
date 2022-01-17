@@ -50,9 +50,13 @@ namespace extDebug.Menu
 			Root = new DMBranch(null, name);
 			Root.Container = this;
 
+			// Setup current branch.
+			_currentBranch = Root;
+			
 			// Setup modules.
 			Input = input;
 			Render = render;
+			
 		}
 
 		public void Open() => Open(Root);
@@ -62,7 +66,8 @@ namespace extDebug.Menu
 			if (branch == null)
 				throw new ArgumentNullException(nameof(branch));
 
-			if (_currentBranch != null)
+			if (_currentBranch != null && 
+			    _currentBranch != branch)
 			{
 				_branchesStack.Push(_currentBranch);
 			}
@@ -101,7 +106,6 @@ namespace extDebug.Menu
 			{
 				_currentBranch.SendEvent(EventArgs.CloseBranch);
 				_currentBranch = _previousBranch;
-				//_currentBranch.SendEvent(EventArgs.OpenBranch); // INFO: Is required?
 				_currentBranch.RequestRepaint();
 
 				_branchesStack.Pop();
