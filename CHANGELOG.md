@@ -1,3 +1,10 @@
+## [1.12.5](https://github.com/Iam1337/extDebug/compare/v1.12.4...v1.12.5) (2022-01-23)
+
+
+### Bug Fixes
+
+* **ci:** added publish settings ([80cd555](https://github.com/Iam1337/extDebug/commit/80cd555841582db1449e6d28ad992d1e51a09936))
+
 ## [1.12.4](https://github.com/Iam1337/extDebug/compare/v1.12.3...v1.12.4) (2022-01-17)
 
 
