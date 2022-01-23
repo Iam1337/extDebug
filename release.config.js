@@ -18,7 +18,7 @@ module.exports = {
 			"changelogFile": "CHANGELOG.md"
 		}],
 		["@semantic-release/npm", {
-			"npmPublish": false, 
+			"npmPublish": true, 
 			"pkgRoot": `Assets/${process.env.PROJECT_NAME}` }],
 		["@semantic-release/git", {
 			"assets": [`Assets/${process.env.PROJECT_NAME}/package.json`, "CHANGELOG.md"],
