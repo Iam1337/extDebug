@@ -19,6 +19,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_CONFIG_REGISTRY: https://npm.iron-wall.org
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       with:
         branch: main
         extra_plugins: |
