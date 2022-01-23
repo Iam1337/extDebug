@@ -18,6 +18,7 @@ jobs:
       uses: cycjimmy/semantic-release-action@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_CONFIG_REGISTRY: https://npm.iron-wall.org
       with:
         branch: main
         extra_plugins: |
