@@ -1,3 +1,10 @@
+## [1.12.9](https://github.com/Iam1337/extDebug/compare/v1.12.8...v1.12.9) (2022-01-24)
+
+
+### Bug Fixes
+
+* **ci:** cleanup ([cf6686f](https://github.com/Iam1337/extDebug/commit/cf6686fcc138f4a3ddde8d6bdf941c1858b5c966))
+
 ## [1.12.8](https://github.com/Iam1337/extDebug/compare/v1.12.7...v1.12.8) (2022-01-24)
 
 
