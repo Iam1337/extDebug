@@ -1,3 +1,10 @@
+## [1.12.6](https://github.com/Iam1337/extDebug/compare/v1.12.5...v1.12.6) (2022-01-24)
+
+
+### Bug Fixes
+
+* **ci:** added self-hosted npm mirror ([8a5f9c1](https://github.com/Iam1337/extDebug/commit/8a5f9c13f9b463563c65c4c71f050aad6e1e5a50))
+
 ## [1.12.5](https://github.com/Iam1337/extDebug/compare/v1.12.4...v1.12.5) (2022-01-23)
 
 
