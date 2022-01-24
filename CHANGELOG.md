@@ -1,3 +1,10 @@
+## [1.12.10](https://github.com/Iam1337/extDebug/compare/v1.12.9...v1.12.10) (2022-01-24)
+
+
+### Bug Fixes
+
+* **ci:** remove npm publish ([c38ee2d](https://github.com/Iam1337/extDebug/commit/c38ee2d2447bb7b2f31fa1e98a6760f5ce5ff7ee))
+
 ## [1.12.9](https://github.com/Iam1337/extDebug/compare/v1.12.8...v1.12.9) (2022-01-24)
 
 
