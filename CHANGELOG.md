@@ -1,3 +1,10 @@
+## [1.12.7](https://github.com/Iam1337/extDebug/compare/v1.12.6...v1.12.7) (2022-01-24)
+
+
+### Bug Fixes
+
+* **ci:** remove publish ([49afb60](https://github.com/Iam1337/extDebug/commit/49afb60e4b44ac01a9e911dbb4b377a3ce1ba2af))
+
 ## [1.12.6](https://github.com/Iam1337/extDebug/compare/v1.12.5...v1.12.6) (2022-01-24)
 
 
