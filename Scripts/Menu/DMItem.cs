@@ -179,9 +179,26 @@ namespace extDebug.Menu
 			internal set => _container = value;
 		}
 
+		public bool IsEnabled()
+		{
+			// If the parent component is disabled, then the child must be disabled. 
+			if (_parent != null && !_parent.IsEnabled())
+				return false;
+
+			return _enabledCallback?.Invoke() ?? _enabled;
+		}
+
+		public void SetEnabled(bool enabled) => _enabled = enabled;
+
+		public void SetEnabled(Func<bool> callback) => _enabledCallback = callback;
+
 		#endregion
 
 		#region Protected Vars
+
+		protected bool _enabled;
+
+		protected Func<bool> _enabledCallback;
 
 		protected DMContainer _container;
 
@@ -240,6 +257,7 @@ namespace extDebug.Menu
             _valueField = new Field<string>(value, DM.Colors.Value);
             _descriptionField = new Field<string>(description, DM.Colors.Description);
 
+			_enabled = true;
             _order = order;
 
 			_parent = parent?.Get(directory, true);
