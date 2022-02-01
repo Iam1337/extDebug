@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/Iam1337/extDebug/compare/v1.12.10...v1.13.0) (2022-02-01)
+
+
+### Features
+
+* **Menu:** added enable/disable state in items ([a41e191](https://github.com/Iam1337/extDebug/commit/a41e19100398dfdf5b8fc9b2d694d4cfd018fce7))
+
 ## [1.12.10](https://github.com/Iam1337/extDebug/compare/v1.12.9...v1.12.10) (2022-01-24)
 
 
