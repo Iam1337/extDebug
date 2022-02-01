@@ -297,7 +297,7 @@ namespace extDebug.Menu
 					var currentItem = Current;
 					if (currentItem is DMBranch currentBranch)
 					{
-						if (Container.IsVisible)
+						if (Container.IsVisible && IsEnabled())
 							Container.Open(currentBranch);
 					}
 					else

@@ -93,7 +93,7 @@ namespace extDebug.Menu
 
 					if (eventArgs.Key == EventKey.Right)
 					{
-						if (Container.IsVisible)
+						if (Container.IsVisible && IsEnabled())
 							Container.Open(_fieldsBranch);
 
 						return;

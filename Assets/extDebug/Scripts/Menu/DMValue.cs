@@ -60,7 +60,7 @@ namespace extDebug.Menu
 				_valueField.Color = _defaultValue.Equals(value) ? DM.Colors.Value : DM.Colors.ValueFlash;
 				_valueField.Value = ValueToString(value);
 			}
-			else if (eventArgs.Tag == EventTag.Input)
+			else if (eventArgs.Tag == EventTag.Input && IsEnabled())
 			{
 				if (eventArgs.Key == EventKey.Left && _setter != null)
 				{
@@ -77,10 +77,6 @@ namespace extDebug.Menu
 				else if (eventArgs.Key == EventKey.Reset && _setter != null)
 				{
 					ChangeValue(_defaultValue, true);
-				}
-				else if (eventArgs.Key == EventKey.Back)
-				{
-					Container.Back();
 				}
 			}
 		}

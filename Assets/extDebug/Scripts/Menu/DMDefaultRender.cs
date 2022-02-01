@@ -54,7 +54,7 @@ namespace extDebug.Menu
 				var item = items[i];
 				var selected = item == branch.Current;
 				var prefix = selected ? kPrefix_Selected : kPrefix;
-				var alpha = selected ? 1 : 0.75f;
+				var alpha = item.IsEnabled() ? (selected ? 1 : 0.75f) : 0.50f;
 
 				// items separator
 				if (order >= 0 && Math.Abs(order - item.Order) > 1)
