@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/Iam1337/extDebug/compare/v1.13.0...v1.13.1) (2022-02-01)
+
+
+### Bug Fixes
+
+* **Menu:** action enabled/disabled state fix ([dc55f8f](https://github.com/Iam1337/extDebug/commit/dc55f8f2b60d2d955ed7cad3c5a6a43755a12831))
+
 # [1.13.0](https://github.com/Iam1337/extDebug/compare/v1.12.10...v1.13.0) (2022-02-01)
 
 
