@@ -32,7 +32,7 @@ namespace extDebug.Menu
 			{
 				Container.Back();
 			}
-			else if (eventArgs.Key == EventKey.Right && _action != null)
+			else if (eventArgs.Key == EventKey.Right && IsEnabled() && _action != null)
 			{
 				_action.Invoke(this);
 
