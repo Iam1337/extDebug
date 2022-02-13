@@ -35,7 +35,7 @@ namespace extDebug.Menu
 		public void SetPrecision(int value)
 		{
 			_precision = Mathf.Clamp(value, 0, FloatUtils.Formats.Length - 1);
-			_floatPointScale = (int)Mathf.Pow(10, _precision);
+			_floatPointScale = (int) Mathf.Pow(10, _precision);
 
 			for (var i = 0; i < _fields.Length; i++)
 			{
@@ -65,7 +65,8 @@ namespace extDebug.Menu
 
 		#region Protected Methods
 
-		protected DMUnityFloatStruct(DMBranch parent, string path, Func<TStruct> getter, Action<TStruct> setter = null, int order = 0) : base(parent, path, getter, setter, order)
+		protected DMUnityFloatStruct(DMBranch parent, string path, Func<TStruct> getter, Action<TStruct> setter = null,
+			int order = 0) : base(parent, path, getter, setter, order)
 		{
 			if (setter != null)
 			{
@@ -121,14 +122,16 @@ namespace extDebug.Menu
 			base.OnEvent(eventArgs);
 		}
 
-		protected sealed override string ValueToString(TStruct value) => value.ToString(string.IsNullOrEmpty(Format) ? FloatUtils.Formats[_precision] : Format, null);
+		protected sealed override string ValueToString(TStruct value) =>
+			value.ToString(string.IsNullOrEmpty(Format) ? FloatUtils.Formats[_precision] : Format, null);
 
 		protected sealed override TStruct ValueIncrement(TStruct value, bool isShift)
 		{
 			var count = StructUtils.GetFieldsCount(typeof(TStruct));
 			for (var i = 0; i < count; i++)
 			{
-				StructFieldSetter(ref value, i, (Mathf.Floor(StructFieldGetter(value, i) * _floatPointScale + 0.1f) + Step) / _floatPointScale);
+				StructFieldSetter(ref value, i,
+					(Mathf.Floor(StructFieldGetter(value, i) * _floatPointScale + 0.1f) + Step) / _floatPointScale);
 			}
 
 			return value;
@@ -139,7 +142,8 @@ namespace extDebug.Menu
 			var count = StructUtils.GetFieldsCount(typeof(TStruct));
 			for (var i = 0; i < count; i++)
 			{
-				StructFieldSetter(ref value, i, (Mathf.Floor(StructFieldGetter(value, i) * _floatPointScale + 0.1f) - Step) / _floatPointScale);
+				StructFieldSetter(ref value, i,
+					(Mathf.Floor(StructFieldGetter(value, i) * _floatPointScale + 0.1f) - Step) / _floatPointScale);
 			}
 
 			return value;
@@ -154,6 +158,111 @@ namespace extDebug.Menu
 		#region Private Methods
 
 		private void BackAction(DMAction action) => Container.Back();
+
+		#endregion
+	}
+
+	public class DMVector2 : DMUnityFloatStruct<Vector2>
+	{
+		#region Public Methods
+
+		public DMVector2(DMBranch parent, string path, Func<Vector2> getter, Action<Vector2> setter = null,
+			int order = 0) : base(parent, path, getter, setter, order)
+		{
+		}
+
+		#endregion
+
+		#region Protected Methods
+
+		protected override float StructFieldGetter(Vector2 vector, int fieldIndex) => vector[fieldIndex];
+
+		protected override void StructFieldSetter(ref Vector2 vector, int fieldIndex, float value) =>
+			vector[fieldIndex] = value;
+
+		#endregion
+	}
+
+	public class DMVector3 : DMUnityFloatStruct<Vector3>
+	{
+		#region Public Methods
+
+		public DMVector3(DMBranch parent, string path, Func<Vector3> getter, Action<Vector3> setter = null,
+			int order = 0) : base(parent, path, getter, setter, order)
+		{
+		}
+
+		#endregion
+
+		#region Protected Methods
+
+		protected override float StructFieldGetter(Vector3 vector, int fieldIndex) => vector[fieldIndex];
+
+		protected override void StructFieldSetter(ref Vector3 vector, int fieldIndex, float value) =>
+			vector[fieldIndex] = value;
+
+		#endregion
+	}
+
+	public class DMVector4 : DMUnityFloatStruct<Vector4>
+	{
+		#region Public Methods
+
+		public DMVector4(DMBranch parent, string path, Func<Vector4> getter, Action<Vector4> setter = null,
+			int order = 0) : base(parent, path, getter, setter, order)
+		{
+		}
+
+		#endregion
+
+		#region Protected Methods
+
+		protected override float StructFieldGetter(Vector4 vector, int fieldIndex) => vector[fieldIndex];
+
+		protected override void StructFieldSetter(ref Vector4 vector, int fieldIndex, float value) =>
+			vector[fieldIndex] = value;
+
+		#endregion
+	}
+
+	public class DMQuaternion : DMUnityFloatStruct<Quaternion>
+	{
+		#region Public Methods
+
+		public DMQuaternion(DMBranch parent, string path, Func<Quaternion> getter, Action<Quaternion> setter = null,
+			int order = 0) : base(parent, path, getter, setter, order)
+		{
+		}
+
+		#endregion
+
+		#region Protected Methods
+
+		protected override float StructFieldGetter(Quaternion vector, int fieldIndex) => vector[fieldIndex];
+
+		protected override void StructFieldSetter(ref Quaternion vector, int fieldIndex, float value) =>
+			vector[fieldIndex] = value;
+
+		#endregion
+	}
+
+	public class DMColor : DMUnityFloatStruct<Color>
+	{
+		#region Public Methods
+
+		public DMColor(DMBranch parent, string path, Func<Color> getter, Action<Color> setter = null, int order = 0) :
+			base(parent, path, getter, setter, order)
+		{
+		}
+
+		#endregion
+
+		#region Protected Methods
+
+		protected override float StructFieldGetter(Color vector, int fieldIndex) => vector[fieldIndex];
+
+		protected override void StructFieldSetter(ref Color vector, int fieldIndex, float value) =>
+			vector[fieldIndex] = value;
 
 		#endregion
 	}
