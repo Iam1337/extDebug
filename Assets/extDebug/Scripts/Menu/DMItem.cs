@@ -4,7 +4,6 @@ using UnityEngine;
 
 using System;
 using System.Runtime.CompilerServices;
-using UnityEditor;
 
 namespace extDebug.Menu
 {
@@ -17,7 +16,8 @@ namespace extDebug.Menu
 			#region Private Static Methods
 
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
-			private static float _flashMap(float flashTime) => Mathf.Clamp01((Time.unscaledTime - flashTime) / kFlashDuration);
+			private static float _flashMap(float flashTime) =>
+				Mathf.Clamp01((Time.unscaledTime - flashTime) / kFlashDuration);
 
 			#endregion
 
@@ -242,7 +242,18 @@ namespace extDebug.Menu
 				Container.Notify(this, null, ValueColor);
 		}
 
-		public override string ToString() => $"Item: {_nameField.Value}, Value: {_valueField.Value}, Desc: {_descriptionField.Value}";
+		public override string ToString()
+		{
+			var value = $"Item {_nameField.Value}";
+
+			if (!string.IsNullOrEmpty(_valueField.Value))
+				value += $", Value: {_valueField.Value}";
+
+			if (!string.IsNullOrEmpty(_descriptionField.Value))
+				value += $", Desc: {_descriptionField.Value}";
+
+			return value;
+		}
 
 		#endregion
 
@@ -254,11 +265,11 @@ namespace extDebug.Menu
 			var name = GetPathName(path);
 
 			_nameField = new Field<string>(name, DM.Colors.Name);
-            _valueField = new Field<string>(value, DM.Colors.Value);
-            _descriptionField = new Field<string>(description, DM.Colors.Description);
+			_valueField = new Field<string>(value, DM.Colors.Value);
+			_descriptionField = new Field<string>(description, DM.Colors.Description);
 
 			_enabled = true;
-            _order = order;
+			_order = order;
 
 			_parent = parent?.Get(directory, true);
 			_parent?.Insert(this);
