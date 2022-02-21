@@ -84,7 +84,7 @@ namespace extDebug.Menu
 		{
 			while (_previousBranch != null)
 			{
-				_currentBranch.SendEvent(EventArgs.CloseBranch);
+				_currentBranch?.SendEvent(EventArgs.CloseBranch);
 				_currentBranch = _previousBranch;
 
 				_branchesStack.Pop();
