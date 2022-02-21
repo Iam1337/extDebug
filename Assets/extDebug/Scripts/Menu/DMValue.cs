@@ -98,8 +98,7 @@ namespace extDebug.Menu
 			_valueField.Value = ValueToString(value);
 
 			// Save value.
-			if (_storage == null ||
-			    _storage != null && _storage.Save(_path, value))
+			if (_storage == null || _storage.Save(_path, value))
 			{
 				FlashValue(DM.Colors.ActionSuccess, true);
 			}
