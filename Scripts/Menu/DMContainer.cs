@@ -170,7 +170,7 @@ namespace extDebug.Menu
 			Root.Add(path, getter, order);
 
 		// Action
-		public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) =>
+		public DMAction Add(string path, Action<ActionEvent> action, string description = "", int order = 0) =>
 			Root.Add(path, action, description, order);
 
 		// Bool
