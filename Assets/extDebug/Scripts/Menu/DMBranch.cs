@@ -88,7 +88,7 @@ namespace extDebug.Menu
 		public DMString Add(string path, Func<string> getter, int order = 0) => 
 			new DMString(this, path, getter, order);
 
-		public DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) =>
+		public DMAction Add(string path, Action<ActionEvent> action, string description = "", int order = 0) =>
 			new DMAction(this, path, description, action, order);
 
 		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) =>

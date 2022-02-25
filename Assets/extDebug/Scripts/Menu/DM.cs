@@ -95,7 +95,7 @@ namespace extDebug.Menu
 			Container.Add(path, getter, order);
 
 		// Action
-		public static DMAction Add(string path, Action<DMAction> action, string description = "", int order = 0) =>
+		public static DMAction Add(string path, Action<ActionEvent> action, string description = "", int order = 0) =>
 			Container.Add(path, action, description, order);
 
 		// Bool
