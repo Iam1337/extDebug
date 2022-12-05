@@ -60,7 +60,7 @@ Or if you don't have it, add the scoped registry to manifest.json with the desir
 	}
 ],
 "dependencies": {
-	"com.iam1337.extdebug": "1.8.6"
+	"com.iam1337.extdebug": "1.15.0"
 }
 ```
 
