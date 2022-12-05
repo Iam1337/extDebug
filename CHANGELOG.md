@@ -1,6 +1,19 @@
 # [1.15.0](https://github.com/Iam1337/extDebug/compare/v1.14.0...v1.15.0) (2022-12-05)
 
 
+### Bug Fixes
+
+* **ci:** remove unitypackage auto publishing ([2f12274](https://github.com/Iam1337/extDebug/commit/2f1227429d3a1f4ce23230ee699960b294ebb4ef))
+* **ci:** remove unitypackage autopublishing ([1405454](https://github.com/Iam1337/extDebug/commit/1405454d77b4d00342c9fda82153969b9e31144e))
+
+
+### Features
+
+* start work on runtime gizmos module ([da3682a](https://github.com/Iam1337/extDebug/commit/da3682a26b31f3428e4046e72c553b9d0d194ac0))
+
+# [1.15.0](https://github.com/Iam1337/extDebug/compare/v1.14.0...v1.15.0) (2022-12-05)
+
+
 ### Features
 
 * start work on runtime gizmos module ([da3682a](https://github.com/Iam1337/extDebug/commit/da3682a26b31f3428e4046e72c553b9d0d194ac0))
