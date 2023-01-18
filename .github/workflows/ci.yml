@@ -57,4 +57,4 @@ jobs:
         UPM_TAG: upm/v${{ steps.semantic.outputs.new_release_version }}
       run: |
         git tag $UPM_TAG upm
-        git push origin --tags 
+        git push origin --tags
