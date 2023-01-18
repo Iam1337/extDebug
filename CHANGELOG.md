@@ -3,6 +3,18 @@
 
 ### Bug Fixes
 
+* **ci:** cleanup ci logic ([a0a058a](https://github.com/Iam1337/extDebug/commit/a0a058a645959c7a43c99ae44b862acfc5eaf84e))
+* **ci:** cleanup ci settings ([d6b4960](https://github.com/Iam1337/extDebug/commit/d6b496067dc44d4aa3115389bfd89b1a6a8d55e7))
+* **ci:** update ci logic ([e6f7b94](https://github.com/Iam1337/extDebug/commit/e6f7b94f96ba6e925c0f79842f40ffb407797ba8))
+* **ci:** update ci logic ([fd7a6cd](https://github.com/Iam1337/extDebug/commit/fd7a6cd627ad4d8e7dfefffdd23f19729053bfeb))
+* **ci:** update ci logic ([96529ba](https://github.com/Iam1337/extDebug/commit/96529ba7f8cf3b798565126d173eabef2199cdd1))
+* update ci settings ([c95ed06](https://github.com/Iam1337/extDebug/commit/c95ed0621b2a9995752f674541840ff36a7fceb9))
+
+## [1.15.2](https://github.com/Iam1337/extDebug/compare/v1.15.1...v1.15.2) (2023-01-18)
+
+
+### Bug Fixes
+
 * **ci:** update ci logic ([fd7a6cd](https://github.com/Iam1337/extDebug/commit/fd7a6cd627ad4d8e7dfefffdd23f19729053bfeb))
 * **ci:** update ci logic ([96529ba](https://github.com/Iam1337/extDebug/commit/96529ba7f8cf3b798565126d173eabef2199cdd1))
 * update ci settings ([c95ed06](https://github.com/Iam1337/extDebug/commit/c95ed0621b2a9995752f674541840ff36a7fceb9))
