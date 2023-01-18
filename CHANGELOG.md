@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/Iam1337/extDebug/compare/v1.15.0...v1.15.1) (2023-01-18)
+
+
+### Bug Fixes
+
+* **ci:** update ci logic ([40f1b81](https://github.com/Iam1337/extDebug/commit/40f1b81cce0c8eb7f73e3f6eeba6f64b089091af))
+
 # [1.15.0](https://github.com/Iam1337/extDebug/compare/v1.14.0...v1.15.0) (2022-12-05)
 
 
