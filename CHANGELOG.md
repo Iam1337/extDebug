@@ -1,3 +1,11 @@
+## [1.15.2](https://github.com/Iam1337/extDebug/compare/v1.15.1...v1.15.2) (2023-01-18)
+
+
+### Bug Fixes
+
+* **ci:** update ci logic ([96529ba](https://github.com/Iam1337/extDebug/commit/96529ba7f8cf3b798565126d173eabef2199cdd1))
+* update ci settings ([c95ed06](https://github.com/Iam1337/extDebug/commit/c95ed0621b2a9995752f674541840ff36a7fceb9))
+
 ## [1.15.1](https://github.com/Iam1337/extDebug/compare/v1.15.0...v1.15.1) (2023-01-18)
 
 
