@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
+﻿/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
 
 using UnityEngine;
 
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
-	public class DMBranch : DMItem, IDMBranch
+	public class DMBranch : DMItem, IDMBranch, IDMContainer
 	{
 		#region Public Methods
 
@@ -25,7 +25,7 @@ namespace extDebug.Menu
 			}
 		}
 
-		public Action<DMBranch> OnOpen;
+        public Action<DMBranch> OnOpen;
 
 		public Action<DMBranch> OnClose;
 
@@ -176,10 +176,13 @@ namespace extDebug.Menu
 			return dynamicBranch;
 		}
 
-		// Repaint
+        public DMLogs Add(string path, IDMLogsContainer logsContainer, string description = "", int size = 10, int order = 0) =>
+            new DMLogs(this, path, description, logsContainer, size, order);
+
+        // Repaint
 		public void RequestRepaint() => _canRepaint = true;
 
-		public void RequestRepaint(float duration) => _canRepaintUntil = Time.unscaledTime + duration;
+        public void RequestRepaint(float duration) => _canRepaintUntil = Time.unscaledTime + duration;
 
 		// Other
 		public override string ToString() => $"Branch: {_nameField.Value}, Desc: {_descriptionField.Value}";
@@ -187,9 +190,7 @@ namespace extDebug.Menu
 		#endregion
 
 		#region Internal Methods
-
-		internal IReadOnlyList<DMItem> GetItems() => _items.AsReadOnly();
-
+        
 		internal void Resort()
 		{
 			int Comparison(DMItem x, DMItem y) => x.Order.CompareTo(y.Order);
@@ -235,17 +236,30 @@ namespace extDebug.Menu
 			return branch;
 		}
 
-		internal bool CanRepaint() => _canRepaint || _canRepaintUntil > Time.unscaledTime || Time.unscaledTime > _autoRepaintAt;
 
-		internal void CompleteRepaint()
-		{
-			if (_autoRepaintPeriod > 0)
-				_autoRepaintAt = Time.unscaledTime + _autoRepaintPeriod;
-
-			_canRepaint = false;
-		}
 
 		#endregion
+
+        #region IDMBranch
+
+        DMContainer IDMBranch.Container
+        {
+            set => Container = value;
+        }
+        
+        IReadOnlyList<DMItem> IDMBranch.GetItems() => _items.AsReadOnly();
+        
+        bool IDMBranch.CanRepaint() => _canRepaint || _canRepaintUntil > Time.unscaledTime || Time.unscaledTime > _autoRepaintAt;
+
+        void IDMBranch.CompleteRepaint()
+        {
+            if (_autoRepaintPeriod > 0)
+                _autoRepaintAt = Time.unscaledTime + _autoRepaintPeriod;
+
+            _canRepaint = false;
+        }
+
+        #endregion
 
 		#region Protected Methods
 
@@ -282,7 +296,7 @@ namespace extDebug.Menu
 				else if (eventArgs.Key == EventKey.Left)
 				{
 					var currentItem = Current;
-					if (currentItem is DMBranch)
+					if (currentItem is IDMBranch)
 					{
 						if (Container.IsVisible)
 							Container.Back();
@@ -295,7 +309,7 @@ namespace extDebug.Menu
 				else if (eventArgs.Key == EventKey.Right)
 				{
 					var currentItem = Current;
-					if (currentItem is DMBranch currentBranch)
+					if (currentItem is IDMBranch currentBranch)
 					{
 						if (Container.IsVisible && IsEnabled())
 							Container.Open(currentBranch);
@@ -308,7 +322,7 @@ namespace extDebug.Menu
 				else if (eventArgs.Key == EventKey.Reset)
 				{
 					var currentItem = Current;
-					if (currentItem is DMBranch currentBranch)
+					if (currentItem is IDMBranch currentBranch)
 					{
 						// None
 					}

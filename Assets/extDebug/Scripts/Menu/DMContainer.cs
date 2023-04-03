@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
+﻿/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
 
 using UnityEngine;
 
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
-	public class DMContainer : IDMBranch
+	public class DMContainer : IDMContainer
 	{
 		#region Public Vars
 
@@ -27,11 +27,11 @@ namespace extDebug.Menu
 
 		private const float kRepeatInterval = 0.1f;
 
-		private DMBranch _currentBranch;
+		private IDMBranch _currentBranch;
 
-		private DMBranch _previousBranch => _branchesStack.Count > 0 ? _branchesStack.Peek() : null;
+		private IDMBranch _previousBranch => _branchesStack.Count > 0 ? _branchesStack.Peek() : null;
 
-		private readonly Stack<DMBranch> _branchesStack = new Stack<DMBranch>();
+		private readonly Stack<IDMBranch> _branchesStack = new();
 
 		private EventKey _previousKey;
 
@@ -56,12 +56,11 @@ namespace extDebug.Menu
 			// Setup modules.
 			Input = input;
 			Render = render;
-			
-		}
+        }
 
 		public void Open() => Open(Root);
 
-		public void Open(DMBranch branch)
+		public void Open(IDMBranch branch)
 		{
 			if (branch == null)
 				throw new ArgumentNullException(nameof(branch));
@@ -249,7 +248,10 @@ namespace extDebug.Menu
 		public DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0) =>
 			Root.Add(path, getter, buildCallback, nameCallback, description, order);
 
-		#endregion
+        public DMLogs Add(string path, IDMLogsContainer logsContainer, string description = "", int size = 10, int order = 0) =>
+            Root.Add(path, logsContainer, description, size, order);
+
+        #endregion
 
 		#region Private Methods
 

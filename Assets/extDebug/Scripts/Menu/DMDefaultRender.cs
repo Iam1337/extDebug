@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
+﻿/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
 
 using UnityEngine;
 
@@ -26,33 +26,33 @@ namespace extDebug.Menu
 
 		#region IDMRender Methods
 
-		void IDMRender.Repaint(DMBranch branch, IReadOnlyList<DMItem> items)
+		void IDMRender.Repaint(IDMBranch itemsContainer, IReadOnlyList<DMItem> items)
 		{
 			const string kPrefix = " ";
 			const string kPrefix_Selected = ">";
 			const string kSpace = "  ";
 			const char kHorizontalChar = '─';
 
-			CalculateLengths(branch, items, kSpace.Length, 
+			CalculateLengths(itemsContainer, items, kSpace.Length, 
 				out var fullLength, 
 				out var maxNameLength, 
 				out var maxValueLength, 
 				out var maxDescriptionLength);
-
+            
 			var order = -1;
 			var lineLength = fullLength + kPrefix.Length;
 			var lineEmpty = new string(kHorizontalChar, lineLength);
 
 			// header
 			_builder.Clear();
-			_builder.AppendFormat($"{kPrefix}<color=#{ColorUtility.ToHtmlStringRGB(branch.NameColor)}>{{0,{-fullLength}}}</color>{Environment.NewLine}", branch.Name);
+			_builder.AppendFormat($"{kPrefix}<color=#{ColorUtility.ToHtmlStringRGB(itemsContainer.NameColor)}>{{0,{-fullLength}}}</color>{Environment.NewLine}", itemsContainer.Name);
 			_builder.AppendLine(lineEmpty);
 
 			// items
 			for (var i = 0; i < items.Count; i++)
 			{
 				var item = items[i];
-				var selected = item == branch.Current;
+				var selected = item == itemsContainer.Current;
 				var prefix = selected ? kPrefix_Selected : kPrefix;
 				var alpha = item.IsEnabled() ? (selected ? 1 : 0.75f) : 0.50f;
 
@@ -66,8 +66,12 @@ namespace extDebug.Menu
 				var value = item.Value;
 				var description = item.Description;
 
-				if (item is DMBranch)
+				if (item is IDMBranch)
 					name += "...";
+
+                // little hack
+                if (itemsContainer is DMLogs)
+                    maxValueLength = 0;
 
 				_builder.AppendFormat($"{prefix}<color=#{ColorUtility.ToHtmlStringRGB(item.NameColor * alpha)}>{{0,{-maxNameLength}}}</color>", name);
 				_builder.AppendFormat($"{kSpace}<color=#{ColorUtility.ToHtmlStringRGB(item.ValueColor * alpha)}>{{0,{maxValueLength}}}</color>", value);
@@ -104,12 +108,12 @@ namespace extDebug.Menu
 
 		#region Private Methods
 
-		private void CalculateLengths(DMBranch branch, IReadOnlyList<DMItem> items, int spaceLength, out int fullLength, out int maxNameLength, out int maxValueLength, out int maxDescriptionLength)
+		private void CalculateLengths(IDMBranch itemsContainer, IReadOnlyList<DMItem> items, int spaceLength, out int fullLength, out int maxNameLength, out int maxValueLength, out int maxDescriptionLength)
 		{
 			maxNameLength = 0;
 			maxValueLength = 0;
 			maxDescriptionLength = 0;
-			fullLength = branch.Name.Length;
+			fullLength = itemsContainer.Name.Length;
 
 			for (var i = 0; i < items.Count; i++)
 			{
@@ -118,7 +122,7 @@ namespace extDebug.Menu
 				var valueLength = item.Value.Length;
 				var descriptionLength = item.Description.Length;
 
-				if (item is DMBranch)
+				if (item is IDMBranch)
 					nameLength += 3;
 
 				maxNameLength = Math.Max(maxNameLength, nameLength);

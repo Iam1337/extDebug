@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
+﻿/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
 
 using System.Collections.Generic;
 
@@ -9,7 +9,7 @@ namespace extDebug.Menu
 		#region Methods
 
 		// Debug Menu Hooks
-		void Repaint(DMBranch branch, IReadOnlyList<DMItem> items);
+		void Repaint(IDMBranch itemsContainer, IReadOnlyList<DMItem> items);
 
 		#endregion
 	}
