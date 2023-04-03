@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/Iam1337/extDebug/compare/v1.15.2...v1.16.0) (2023-04-03)
+
+
+### Features
+
+* **Menu:** added logs logic ([d9bcead](https://github.com/Iam1337/extDebug/commit/d9bcead2780be224240f534d402dc4bb2e87cc55))
+
 ## [1.15.2](https://github.com/Iam1337/extDebug/compare/v1.15.1...v1.15.2) (2023-01-18)
 
 
