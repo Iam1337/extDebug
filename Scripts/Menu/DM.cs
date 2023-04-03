@@ -1,4 +1,4 @@
-/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
+/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
 
 using UnityEngine;
 
@@ -80,7 +80,7 @@ namespace extDebug.Menu
 
 		public static void Open() => Container.Open();
 
-		public static void Open(DMBranch branch) => Container.Open(branch);
+		public static void Open(IDMBranch branch) => Container.Open(branch);
 
 		public static void Back() => Container.Back();
 
@@ -174,6 +174,10 @@ namespace extDebug.Menu
 		public static DMBranch Add<T>(string path, Func<IEnumerable<T>> getter, Action<DMBranch, T> buildCallback = null, Func<T, string> nameCallback = null, string description = "", int order = 0) =>
 			Container.Add(path, getter, buildCallback, nameCallback, description, order);
 
+        // Logs
+        public static DMLogs Add(string path, IDMLogsContainer logger, string description = "", int size = 10, int order = 0) =>
+            Container.Add(path, logger, description, size, order);
+        
 		#endregion
 
 		#region Private Methods

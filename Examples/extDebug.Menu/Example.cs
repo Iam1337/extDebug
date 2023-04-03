@@ -1,10 +1,11 @@
-/* Copyright (c) 2021 dr. ext (Vladimir Sigalkin) */
+/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
 
 using UnityEngine;
 
 using System;
-
+using System.Collections.Generic;
 using extDebug.Menu;
+using Random = UnityEngine.Random;
 
 namespace extDebug.Examples.Menu
 {
@@ -26,6 +27,85 @@ namespace extDebug.Examples.Menu
 			Two = 1 << 1,
 			Three = 1 << 2,
 		}
+
+        private class ExampleLogsContainer : IDMLogsContainer
+        {
+            private enum LogType
+            {
+                Info,
+                Warning,
+                Error
+            }
+
+            private struct LogData
+            {
+                public LogType Type;
+                public string Message;
+            }
+
+            private bool _isDirty = false;
+            
+            private readonly Dictionary<LogType, Color> _tagsColors = new()
+            {
+                { LogType.Info, Color.white},
+                { LogType.Warning, Color.yellow },
+                { LogType.Error, Color.red },
+            };
+
+            private readonly Dictionary<LogType, String> _tags = new()
+            {
+                { LogType.Info, "[I]" },
+                { LogType.Warning, "[W]" },
+                { LogType.Error, "[E]" },
+            };
+            private readonly List<LogData> _logs = new();
+
+            public ExampleLogsContainer()
+            {
+                for (var i = 0; i < 100; i++) AddRandom();
+            }
+
+            public void AddRandom()
+            {
+                _logs.Add(new LogData
+                {
+                    Type = (LogType)Random.Range(0, 3),
+                    Message = Guid.NewGuid() + (Random.value > 0.5f ? Guid.NewGuid().ToString() : string.Empty  )
+                });
+
+                _isDirty = true;
+            }
+
+            public bool IsDirty()
+            {
+                var isDirty = _isDirty;
+                _isDirty = false;
+                return isDirty;
+            }
+
+            public bool GetLog(int index, out string tag, out Color tagColor, out string message, out Color messageColor)
+            {
+                tag = string.Empty;
+                tagColor = Color.clear;
+                message = string.Empty;
+                messageColor = Color.white;
+
+                if (index >= _logs.Count)
+                    return false;
+
+                var log = _logs[_logs.Count - 1 - index];
+                tag = _tags[log.Type];
+                tagColor = _tagsColors[log.Type];
+                message = log.Message;
+
+                return true;
+            }
+
+            public int GetLogsCount()
+            {
+                return _logs.Count;
+            }
+        }
 
 		#endregion
 
@@ -95,6 +175,8 @@ namespace extDebug.Examples.Menu
 
 		private ExampleFlags _flagsStorage;
 
+        private ExampleLogsContainer _logsContainer;
+        
 		#endregion
 
 		#region Unity Methods
@@ -140,6 +222,10 @@ namespace extDebug.Examples.Menu
 			DM.Add("Storage Values/Enum", () => _enumStorage, v => _enumStorage = v, order: 11).SetStorage(storage);
 			DM.Add("Storage Values/Flags", () => _flagsStorage, v => _flagsStorage = v, order: 12).SetStorage(storage);
 
+            // Logs
+            _logsContainer = new ExampleLogsContainer();
+            DM.Add("Logs", _logsContainer, "Logs Example", 10);
+            
 			// Dynamic
 			DM.Add("Dynamic Transforms", FindObjectsOfType<Transform>, (branch, transform) =>
 			{
@@ -149,6 +235,12 @@ namespace extDebug.Examples.Menu
 			DM.Open();
 		}
 
-		#endregion
+        protected void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                _logsContainer.AddRandom();
+        }
+
+        #endregion
 	}
 }
