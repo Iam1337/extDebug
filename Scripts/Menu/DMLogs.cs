@@ -75,7 +75,7 @@ namespace extDebug.Menu
                 _itemsLogs[i] = logItem;
             }
 
-            _items[size] = new DMString(null, string.Empty, GetLogsPagination, int.MaxValue);
+            _items[size] = new DMString(null, string.Empty, GetLogsPagination, order: int.MaxValue);
         }
 
         public void RequestRepaint() => _canRepaint = true;

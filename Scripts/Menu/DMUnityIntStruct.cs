@@ -51,7 +51,7 @@ namespace extDebug.Menu
 		#region Protected Methods
 
 		protected DMUnityIntStruct(DMBranch parent, string path, Func<TStruct> getter, Action<TStruct> setter = null,
-			int order = 0) : base(parent, path, getter, setter, order)
+			int order = 0) : base(parent, path, getter, setter, null, order)
 		{
 			if (setter != null)
 			{
@@ -71,7 +71,7 @@ namespace extDebug.Menu
 							var vector = getter.Invoke();
 							StructFieldSetter(ref vector, fieldIndex, v);
 							setter.Invoke(vector);
-						}, i);
+						}, order: i);
 				}
 
 				_fieldsBranch.Add("Back", BackAction, string.Empty, int.MaxValue);

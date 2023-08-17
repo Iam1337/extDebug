@@ -28,7 +28,7 @@ namespace extDebug.Menu
 
 		#region Public Methods
 
-		public DMFloat(DMBranch parent, string path, Func<float> getter, Action<float> setter = null, int order = 0) : base(parent, path, getter, setter, order)
+		public DMFloat(DMBranch parent, string path, Func<float> getter, Action<float> setter = null, float[] variants = null, int order = 0) : base(parent, path, getter, setter, variants, order)
 		{
 			SetPrecision(2);
 		}

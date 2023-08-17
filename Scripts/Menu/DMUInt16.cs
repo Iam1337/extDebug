@@ -18,7 +18,7 @@ namespace extDebug.Menu
 
 		#region Public Methods
 
-		public DMUInt16(DMBranch parent, string path, Func<UInt16> getter, Action<UInt16> setter = null, int order = 0) : base(parent, path, getter, setter, order)
+		public DMUInt16(DMBranch parent, string path, Func<UInt16> getter, Action<UInt16> setter = null, UInt16[] variants = null, int order = 0) : base(parent, path, getter, setter, variants, order)
 		{ }
 
 		#endregion

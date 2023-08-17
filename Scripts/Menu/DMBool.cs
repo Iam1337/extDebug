@@ -8,7 +8,7 @@ namespace extDebug.Menu
 	{
 		#region Public Methods
 
-		public DMBool(DMBranch parent, string path, Func<bool> getter, Action<bool> setter = null, int order = 0) : base(parent, path, getter, setter, order)
+		public DMBool(DMBranch parent, string path, Func<bool> getter, Action<bool> setter = null, bool[] variants = null, int order = 0) : base(parent, path, getter, setter, variants, order)
 		{ }
 
 		#endregion

@@ -168,53 +168,56 @@ namespace extDebug.Menu
 		public DMString Add(string path, Func<string> getter, int order = 0) => 
 			Root.Add(path, getter, order);
 
+		public DMString Add(string path, Func<string> getter, Action<string> setter, string[] variants, int order = 0) =>
+			Root.Add(path, getter, setter, variants, order);
+
 		// Action
 		public DMAction Add(string path, Action<ActionEvent> action, string description = "", int order = 0) =>
 			Root.Add(path, action, description, order);
 
 		// Bool
-		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) =>
-			Root.Add(path, getter, setter, order);
+		public DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, bool[] variants = null, int order = 0) =>
+			Root.Add(path, getter, setter, variants, order);
 
 		// Enums
-		public DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0) where T : struct, Enum =>
-			Root.Add(path, getter, setter, order);
+		public DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, T[] variants = null, int order = 0) where T : struct, Enum =>
+			Root.Add(path, getter, setter, variants, order);
 
 		// UInt8
-		public DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, int order = 0) =>
-			Root.Add(path, getter, setter, order);
+		public DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, byte[] variants = null, int order = 0) =>
+			Root.Add(path, getter, setter, variants, order);
 
 		// UInt16
-		public DMUInt16 Add(string path, Func<UInt16> getter, Action<UInt16> setter = null, int order = 0) =>
-			Root.Add(path, getter, setter, order);
+		public DMUInt16 Add(string path, Func<UInt16> getter, Action<UInt16> setter = null, UInt16[] variants = null, int order = 0) =>
+			Root.Add(path, getter, setter, variants, order);
 
 		// UInt32
-		public DMUInt32 Add(string path, Func<UInt32> getter, Action<UInt32> setter = null, int order = 0) =>
-			Root.Add(path, getter, setter, order);
+		public DMUInt32 Add(string path, Func<UInt32> getter, Action<UInt32> setter = null, UInt32[] variants = null, int order = 0) =>
+			Root.Add(path, getter, setter, variants, order);
 
 		// UInt64
-		public DMUInt64 Add(string path, Func<UInt64> getter, Action<UInt64> setter = null, int order = 0) =>
-			Root.Add(path, getter, setter, order);
+		public DMUInt64 Add(string path, Func<UInt64> getter, Action<UInt64> setter = null, UInt64[] variants = null, int order = 0) =>
+			Root.Add(path, getter, setter, variants, order);
 
 		// Int8
-		public DMInt8 Add(string path, Func<sbyte> getter, Action<sbyte> setter = null, int order = 0) =>
-			Root.Add(path, getter, setter, order);
+		public DMInt8 Add(string path, Func<sbyte> getter, Action<sbyte> setter = null, sbyte[] variants = null, int order = 0) =>
+			Root.Add(path, getter, setter, variants, order);
 
 		// Int16
-		public DMInt16 Add(string path, Func<Int16> getter, Action<Int16> setter = null, int order = 0) =>
-			Root.Add(path, getter, setter, order);
+		public DMInt16 Add(string path, Func<Int16> getter, Action<Int16> setter = null, Int16[] variants = null, int order = 0) =>
+			Root.Add(path, getter, setter, variants, order);
 
 		// Int32
-		public DMInt32 Add(string path, Func<Int32> getter, Action<Int32> setter = null, int order = 0) =>
-			Root.Add(path, getter, setter, order);
+		public DMInt32 Add(string path, Func<Int32> getter, Action<Int32> setter = null, Int32[] variants = null, int order = 0) =>
+			Root.Add(path, getter, setter, variants, order);
 
 		// Int64
-		public DMInt64 Add(string path, Func<Int64> getter, Action<Int64> setter = null, int order = 0) =>
-			Root.Add(path, getter, setter, order);
+		public DMInt64 Add(string path, Func<Int64> getter, Action<Int64> setter = null, Int64[] variants = null, int order = 0) =>
+			Root.Add(path, getter, setter, variants, order);
 
 		// Float
-		public DMFloat Add(string path, Func<float> getter, Action<float> setter = null, int order = 0) =>
-			Root.Add(path, getter, setter, order);
+		public DMFloat Add(string path, Func<float> getter, Action<float> setter = null, float[] variants = null, int order = 0) =>
+			Root.Add(path, getter, setter, variants, order);
 
 		// Vector 2
 		public DMVector2 Add(string path, Func<Vector2> getter, Action<Vector2> setter = null, int order = 0) =>

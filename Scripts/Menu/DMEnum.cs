@@ -40,7 +40,7 @@ namespace extDebug.Menu
 
 		#region Public Methods
 
-		public DMEnum(DMBranch parent, string path, Func<T> getter, Action<T> setter = null, int order = 0) : base(parent, path, getter, setter, order)
+		public DMEnum(DMBranch parent, string path, Func<T> getter, Action<T> setter = null, T[] variants = null, int order = 0) : base(parent, path, getter, setter, variants, order)
 		{
 			if (setter != null)
 			{
@@ -67,7 +67,7 @@ namespace extDebug.Menu
 							var intValue = (int)(object)value;
 
 							setter.Invoke((T)(object)(intGetter ^ intValue));
-						}, i);
+						}, order: i);
 					}
 
 					_flagBranch.Add("Back", BackAction, string.Empty, int.MaxValue);
