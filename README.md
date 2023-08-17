@@ -169,6 +169,16 @@ var branch = DM.Add("Example/Branch 3");
 DM.Add(branch, "Action", action => Debug.Log("Hello World"));
 ```
 
+**Variants**<br>
+```C#
+string _string = "Variant 2";
+string[] _stringVariants = new string[] { "Variant 1", "Variant 2", "Variant 3" };
+
+
+// You can pre-define lists of values and select the ones you need from them.
+DM.Add("Simple Menus/String Variants", () => _string, v => _string = v, _stringVariants, order: 1);
+```
+
 ### Keyboard Shortcuts:
 
 **Shared**
