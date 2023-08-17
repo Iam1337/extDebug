@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/Iam1337/extDebug/compare/v1.16.0...v1.17.0) (2023-08-17)
+
+
+### Features
+
+* **values:** added variants ([5afe410](https://github.com/Iam1337/extDebug/commit/5afe410bce0ceea9c484eb5c0896859c44681827))
+
 # [1.16.0](https://github.com/Iam1337/extDebug/compare/v1.15.2...v1.16.0) (2023-04-03)
 
 
