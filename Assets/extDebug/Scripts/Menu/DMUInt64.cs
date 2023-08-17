@@ -18,7 +18,7 @@ namespace extDebug.Menu
 
 		#region Public Methods
 
-		public DMUInt64(DMBranch parent, string path, Func<UInt64> getter, Action<UInt64> setter = null, int order = 0) : base(parent, path, getter, setter, order)
+		public DMUInt64(DMBranch parent, string path, Func<UInt64> getter, Action<UInt64> setter = null, UInt64[] variants = null, int order = 0) : base(parent, path, getter, setter, variants, order)
 		{ }
 
 		#endregion

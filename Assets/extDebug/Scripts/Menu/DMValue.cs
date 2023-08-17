@@ -1,6 +1,7 @@
 ﻿/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
 
 using System;
+using System.Collections.Generic;
 
 namespace extDebug.Menu
 {
@@ -20,19 +21,22 @@ namespace extDebug.Menu
 
 		private T _defaultValue;
 
+		private T[] _variants;
+
 		private IDMStorage _storage;
 
 		#endregion
 
 		#region Public Methods
 
-		protected DMValue(DMBranch parent, string path, Func<T> getter, Action<T> setter = null, int order = 0) : base(parent, path, string.Empty, string.Empty, order)
+		protected DMValue(DMBranch parent, string path, Func<T> getter, Action<T> setter = null, T[] variants = null, int order = 0) : base(parent, path, string.Empty, string.Empty, order)
 		{
 			_getter = getter;
 			_setter = setter;
 			_path = path;
 
 			_defaultValue = getter.Invoke();
+			_variants = variants;
 		}
 
 		public void SetStorage(IDMStorage storage)
@@ -64,13 +68,31 @@ namespace extDebug.Menu
 			{
 				if (eventArgs.Key == EventKey.Left && _setter != null)
 				{
-					var value = ValueDecrement(_getter.Invoke(), eventArgs.IsShift);
+					T value;
+					
+					if (_variants != null && _variants.Length > 0)
+					{
+						value = PrevVariant(_getter.Invoke());
+					}
+					else
+					{
+                        value = ValueDecrement(_getter.Invoke(), eventArgs.IsShift);
+					}
 
 					ChangeValue(value, false);
 				}
 				else if (eventArgs.Key == EventKey.Right && _setter != null)
 				{
-					var value = ValueIncrement(_getter.Invoke(), eventArgs.IsShift);
+					T value;
+					
+					if (_variants != null && _variants.Length > 0)
+					{
+						value = NextVariant(_getter.Invoke());
+					}
+					else
+					{
+						value = ValueIncrement(_getter.Invoke(), eventArgs.IsShift);
+					}
 
 					ChangeValue(value, false);
 				}
@@ -86,6 +108,18 @@ namespace extDebug.Menu
 		protected abstract T ValueIncrement(T value, bool isShift);
 
 		protected abstract T ValueDecrement(T value, bool isShift);
+
+		protected virtual T NextVariant(T value)
+		{
+			var index = Math.Max(Array.IndexOf(_variants, value), 0) + 1;
+			return index >= _variants.Length ? _variants[0] : _variants[index];
+		}
+
+		protected virtual T PrevVariant(T value)
+		{
+			var index = Math.Max(Array.IndexOf(_variants, value), 0) - 1;
+			return index < 0 ? _variants[_variants.Length] : _variants[index];
+		}
 
 		#endregion
 

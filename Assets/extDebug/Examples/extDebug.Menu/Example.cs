@@ -111,7 +111,11 @@ namespace extDebug.Examples.Menu
 
 		#region Private Vars
 
-		private string _string = "Hello, World!";
+		private readonly string _string = "Hello, World!";
+
+		private string _string2 = "Variant 2";
+		
+		private readonly string[] _stringVariants = new string[] { "Variant 1", "Variant 2", "Variant 3" };
 
 		private byte _uint8;
 
@@ -184,10 +188,12 @@ namespace extDebug.Examples.Menu
 		private void Start()
 		{
 			var storage = new DMPlayerStorage();
-
+			var order = 0;
+			
 			// Simple Menus
-			DM.Add("Simple Menus/Action", action => Debug.Log("Hello, Action!"), "Simple Action", order: 0);
-			DM.Add("Simple Menus/String", () => _string, order: 1);
+			DM.Add("Simple Menus/Action", action => Debug.Log("Hello, Action!"), "Simple Action", order: -1);
+			DM.Add("Simple Menus/String", () => _string, order: 0);
+			DM.Add("Simple Menus/String Variants", () => _string2, v => _string2 = v, _stringVariants, order: 1);
 			DM.Add("Simple Menus/UInt8", () => _uint8, v => _uint8 = v, order: 2);
 			DM.Add("Simple Menus/UInt16", () => _uint16, v => _uint16 = v, order: 3);
 			DM.Add("Simple Menus/UInt32", () => _uint32, v => _uint32 = v, order: 4);

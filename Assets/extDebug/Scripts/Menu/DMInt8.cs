@@ -18,7 +18,7 @@ namespace extDebug.Menu
 
 		#region Public Methods
 
-		public DMInt8(DMBranch parent, string path, Func<sbyte> getter, Action<sbyte> setter = null, int order = 0) : base(parent, path, getter, setter, order)
+		public DMInt8(DMBranch parent, string path, Func<sbyte> getter, Action<sbyte> setter = null, sbyte[] variants = null, int order = 0) : base(parent, path, getter, setter, variants, order)
 		{ }
 
 		#endregion

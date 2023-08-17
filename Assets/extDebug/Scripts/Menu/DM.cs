@@ -94,53 +94,56 @@ namespace extDebug.Menu
 		public static DMString Add(string path, Func<string> getter, int order = 0) =>
 			Container.Add(path, getter, order);
 
+		public static DMString Add(string path, Func<string> getter, Action<string> setter, string[] variants, int order = 0) =>
+			Container.Add(path, getter, setter, variants, order);
+
 		// Action
 		public static DMAction Add(string path, Action<ActionEvent> action, string description = "", int order = 0) =>
 			Container.Add(path, action, description, order);
 
 		// Bool
-		public static DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, int order = 0) =>
-			Container.Add(path, getter, setter, order);
+		public static DMBool Add(string path, Func<bool> getter, Action<bool> setter = null, bool[] variants = null, int order = 0) =>
+			Container.Add(path, getter, setter, variants, order);
 
 		// Enum
-		public static DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, int order = 0) where T : struct, Enum =>
-			Container.Add(path, getter, setter, order);
+		public static DMEnum<T> Add<T>(string path, Func<T> getter, Action<T> setter = null, T[] variants = null, int order = 0) where T : struct, Enum =>
+			Container.Add(path, getter, setter, variants, order);
 
 		// UInt8
-		public static DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, int order = 0) =>
-			Container.Add(path, getter, setter, order);
+		public static DMUInt8 Add(string path, Func<byte> getter, Action<byte> setter = null, byte[] variants = null, int order = 0) =>
+			Container.Add(path, getter, setter, variants, order);
 
 		// UInt16
-		public static DMUInt16 Add(string path, Func<UInt16> getter, Action<UInt16> setter = null, int order = 0) =>
-			Container.Add(path, getter, setter, order);
+		public static DMUInt16 Add(string path, Func<UInt16> getter, Action<UInt16> setter = null, UInt16[] variants = null, int order = 0) =>
+			Container.Add(path, getter, setter, variants, order);
 
 		// UInt32
-		public static DMUInt32 Add(string path, Func<UInt32> getter, Action<UInt32> setter = null, int order = 0) =>
-			Container.Add(path, getter, setter, order);
+		public static DMUInt32 Add(string path, Func<UInt32> getter, Action<UInt32> setter = null, UInt32[] variants = null, int order = 0) =>
+			Container.Add(path, getter, setter, variants, order);
 
 		// UInt64
-		public static DMUInt64 Add(string path, Func<UInt64> getter, Action<UInt64> setter = null, int order = 0) =>
-			Container.Add(path, getter, setter, order);
+		public static DMUInt64 Add(string path, Func<UInt64> getter, Action<UInt64> setter = null, UInt64[] variants = null, int order = 0) =>
+			Container.Add(path, getter, setter, variants, order);
 
 		// Int8
-		public static DMInt8 Add(string path, Func<sbyte> getter, Action<sbyte> setter = null, int order = 0) =>
-			Container.Add(path, getter, setter, order);
+		public static DMInt8 Add(string path, Func<sbyte> getter, Action<sbyte> setter = null, sbyte[] variants = null, int order = 0) =>
+			Container.Add(path, getter, setter, variants, order);
 
 		// Int16
-		public static DMInt16 Add(string path, Func<Int16> getter, Action<Int16> setter = null, int order = 0) =>
-			Container.Add(path, getter, setter, order);
+		public static DMInt16 Add(string path, Func<Int16> getter, Action<Int16> setter = null, Int16[] variants = null, int order = 0) =>
+			Container.Add(path, getter, setter, variants, order);
 
 		// Int32
-		public static DMInt32 Add(string path, Func<Int32> getter, Action<Int32> setter = null, int order = 0) =>
-			Container.Add(path, getter, setter, order);
+		public static DMInt32 Add(string path, Func<Int32> getter, Action<Int32> setter = null, Int32[] variants = null, int order = 0) =>
+			Container.Add(path, getter, setter, variants, order);
 
 		// Int64
-		public static DMInt64 Add(string path, Func<Int64> getter, Action<Int64> setter = null, int order = 0) =>
-			Container.Add(path, getter, setter, order);
+		public static DMInt64 Add(string path, Func<Int64> getter, Action<Int64> setter = null, Int64[] variants = null, int order = 0) =>
+			Container.Add(path, getter, setter, variants, order);
 
 		// Float
-		public static DMFloat Add(string path, Func<float> getter, Action<float> setter = null, int order = 0) =>
-			Container.Add(path, getter, setter, order);
+		public static DMFloat Add(string path, Func<float> getter, Action<float> setter = null, float[] variants = null, int order = 0) =>
+			Container.Add(path, getter, setter, variants, order);
 
 		// Vector 2
 		public static DMVector2 Add(string path, Func<Vector2> getter, Action<Vector2> setter = null, int order = 0) =>
