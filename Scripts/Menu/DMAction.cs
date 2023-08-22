@@ -4,75 +4,75 @@ using System;
 
 namespace extDebug.Menu
 {
-	public struct ActionEvent
-	{
-		#region Static Public Methods
+    public struct ActionEvent
+    {
+        #region Static Public Methods
 
-		public static ActionEvent Create(DMAction action, EventArgs eventArgs) => new()
-		{
-			_action = action,
-			_eventArgs = eventArgs
-		};
+        public static ActionEvent Create(DMAction action, EventArgs eventArgs) => new()
+        {
+            _action = action,
+            _eventArgs = eventArgs
+        };
 
-		#endregion
+        #endregion
 		
-		#region Public Vars
+        #region Public Vars
 
-		public DMAction Action => _action;
+        public DMAction Action => _action;
 
-		public object Data => _action.Data;
+        public object Data => _action.Data;
 
-		public EventKey Key => _eventArgs.Key;
+        public EventKey Key => _eventArgs.Key;
 
-		public bool IsShift => _eventArgs.IsShift;
+        public bool IsShift => _eventArgs.IsShift;
 
-		#endregion
+        #endregion
 
-		#region Private Vars
+        #region Private Vars
 
-		private DMAction _action;
+        private DMAction _action;
 
-		private EventArgs _eventArgs;
+        private EventArgs _eventArgs;
 
-		#endregion
-	}
+        #endregion
+    }
 
-	public class DMAction : DMItem
-	{
-		#region Private Vars
+    public class DMAction : DMItem
+    {
+        #region Private Vars
 
-		private readonly Action<ActionEvent> _action;
+        private readonly Action<ActionEvent> _action;
 
-		#endregion
+        #endregion
 
-		#region Public Methods
+        #region Public Methods
 
-		public DMAction(DMBranch parent, string path, string description = null, Action<ActionEvent> action = null, int order = 0) : base(parent, path, string.Empty, description, order)
-		{
-			_action = action;
-		}
+        public DMAction(DMBranch parent, string path, string description = null, Action<ActionEvent> action = null, int order = 0) : base(parent, path, string.Empty, description, order)
+        {
+            _action = action;
+        }
 
-		#endregion
+        #endregion
 
-		#region Protected Methods
+        #region Protected Methods
 
-		protected override void OnEvent(EventArgs eventArgs)
-		{
-			if (eventArgs.Tag != EventTag.Input)
-				return;
+        protected override void OnEvent(EventArgs eventArgs)
+        {
+            if (eventArgs.Tag != EventTag.Input)
+                return;
 
-			if (eventArgs.Key == EventKey.Left)
-			{
-				Container.Back();
-			}
-			else if (eventArgs.Key == EventKey.Right && IsEnabled() && _action != null)
-			{
-				_action.Invoke(ActionEvent.Create(this, eventArgs));
+            if (eventArgs.Key == EventKey.Back)
+            {
+                Container.Back();
+            }
+            else if (eventArgs.Key == EventKey.Submit && IsEnabled() && _action != null)
+            {
+                _action.Invoke(ActionEvent.Create(this, eventArgs));
 
-				FlashName(DM.Colors.ActionSuccess, true);
-			}
-		}
+                FlashName(DM.Colors.ActionSuccess, true);
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

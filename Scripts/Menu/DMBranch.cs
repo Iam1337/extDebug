@@ -250,7 +250,9 @@ namespace extDebug.Menu
             set => Container = value;
         }
         
-        IReadOnlyList<DMItem> IDMBranch.GetItems() => _items.AsReadOnly();
+        public IReadOnlyList<DMItem> GetItems() => _items.AsReadOnly();
+        
+        
         
         bool IDMBranch.CanRepaint() => _canRepaint || _canRepaintUntil > Time.unscaledTime || Time.unscaledTime > _autoRepaintAt;
 
@@ -296,13 +298,30 @@ namespace extDebug.Menu
 
 					RequestRepaint();
 				}
+				else if (eventArgs.Key == EventKey.PageUp)
+				{
+					_currentItem -= DM.Input.GetPageIncrementation();
+
+					if (_currentItem < 0)
+						_currentItem = 0;
+
+					RequestRepaint();
+				}
+				else if (eventArgs.Key == EventKey.PageDown)
+				{
+					_currentItem += DM.Input.GetPageIncrementation();
+
+					if (_currentItem >= _items.Count)
+						_currentItem = _items.Count-1;
+
+					RequestRepaint();
+				}
 				else if (eventArgs.Key == EventKey.Left)
 				{
 					var currentItem = Current;
 					if (currentItem is IDMBranch)
 					{
-						if (Container.IsVisible)
-							Container.Back();
+						//Nothing
 					}
 					else
 					{
@@ -314,8 +333,7 @@ namespace extDebug.Menu
 					var currentItem = Current;
 					if (currentItem is IDMBranch currentBranch)
 					{
-						if (Container.IsVisible && IsEnabled())
-							Container.Open(currentBranch);
+						//Nothing
 					}
 					else
 					{
@@ -338,6 +356,19 @@ namespace extDebug.Menu
 				{
 					if (Container.IsVisible)
 						Container.Back();
+				}
+				else if (eventArgs.Key == EventKey.Submit)
+				{
+					var currentItem = Current;
+					if (currentItem is IDMBranch currentBranch)
+					{
+						if (Container.IsVisible && IsEnabled())
+							Container.Open(currentBranch);
+					}
+					else
+					{
+						currentItem?.SendEvent(eventArgs);
+					}
 				}
 			}
 		}

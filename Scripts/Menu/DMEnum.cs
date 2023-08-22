@@ -85,7 +85,7 @@ namespace extDebug.Menu
 			{
 				if (_flagBranch != null)
 				{
-					if (eventArgs.Key == EventKey.Left)
+					if (eventArgs.Key == EventKey.Back)
 					{
 						if (Container.IsVisible)
 							Container.Back();
@@ -93,7 +93,7 @@ namespace extDebug.Menu
 						return;
 					}
 
-					if (eventArgs.Key == EventKey.Right)
+					if (eventArgs.Key == EventKey.Submit)
 					{
 						if (Container.IsVisible && IsEnabled())
 							Container.Open(_flagBranch);

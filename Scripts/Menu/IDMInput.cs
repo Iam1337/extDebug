@@ -2,56 +2,60 @@
 
 namespace extDebug.Menu
 {
-	public enum EventTag
-	{
-		None,			// -
-		OpenBranch,		// Menu open
-		CloseBranch,	// Menu closed
-		Repaint,		// Repaint item
-		Input			// Process input
-	}
+    public enum EventTag
+    {
+        None,			// -
+        OpenBranch,		// Menu open
+        CloseBranch,	// Menu closed
+        Repaint,		// Repaint item
+        Input			// Process input
+    }
 
-	public enum EventKey
-	{
-		None,		// -
-		ToggleMenu, // Key menu toggled
-		Up,			// Key up
-		Down,		// Key down
-		Left,		// Key left
-		Right,		// Key right
-		Back,		// Key back
-		Reset		// Key reset value
-	}
+    public enum EventKey
+    {
+        None,		// -
+        ToggleMenu, // Key menu toggled
+        Up,			// Key up
+        Down,		// Key down
+        Left,		// Key left
+        Right,		// Key right
+        Back,		// Key back
+        Submit,		// Key submit
+        Reset,		// Key reset value
+        PageUp,		// Key Pageup
+        PageDown,	// Key PageDown
+    }
 
-	public class EventArgs
-	{
-		#region Static Public Methods
+    public class EventArgs
+    {
+        #region Static Public Methods
 
-		public static EventArgs OpenBranch => new EventArgs { Tag = EventTag.OpenBranch };
+        public static EventArgs OpenBranch => new EventArgs { Tag = EventTag.OpenBranch };
 
-		public static EventArgs CloseBranch => new EventArgs { Tag = EventTag.CloseBranch };
+        public static EventArgs CloseBranch => new EventArgs { Tag = EventTag.CloseBranch };
 
-		public static EventArgs Repaint => new EventArgs { Tag = EventTag.Repaint };
+        public static EventArgs Repaint => new EventArgs { Tag = EventTag.Repaint };
 
-		#endregion
+        #endregion
 
-		#region Public Vars
+        #region Public Vars
 
-		public EventTag Tag;
+        public EventTag Tag;
 
-		public EventKey Key;
+        public EventKey Key;
 
-		public bool IsShift;
+        public bool IsShift;
 
-		#endregion
-	}
+        #endregion
+    }
 
-	public interface IDMInput
-	{
-		#region Methods
+    public interface IDMInput
+    {
+        #region Methods
 
-		EventKey GetKey(bool isVisible, out bool shift);
+        EventKey GetKey(bool isVisible, out bool shift);
+        int GetPageIncrementation();
 
-		#endregion
-	}
+        #endregion
+    }
 }
