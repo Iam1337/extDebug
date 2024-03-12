@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
+﻿/* Copyright (c) 2024 dr. ext (Vladimir Sigalkin) */
 
 using UnityEngine;
 
@@ -9,6 +9,12 @@ namespace extDebug.Menu
 {
 	public class DMBranch : DMItem, IDMBranch, IDMContainer
 	{
+		#region Static Private Vars
+
+		private static readonly List<DMItem> _tempItems = new();
+
+		#endregion
+		
 		#region Public Methods
 
 		public DMItem Current
@@ -43,7 +49,7 @@ namespace extDebug.Menu
 
 		#region Private Vars
 
-		private readonly List<DMItem> _items = new List<DMItem>();
+		private readonly List<DMItem> _items = new();
 
 		private int _currentItem;
 
@@ -54,6 +60,12 @@ namespace extDebug.Menu
 		private float _autoRepaintPeriod;
 
 		private float _autoRepaintAt = float.MaxValue;
+
+		private int _pageSize = 15;
+		
+		private int _pageOffset;
+		private int _pageStart => Mathf.Clamp(_pageOffset, 0, _items.Count);
+		private int _pageEnd =>  Mathf.Clamp(_pageOffset + _pageSize, 0, _items.Count);
 
 		#endregion
 
@@ -249,9 +261,33 @@ namespace extDebug.Menu
         {
             set => Container = value;
         }
+
+        public int ItemsCount => _items.Count;
+
+        public int PageSize
+        {
+	        get => _pageSize;
+	        set => _pageSize = value;
+        }
         
+        public int PageStart => _pageStart;
+        
+        public int PageEnd => _pageEnd;
+
         IReadOnlyList<DMItem> IDMBranch.GetItems() => _items.AsReadOnly();
-        
+
+        public IReadOnlyList<DMItem> GetPageItems()
+        {
+	        _tempItems.Clear();
+	        
+	        for (var i = _pageStart; i < _pageEnd; i++)
+	        {
+		        _tempItems.Add(_items[i]);
+	        }
+
+	        return _tempItems.AsReadOnly();
+        }
+
         bool IDMBranch.CanRepaint() => _canRepaint || _canRepaintUntil > Time.unscaledTime || Time.unscaledTime > _autoRepaintAt;
 
         void IDMBranch.CompleteRepaint()
@@ -283,8 +319,16 @@ namespace extDebug.Menu
 					_currentItem--;
 
 					if (_currentItem < 0)
+					{
 						_currentItem = _items.Count - 1;
-
+						_pageOffset = Mathf.Max(0, _items.Count - _pageSize);
+					}
+					else
+					{
+						if (_currentItem <= _pageOffset)
+							_pageOffset = _currentItem; 
+					}
+					
 					RequestRepaint();
 				}
 				else if (eventArgs.Key == EventKey.Down)
@@ -292,8 +336,16 @@ namespace extDebug.Menu
 					_currentItem++;
 
 					if (_currentItem >= _items.Count)
+					{
 						_currentItem = 0;
-
+						_pageOffset = 0;
+					}
+					else
+					{
+						if (_currentItem >= _pageEnd) 
+							_pageOffset = _currentItem - _pageSize + 1;
+					}
+					
 					RequestRepaint();
 				}
 				else if (eventArgs.Key == EventKey.Left)

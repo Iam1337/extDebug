@@ -1,9 +1,8 @@
-/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
+/* Copyright (c) 2024 dr. ext (Vladimir Sigalkin) */
 
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace extDebug.Menu
 {
@@ -30,7 +29,12 @@ namespace extDebug.Menu
         {
             set => Container = value;
         }
-        
+
+        public int ItemsCount => _logsContainer.GetLogsCount();
+        public int PageSize => _logsContainer.GetLogsCount();
+        public int PageStart => _logOffset;
+        public int PageEnd => Mathf.Clamp(_logOffset + _itemsLogs.Length, 0, _logsContainer.GetLogsCount());
+
         public Action<DMLogs> OnOpen;
 
         public Action<DMLogs> OnClose;
@@ -49,6 +53,12 @@ namespace extDebug.Menu
 
         private int _logOffset;
 
+        private int _pageSize;
+
+        private int _pageStart;
+
+        private int _pageEnd;
+        
         private readonly DMItem[] _items;
 
         private readonly DMInternalItem[] _itemsLogs;
@@ -63,7 +73,7 @@ namespace extDebug.Menu
         {
             _logsContainer = logsContainer;
             
-            _items = new DMItem[size + 1];
+            _items = new DMItem[size];
             _itemsLogs = new DMInternalItem[size];
 
             for (var i = 0; i < size; i++)
@@ -74,8 +84,6 @@ namespace extDebug.Menu
                 _items[i] = logItem;
                 _itemsLogs[i] = logItem;
             }
-
-            _items[size] = new DMString(null, string.Empty, GetLogsPagination, order: int.MaxValue);
         }
 
         public void RequestRepaint() => _canRepaint = true;
@@ -83,7 +91,9 @@ namespace extDebug.Menu
         public void RequestRepaint(float duration) => _canRepaintUntil = Time.unscaledTime + duration;
 
         public bool CanRepaint() => _logsContainer.IsDirty() || _canRepaint || _canRepaintUntil > Time.unscaledTime || Time.unscaledTime > _autoRepaintAt;
-        
+
+        public IReadOnlyList<DMItem> GetPageItems() => _items;
+
         public void CompleteRepaint()
         {
             if (_autoRepaintPeriod > 0)
@@ -167,11 +177,6 @@ namespace extDebug.Menu
         #endregion
 
         #region Private Vars
-
-        private string GetLogsPagination()
-        {
-            return $"{_logOffset} - {Mathf.Clamp(_logOffset + _itemsLogs.Length, 0, _logsContainer.GetLogsCount())} / {_logsContainer.GetLogsCount()}";
-        }
         
         private void RepaintItems()
         {

@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
+﻿/* Copyright (c) 2024 dr. ext (Vladimir Sigalkin) */
 
 using UnityEngine;
 
@@ -12,7 +12,7 @@ namespace extDebug.Menu
 	{
 		#region Static Private Vars
 
-		private static readonly GUISkin _skin = Resources.Load<GUISkin>("extDebug/Skins/Default Skin");
+		private static GUISkin _skin = Resources.Load<GUISkin>("extDebug/Skins/Default Skin");
 
 		#endregion
 
@@ -32,22 +32,32 @@ namespace extDebug.Menu
 			const string kPrefix_Selected = ">";
 			const string kSpace = "  ";
 			const char kHorizontalChar = '─';
-
+			
 			CalculateLengths(itemsContainer, items, kSpace.Length, 
 				out var fullLength, 
 				out var maxNameLength, 
 				out var maxValueLength, 
 				out var maxDescriptionLength);
-            
+
 			var order = -1;
 			var lineLength = fullLength + kPrefix.Length;
+			
+			var pageInfo = string.Empty;
+			var hasPage = itemsContainer.PageSize > 0;
+			if (hasPage)
+			{
+				pageInfo = $"{itemsContainer.PageStart}-{itemsContainer.PageEnd} of {itemsContainer.ItemsCount}";
+				lineLength = Mathf.Max(pageInfo.Length, lineLength);
+				items = itemsContainer.GetPageItems();
+			}
+			
 			var lineEmpty = new string(kHorizontalChar, lineLength);
 
 			// header
 			_builder.Clear();
 			_builder.AppendFormat($"{kPrefix}<color=#{ColorUtility.ToHtmlStringRGB(itemsContainer.NameColor)}>{{0,{-fullLength}}}</color>{Environment.NewLine}", itemsContainer.Name);
 			_builder.AppendLine(lineEmpty);
-
+			
 			// items
 			for (var i = 0; i < items.Count; i++)
 			{
@@ -79,7 +89,15 @@ namespace extDebug.Menu
 				_builder.Append(Environment.NewLine);
 			}
 
-			_builder.Remove(_builder.Length - Environment.NewLine.Length, Environment.NewLine.Length);
+			if (hasPage)
+			{
+				_builder.AppendFormat( new string(kHorizontalChar, Mathf.Max(0, lineLength - pageInfo.Length - 1)) + " {0}", pageInfo);
+			}
+			else
+			{
+				_builder.Remove(_builder.Length - Environment.NewLine.Length, Environment.NewLine.Length);
+			}
+			
 			_text = _builder.ToString();
 		}
 
@@ -87,6 +105,9 @@ namespace extDebug.Menu
 		{
 			if (!isVisible)
 				return;
+
+			if (_skin == null)
+				_skin = Resources.Load<GUISkin>("extDebug/Skins/Default Skin");
 			
 			GUI.skin = _skin;
 
@@ -130,6 +151,7 @@ namespace extDebug.Menu
 				maxDescriptionLength = Math.Max(maxDescriptionLength, descriptionLength);
 			}
 
+			
 			fullLength = Math.Max(fullLength, maxNameLength + spaceLength + maxValueLength + spaceLength + maxDescriptionLength);
 		}
 

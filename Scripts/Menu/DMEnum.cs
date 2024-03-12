@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
+﻿/* Copyright (c) 2024 dr. ext (Vladimir Sigalkin) */
 
 using System;
 
@@ -48,6 +48,7 @@ namespace extDebug.Menu
 				if (type.IsDefined(typeof(FlagsAttribute), false))
 				{
 					_flagBranch = new DMBranch(null, GetPathName(path));
+					_flagBranch.PageSize = 0;
 					_flagBranch.Container = Container;
 
 					var values = (T[])Enum.GetValues(type);

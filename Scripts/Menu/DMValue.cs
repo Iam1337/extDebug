@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
+﻿/* Copyright (c) 2024 dr. ext (Vladimir Sigalkin) */
 
 using System;
 using System.Collections.Generic;
