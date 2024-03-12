@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2023 dr. ext (Vladimir Sigalkin) */
+﻿/* Copyright (c) 2024 dr. ext (Vladimir Sigalkin) */
 
 using UnityEngine;
 
@@ -51,6 +51,7 @@ namespace extDebug.Menu
 			if (_presetsBranch == null)
 			{
 				_presetsBranch = _fieldsBranch.Add("Presets", order: byte.MaxValue - 2);
+				_presetsBranch.PageSize = 0;
 				_presetsBranch.Add("Back", BackAction, string.Empty, int.MaxValue);
 			}
 
@@ -75,6 +76,7 @@ namespace extDebug.Menu
 
 				_fields = new DMFloat[count];
 				_fieldsBranch = new DMBranch(null, GetPathName(path));
+				_fieldsBranch.PageSize = 0;
 				_fieldsBranch.Container = Container;
 
 				for (var i = 0; i < count; i++)
