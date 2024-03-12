@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/Iam1337/extDebug/compare/v1.17.0...v1.18.0) (2024-03-12)
+
+
+### Features
+
+* added pagination system ([e6dea3b](https://github.com/Iam1337/extDebug/commit/e6dea3b5f6e0bc61f7aa8d211490aeb050c696a6))
+
 # [1.17.0](https://github.com/Iam1337/extDebug/compare/v1.16.0...v1.17.0) (2023-08-17)
 
 
